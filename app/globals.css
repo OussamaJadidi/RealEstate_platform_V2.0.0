@@ -20,3 +20,70 @@
   width: 100vw;
   padding-inline: 5rem;
 }
+
+/* Start hide the default marker of the <details> html tag  */
+details summary {
+  list-style: none;
+}
+details summary::-webkit-details-marker {
+  display: none;
+}
+details summary::before {
+  content: '';
+  padding-right: 5px;
+}
+details[open] summary::before {
+  content: '';
+}
+input[list] datalist ::after{
+  content :""
+}
+/* End hide the default marker of the <details> html tag  */
+
+
+input{
+  outline: none;
+  
+}
+
+/* Style the elements Search Form  */
+.Input{
+  padding: .5rem;
+  color: black;
+  border: 1px solid gray;
+  border-radius: .3rem;
+  font-weight: 500;
+  font-size: .9rem;
+  background-color: white;
+  max-width: 15rem;
+
+}
+.Input::placeholder{
+  color: gray;
+  font-weight: 400;
+  font-size: .9rem;
+}
+.box{
+  padding-block: .4rem;
+  padding-inline: .9rem;
+  background-color: rgb(229, 229, 229);
+  border-radius: .3rem;
+  color: black;
+  background-color: #f1f5f9;
+}
+.box span{
+  font-weight: 400;
+}
+input[type="checkbox"]:checked + label{
+  background-color: #e0f2fe;
+  color: #1e40af;
+  border: 1px solid #1e40af;
+}
+
+input[type="radio"]:checked + label{
+  background-color: #e0f2fe;
+  color: #1e40af;
+  border: 1px solid #1e40af;
+}
+
+
