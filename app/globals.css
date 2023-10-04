@@ -1,6 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&family=Poppins&family=Roboto:wght@100;300;400;500;700;900&family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;600;800&family=Poppins&family=Roboto:wght@300;400;500;700&family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&family=Nunito+Sans:wght@300;600;800&family=Poppins&family=Roboto:wght@100;300;400;500;700;900&family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+
+@layer base {
+  html {
+    font-family: "roboto-100",;
+  }
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -16,10 +25,28 @@
   }
 }
 
+.Wrapper {
+  background-color: blue; /* Or whatever color you want */
+}
+
+
 .Container{
-  width: 100vw;
+  max-width: 12180px;
   padding-inline: 5rem;
 }
+@media(max-width: 70em){
+  .Container{
+    max-width: 12180px;
+    padding-inline: 3rem;
+  }
+}
+@media(max-width: 50em){
+  .Container{
+    max-width: 12180px;
+    padding-inline: 2rem;
+  }
+}
+
 
 /* Start hide the default marker of the <details> html tag  */
 details summary {
