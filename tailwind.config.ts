@@ -14,9 +14,9 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       fontFamily: {
-        roboto :["Roboto"],
-        rubik:["Rubik"],
-        vietnam: ["Be Vietnam Pro","sans-serif"]
+        roboto :["Roboto","sans-serif"],
+        rubik:["Rubik","sans-serif"],
+        vietnam: ["Be Vietnam Pro","sans-serif"],
       }
     },
   },
