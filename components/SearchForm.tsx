@@ -1,19 +1,31 @@
 "use client"
-import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChevronDown,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRef } from "react";
+import useHandlePopUp from "@/lib/useHandlePopUp";
 
 // onBlur={(e)=>{e.currentTarget.open= false}}
 
 
 export default function SearchForm() {
-  
+  const surfacePopUptrigger = useRef<HTMLButtonElement | null>(null)
+  const sufacePopUp = useRef<HTMLUListElement | null>(null)
+
+  const pricePopUptrigger = useRef<HTMLButtonElement | null>(null)
+  const pricePopUp = useRef<HTMLUListElement | null>(null)
+
+  const bedsAndBathsPopUptrigger = useRef<HTMLButtonElement | null>(null)
+  const bedsAndBaths = useRef<HTMLUListElement | null>(null)
+
+  const [surfacePopUpIsOpen,handleSurfacePopUp] = useHandlePopUp(surfacePopUptrigger,sufacePopUp)
+  const [PricePopUpIsOpen,handlePricePopUp] = useHandlePopUp(pricePopUptrigger,pricePopUp)
+  const [bedsAndBathsPopUpIsOpen,handleBedsAndBathsPopUp] = useHandlePopUp(bedsAndBathsPopUptrigger,bedsAndBaths)
   return (
     <>
-      <form action="">
+      <form action="" >
         <ul className="flex flex-wrap">
           <li>
             <input className="Input" list="country" placeholder="Country" />
@@ -51,9 +63,9 @@ export default function SearchForm() {
             </select>
           </li>
           <li>
-            <details className="relative" >
-              <summary className="Input ">Beds & Baths</summary>
-              <ul className="border rounded-md px-4 absolute z-10 top-[105%]   bg-white w-max h-40">
+            <div className="relative"   >
+              <button  type="button" className="Input cursor-pointer" onClick={handleBedsAndBathsPopUp} ref={bedsAndBathsPopUptrigger}>Beds & Baths</button>
+              {bedsAndBathsPopUpIsOpen && <ul ref={bedsAndBaths} className="border rounded-md px-4 absolute z-10 top-[105%]   bg-white w-max h-40">
                 <li className="">
                   <h3 className="p-2">Beds</h3>
                   <ul className="flex flex-wrap gap-2 gap-y-2">
@@ -132,14 +144,14 @@ export default function SearchForm() {
                     </li>
                   </ul>
                 </li>
-              </ul>
-            </details>
+              </ul>}
+            </div>
           </li>
           <li>
-            <details className="marker:hidden relative" >
-              <summary className="Input">Price</summary>
-              <ul className="border-2   gap-2 rounded-md absolute z-10 top-[105%]   bg-white  px-4 h-44">
-                <li>
+            <div className="relative" >
+              <button type="button" ref={pricePopUptrigger} className="Input" onClick={handlePricePopUp} >Price</button>
+             { PricePopUpIsOpen && <ul ref={pricePopUp} className="border-2  gap-2 rounded-md absolute z-10 top-[105%]  bg-white  px-4 h-44" >
+                <li >
                     <h3 className="py-2">Price</h3>
                     <ul className="flex gap-2">
                         <li><input  type="number" placeholder="Min Price $" className="box" /></li>
@@ -159,8 +171,8 @@ export default function SearchForm() {
                         <label htmlFor="PerYear" className="box"><span>Per Year</span></label></li>
                     </ul>
                 </li>
-              </ul>
-            </details>
+              </ul>}
+            </div>
           </li>
           <li>
             <select className="Input" name="" id="">
@@ -171,17 +183,19 @@ export default function SearchForm() {
             </select>
           </li>
           <li>
-            <details className="Input relative" >
-              <summary>Sruface (m²)</summary>
-              <ul className="border-2   gap-2 rounded-md absolute z-10 top-[105%] left-0   bg-white  p-4">
-                <li>
-                    <ul className="flex gap-2">
-                        <li><input  type="number" placeholder="Min Price $" className="box" /></li>
-                        <li><input  type="number" placeholder="Max Price $" className="box" /></li>
-                    </ul>
-                </li>
-              </ul>
-            </details>
+            <div className="Input relative" >
+  <button type="button" ref={surfacePopUptrigger} onClick={handleSurfacePopUp}>Surface (m²)</button>
+  {surfacePopUpIsOpen && 
+    <ul ref={sufacePopUp} className="border-2 gap-2 rounded-md absolute z-10 top-[105%] left-0 bg-white p-4"> 
+      <li className=""> 
+        <ul className="flex 850px:flex-col flex-row gap-2"> 
+          <li><input type="number" placeholder="Min surface $" className="box" /></li> 
+          <li><input type="number" placeholder="Max surface $" className="box" /></li> 
+        </ul> 
+      </li> 
+    </ul>
+  } 
+</div>
           </li>
           <li>
             <div className="Input flex items-center">
