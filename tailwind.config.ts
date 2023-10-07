@@ -26,6 +26,8 @@ const config: Config = {
       'lg': '1025px',
       'xl': '1281px',
       '2xl': '1537px',
+      '516px': {'min': '516px'},
+      'max-516px': {'max': '516px'},
       '850px': {'max': '850px'},
       'max-sm': {'max': '640px'},
       'max-md': {'max': '768px'},
