@@ -80,12 +80,12 @@ export default function SearchForm() {
               onClick={handlePropertyTypePopUp}
               ref={propertyTypePopUptrigger}
             >
-              Property type <FontAwesomeIcon icon={faChevronDown} />
+              Property type <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}}/>
             </button>
             {propertyTypePopUpIsOpen && (
               <ul
                 ref={propertyTypePopUp}
-                className="border absolute rounded-md px-4 mt-[2px] pt-6 pb-6 z-10  bg-white  flex flex-wrap gap-x-1 gap-y-4 w-[20rem] max-md:w-[15rem]"
+                className="border absolute rounded-md px-4 mt-[2px] pt-6 pb-6 z-10  bg-white  flex max-lg:justify-center flex-wrap gap-x-1 gap-y-4 max-w-[29rem]"
               >
                 <li>
                   <input
@@ -265,29 +265,29 @@ export default function SearchForm() {
               className="Input whitespace-nowrap"
               onClick={handlePricePopUp}
             >
-              Price <FontAwesomeIcon icon={faChevronDown} />
+              Price <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}} />
             </button>
             <div>
               {PricePopUpIsOpen && (
                 <ul
                   ref={pricePopUp}
-                  className="border-2  gap-2 rounded-md absolute mt-[2px] z-10 pt-2 pb-6  bg-white  px-4 w-fit"
+                  className="border-2  gap-2 rounded-md absolute max-lg:right-[0] mx-[5px] mt-[2px] z-10 pt-2 pb-6  bg-white  px-4 w-fit"
                 >
                   <li>
                     <h3 className="py-2">Price</h3>
-                    <ul className="flex flex-wrap gap-x-2 gap-y-1">
+                    <ul className="flex flex-wrap gap-x-2 gap-y-1 justify-center">
                       <li>
                         <input
                           type="number"
                           placeholder="Min Price $"
-                          className="box w-[12rem] max-516px:w-[7rem]"
+                          className="box w-[13rem] "
                         />
                       </li>
                       <li>
                         <input
                           type="number"
                           placeholder="Max Price $"
-                          className="box w-[12rem] max-516px:w-[7rem]"
+                          className="box w-[13rem] "
                         />
                       </li>
                     </ul>
@@ -295,7 +295,7 @@ export default function SearchForm() {
 
                   <li>
                     <h3 className="py-2">Rental Period</h3>
-                    <ul className="flex flex-wrap gap-x-2 gap-y-4">
+                    <ul className="flex flex-wrap gap-x-2 gap-y-4 justify-center">
                       <li>
                         <input
                           type="radio"
@@ -340,7 +340,7 @@ export default function SearchForm() {
           </li>
           
           </div>
-          <div className="flex items-center">
+          <div className="flex  flex-wrap items-center">
           {extraOptions && (
             <li>
               <button
@@ -349,7 +349,7 @@ export default function SearchForm() {
                 onClick={handleBedsAndBathsPopUp}
                 ref={bedsAndBathsPopUptrigger}
               >
-                Beds & Baths <FontAwesomeIcon icon={faChevronDown} />
+                Beds & Baths <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}} />
               </button>
               <div>
                 {bedsAndBathsPopUpIsOpen && (
@@ -585,13 +585,13 @@ export default function SearchForm() {
                 className="Input whitespace-nowrap"
                 onClick={handleMeublePopUp}
               >
-                Meublement <FontAwesomeIcon icon={faChevronDown} />
+                Meublement <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}} />
               </button>
               <div>
                 {meublePopUpIsOpen && (
                   <ul
                     ref={meublePopUp}
-                    className="border-2  flex flex-wrap gap-x-2 gap-y-4 rounded-md absolute mt-[2px] z-10 py-5 max-lg:flex-col bg-white  px-4 w-max"
+                    className="border-2  flex  flex-wrap gap-x-2 gap-y-4 rounded-md absolute max-sm:right-0 mx-[5px] justify-center mt-[2px] z-10 py-5  bg-white  px-4 w-fit"
                   >
                     <li>
                       <input
@@ -614,7 +614,7 @@ export default function SearchForm() {
                         className="hidden"
                       />
                       <label htmlFor="not-meuble" className="box">
-                        <span>Not Meuble</span>
+                        <span className=" whitespace-nowrap">Not Meuble</span>
                       </label>
                     </li>
                     <li>
@@ -626,7 +626,7 @@ export default function SearchForm() {
                         className="hidden"
                       />
                       <label htmlFor="partiellement-meuble" className="box">
-                        <span>partiellemnt meuble</span>
+                        <span className=" whitespace-nowrap">partiellemnt meuble</span>
                       </label>
                     </li>
                   </ul>
@@ -637,37 +637,33 @@ export default function SearchForm() {
           {extraOptions && ( 
           <li>
             
-              <div className="relative">
+              <div className="">
                 <button
                   type="button"
                   ref={surfacePopUptrigger}
                   onClick={handleSurfacePopUp}
                   className="Input whitespace-nowrap"
                 >
-                  Surface (m²) <FontAwesomeIcon icon={faChevronDown} />
+                  Surface (m²) <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}} />
                 </button>
                 {surfacePopUpIsOpen && (
                   <ul
                     ref={sufacePopUp}
-                    className="border-2 gap-2 rounded-md absolute z-10 top-[105%] left-0 bg-white p-4"
+                    className="border-2 flex flex-wrap justify-center max-lg:right-0 gap-2 mx-[5px] rounded-md absolute z-10  bg-white p-4 "
                   >
-                    <li className="">
-                      <ul className="flex 850px:flex-col flex-row gap-2">
-                        <li>
-                          <input
-                            type="number"
-                            placeholder="Min surface $"
-                            className="box max-516px:w-[9rem]"
-                          />
-                        </li>
-                        <li>
-                          <input
-                            type="number"
-                            placeholder="Max surface $"
-                            className="box max-516px:w-[9rem]"
-                          />
-                        </li>
-                      </ul>
+                    <li>
+                      <input
+                        type="number"
+                        placeholder="Min surface $"
+                        className="box "
+                      />
+                    </li>
+                    <li>
+                      <input
+                        type="number"
+                        placeholder="Max surface $"
+                        className="box "
+                      />
                     </li>
                   </ul>
                 )}
@@ -697,10 +693,10 @@ export default function SearchForm() {
             </li>
           </div>
         </ul>
-        <span className=" flex  items-center gap-2 text-xs text-gray-400  ">
+        <span className=" flex flex-wrap-reverse ml-auto w-fit justify-center  items-center gap-2 text-xs text-gray-400  ">
           <button
             type="button"
-            className="text-left ml-auto underline outline-none" 
+            className="text-left  underline outline-none" 
             onClick={handleExtraOptions}
           >
             Show {extraOptions ? "less" : "more"} options search
