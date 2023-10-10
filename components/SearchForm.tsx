@@ -6,8 +6,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
 import useHandlePopUp from "@/lib/useHandlePopUp";
+// The following import prevents a Font Awesome icon server-side rendering bug,
+// where the icons flash from a very large icon down to a properly sized one:
+import '@fortawesome/fontawesome-svg-core/styles.css';
+// Prevent fontawesome from adding its CSS since we did it manually above:
+// import { config } from '@fortawesome/fontawesome-svg-core';
+// config.autoAddCss = false; /* eslint-disable import/first */
 
-// onBlur={(e)=>{e.currentTarget.open= false}}
 
 export default function SearchForm() {
   const [extraOptions, setExtraOptions] = useState(false);
@@ -340,7 +345,7 @@ export default function SearchForm() {
           </li>
           
           </div>
-          <div className="flex  flex-wrap items-center">
+          <div className="flex  flex-wrap items-center gap-1">
           {extraOptions && (
             <li>
               <button
@@ -699,13 +704,16 @@ export default function SearchForm() {
             className="text-left  underline outline-none" 
             onClick={handleExtraOptions}
           >
-            Show {extraOptions ? "less" : "more"} options search
+            Show {extraOptions ? "less" : "more"} options search <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem",transform: extraOptions ? "rotate(180deg)" : ""}} />
           </button>
           <button type="button" className=" bg-blue-800 text-white flex items-center p-2 rounded-md px-4 mt-2">
-            <FontAwesomeIcon
+            <span className="w-4 text-white px-1">
+               <FontAwesomeIcon
               icon={faMagnifyingGlass}
-              style={{ width: "1rem", color: "white", paddingInline: ".3rem" }}
+              // style={{ width: "1rem", color: "white", paddingInline: ".3rem" }}
             />
+            </span>
+           
             <span className="px-2 ">Search</span>
           </button>
         </span>

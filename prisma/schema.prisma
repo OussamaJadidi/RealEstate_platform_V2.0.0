@@ -9,3 +9,85 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id       String  @id @default(uuid())
+  name     String?
+  email    String
+  password String
+  image    String?
+  phone    String?
+
+  ownedPropertiesToBuy PropertyToBuy[] @relation("ownedPropertiesToBuy")
+  ownedPropertiesToRent PropertyToRent[] @relation("ownedPropertiesToRent")
+
+  bookedVisits          Json?
+  FavoritesPropertiesId Json?
+}
+
+
+model PropertyToBuy {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  images      Json
+
+  country String
+  city    String
+  address String
+
+  propertyType String
+  bedsNumber   Int
+  bathsNumber  Int
+  meublement   String
+  surface      Float
+  Hashtags     Json?
+
+  globalLikesNumber Int?   @default(0)
+  ViewByNumber      Int?   @default(0)
+  clickedBy         Int?   @default(0)
+  User              User   @relation("ownedPropertiesToBuy", fields: [ownerId], references: [id])
+  ownerId           String
+
+  ownerEmail String?
+  ownerPhone String?
+
+  @@unique(fields: [address, ownerEmail])
+}
+
+
+model PropertyToRent {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  rentalPeriod String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  images      Json
+
+  country String
+  city    String
+  address String
+
+  propertyType String
+  bedsNumber   Int
+  bathsNumber  Int
+  meublement   String
+  surface      Float
+  Hashtags     Json?
+
+  globalLikesNumber Int?   @default(0)
+  ViewByNumber      Int?   @default(0)
+  clickedBy         Int?   @default(0)
+  User              User   @relation("ownedPropertiesToRent", fields: [ownerId], references: [id])
+  ownerId          String
+
+  ownerEmail String?
+  ownerPhone String?
+
+  @@unique(fields: [address, ownerEmail])
+}

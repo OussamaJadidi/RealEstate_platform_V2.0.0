@@ -32,8 +32,8 @@ export default function Header() {
   );
 
   return (
-    <header className="Container bg-sky-50 ">
-      <Container className="h-20 font-medium | flex justify-between items-center font-sans">
+    <header className="Container bg-sky-50  ">
+      <Container className="h-20 max-sm:h-22 font-medium |  flex justify-between items-center font-sans">
         <span className="text-4xl text-blue-800 font-sans ">EstateElite</span>
         <ul className="flex gap-4  max-sm:hidden font-rubik">
           <li className="cursor-pointer hover:text-blue-800 transition-all">
@@ -43,7 +43,7 @@ export default function Header() {
             Rent
           </li>
           <li className="cursor-pointer hover:text-blue-800 transition-all">
-            Post property
+            Add Property
           </li>
           <li>
             <div className="">
@@ -73,14 +73,14 @@ export default function Header() {
                           style={{ paddingInline: ".7rem" }}
                           icon={faBell}
                         />
-                        Notification
+                        Bookings
                       </li>
                       <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                         <FontAwesomeIcon
                           style={{ paddingInline: ".7rem" }}
                           icon={faHeart}
                         />
-                        Saves
+                        Favorites
                       </li>
                       <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                         <FontAwesomeIcon
@@ -143,21 +143,21 @@ export default function Header() {
                     style={{ paddingInline: ".7rem" }}
                     icon={faCircleDown}
                   />
-                  Post my perty
+                  Add Property
                 </li>
                 <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                   <FontAwesomeIcon
                     style={{ paddingInline: ".7rem" }}
                     icon={faBell}
                   />
-                  Notification
+                  Bookings
                 </li>
                 <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                   <FontAwesomeIcon
                     style={{ paddingInline: ".7rem" }}
                     icon={faHeart}
                   />
-                  Saves
+                  Favorites
                 </li>
                 <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                   <FontAwesomeIcon
