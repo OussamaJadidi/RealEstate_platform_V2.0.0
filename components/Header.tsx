@@ -6,7 +6,7 @@ import {
   faUserPlus,
   faUser,
   faHeart,
-  faBell,
+  faCalendarDays,
   faRightFromBracket,
   faBars,
   faCircleDown,
@@ -71,7 +71,7 @@ export default function Header() {
                       <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                         <FontAwesomeIcon
                           style={{ paddingInline: ".7rem" }}
-                          icon={faBell}
+                          icon={faCalendarDays}
                         />
                         Bookings
                       </li>
@@ -148,7 +148,7 @@ export default function Header() {
                 <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                   <FontAwesomeIcon
                     style={{ paddingInline: ".7rem" }}
-                    icon={faBell}
+                    icon={faCalendarDays}
                   />
                   Bookings
                 </li>

@@ -1,9 +1,12 @@
 import Image from "next/image";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faAnglesDown,
+} from "@fortawesome/free-solid-svg-icons";
 import { Container, SearchForm } from "./";
 export default function Hero() {
   return (
-    <section className="Container max-lg:p-0 bg-sky-50 ">
+    <section className="Container max-lg:p-0 bg-sky-50">
       <Container className=" relative  flex items-center h-[calc(100vh-5rem)]">
         {/* <div className="min-w-[12rem] w-[90%]  516px:w-max  z-10 absolute top-[12rem] lg:top-[50%] lg:translate-y-[-50%]  / left-0 max-lg:left-[50%] max-lg:translate-x-[-50%] / max-w-4xl p-6 lg:p-8 shadow-xl rounded-md bg-white | flex flex-col"> */}
         <div className="min-w-[12rem] w-[90%]  516px:w-max z-10  max-lg:mx-auto / max-w-4xl p-6 lg:p-8 shadow-xl rounded-md bg-white | flex flex-col">

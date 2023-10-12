@@ -6,6 +6,8 @@ import Hero from "./Hero"
 import Value from "./Value"
 import LatestPosts from "./LatestPosts"
 import Card from "./Card"
+import CTA from "./CTA"
+import FilterBar from "./FilterBar"
 export {
     Header,
     Footer,
@@ -14,5 +16,7 @@ export {
     Hero,
     Value,
     LatestPosts,
-    Card
+    Card,
+    CTA,
+    FilterBar
 }
