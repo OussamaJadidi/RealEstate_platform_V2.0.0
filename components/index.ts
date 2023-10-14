@@ -8,6 +8,8 @@ import LatestPosts from "./LatestPosts"
 import Card from "./Card"
 import CTA from "./CTA"
 import FilterBar from "./FilterBar"
+import FlexCard from "./FlexCard"
+import Map from "./Map"
 export {
     Header,
     Footer,
@@ -18,5 +20,7 @@ export {
     LatestPosts,
     Card,
     CTA,
-    FilterBar
+    FilterBar,
+    FlexCard,
+    Map
 }

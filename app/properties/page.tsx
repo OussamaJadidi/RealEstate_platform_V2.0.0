@@ -1,12 +1,31 @@
 import Image from "next/image";
 import React from "react";
-import { Container, FilterBar } from "@/components";
+import { Container, FilterBar, Card,Map } from "@/components";
 export default function page() {
   return (
-    <div>
-      <Container className="h-screen border border-black">
-        <div className=" w-screen h-16 bg-sky-50 rounded-lg  px-[5rem] py-[1rem] border border-red-700 flex justify-center items-center">
-          <FilterBar />
+    <div className="Container">
+      <Container className=" flex ">
+    
+        {/* <div className=" w-[15rem]   rounded-lg ">
+          <div className="bg-sky-50 fixed  w-[13rem]  border border-black">
+            <FilterBar />
+          </div>
+        </div> */}
+        <div className="flex flex-col gap-y-4 py-4 ">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+        <div className=" w-[15rem] relative  rounded-lg pl-[0rem] pt-[4rem]">
+          <Map />
         </div>
       </Container>
     </div>
