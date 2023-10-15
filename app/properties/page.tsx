@@ -12,19 +12,19 @@ export default function page() {
           </div>
         </div> */}
         <div className="flex flex-col gap-y-4 py-4 ">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
+          <Card TailwindCSS="max-w-[30rem]"/>
         </div>
-        <div className=" w-[15rem] relative  rounded-lg pl-[0rem] pt-[4rem]">
+        <div className="w-full  rounded-lg h-[calc(100vh-5rem)]">
           <Map />
         </div>
       </Container>

@@ -27,9 +27,13 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
-export default function Card() {
+type CardPropsType={
+  TailwindCSS?: String,
+}
+
+export default function Card({TailwindCSS}: CardPropsType) {
   return (
-    <div className='w-full rounded-lg overflow-hidden group/card border '>
+    <div className={`${TailwindCSS} rounded-lg overflow-hidden group/card border`}>
     <span className='relative'>
     <Swiper
       spaceBetween={0}
