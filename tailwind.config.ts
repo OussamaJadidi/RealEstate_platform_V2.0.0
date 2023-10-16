@@ -28,6 +28,7 @@ const config: Config = {
       '2xl': '1537px',
       '516px': {'min': '516px'},
       'max-516px': {'max': '516px'},
+      'max-710px': {'max':'710px'},
       '850px': {'max': '850px'},
       'max-sm': {'max': '640px'},
       'max-md': {'max': '768px'},

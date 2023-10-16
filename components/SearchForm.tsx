@@ -5,17 +5,18 @@ import {
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRef, useState } from "react";
-import useHandlePopUp from "@/lib/useHandlePopUp";
+import useHandlePopUp from "@/hooks/useHandlePopUp";
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
 import '@fortawesome/fontawesome-svg-core/styles.css';
 // Prevent fontawesome from adding its CSS since we did it manually above:
 // import { config } from '@fortawesome/fontawesome-svg-core';
 // config.autoAddCss = false; /* eslint-disable import/first */
+import getCountries from "@/utils/getCountries";
 
-
-export default function SearchForm() {
-  const [extraOptions, setExtraOptions] = useState(false);
+export default function SearchForm({showAllOptions = false}) {
+  
+  const [extraOptions, setExtraOptions] = useState(showAllOptions);
 
   const propertyTypePopUptrigger = useRef<HTMLButtonElement | null>(null);
   const propertyTypePopUp = useRef<HTMLUListElement | null>(null);
@@ -52,7 +53,7 @@ export default function SearchForm() {
     propertyTypePopUptrigger,
     propertyTypePopUp
   );
-
+  const countries = getCountries()
   function handleExtraOptions() {
     setExtraOptions((state) => !state);
   }
@@ -64,18 +65,14 @@ export default function SearchForm() {
             <li>
               <input className="Input w-[8rem]" list="country" placeholder="Country" />
               <datalist className="marker:text-red-600" id="country">
-                <option value="morroco">morroco</option>
-                <option value="USA">USA</option>
-                <option value="Europe">Europe</option>
+                {countries.map(country=>{
+                  return(<option value={country.name}>{country.label}</option>)
+                })}
               </datalist>
             </li>
             <li>
-              <input className="Input w-[8rem]" list="city" placeholder="City" />
-              <datalist id="city">
-                <option value="oujda">oujda</option>
-                <option value="taourirt">taourirt</option>
-                <option value="tghit">tghit</option>
-              </datalist>
+              <input className="Input w-[8rem]" type="text" placeholder="City" autoComplete="address-level2" />
+            
             </li>
             
           <li>
@@ -690,7 +687,7 @@ export default function SearchForm() {
                   <div>
                     <input
                       type="text"
-                      placeholder="Key-Words: pisicne,centre ville"
+                      placeholder="hashtags: #pisicne#centre ville"
                     />
                   </div>
                 </div>
@@ -699,13 +696,13 @@ export default function SearchForm() {
           </div>
         </ul>
         <span className=" flex flex-wrap-reverse ml-auto w-fit justify-center  items-center gap-2 text-xs text-gray-400  ">
-          <button
+          {showAllOptions == false && <button
             type="button"
             className="text-left  underline outline-none" 
             onClick={handleExtraOptions}
           >
             Show {extraOptions ? "less" : "more"} options search <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem",transform: extraOptions ? "rotate(180deg)" : ""}} />
-          </button>
+          </button>}
           <button type="button" className=" bg-blue-800 text-white flex items-center p-2 rounded-md px-4 mt-2">
             <span className="w-4 text-white px-1">
                <FontAwesomeIcon

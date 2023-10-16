@@ -1,15 +1,15 @@
 "use client"
+import { useState } from "react";
 import "leaflet/dist/leaflet.css";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-import {LatLngExpression} from "leaflet"
+import { MapContainer, TileLayer } from "react-leaflet";
+import { LatLngExpression } from "leaflet";
 import * as L from 'leaflet';
 import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.webpack.css"; 
 import "leaflet-defaulticon-compatibility";
-import {Card} from "./"
-// Define the type for your markers
-interface MarkerData {
-  geocode: LatLngExpression;
-  popUp: string;
+import Markers from './Markers';
+
+type MapPropsType = {
+  address?: string,
 }
 
 let DefaultIcon = L.icon({
@@ -20,33 +20,14 @@ let DefaultIcon = L.icon({
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-export default function Map() {
-  const markers: MarkerData[] = [
-    {
-      geocode: [34.6949524,-1.9006104],
-      popUp: "Hello I am a pop Up"
-    },
-    {
-      geocode: [34.6557527,-1.9112698],
-      popUp: "Hello I am a pop Up"
-    },
-    {
-      geocode: [34.6981051,-1.8913764],
-      popUp: "Hello I am a pop Up"
-    },
-  ];
+export default function Map({ address }: MapPropsType) {
+  const [position, setPosition] = useState<LatLngExpression>([32, -5]);
 
   return (
     <>
-      <MapContainer center={[34.6845636,-1.9486776]} zoom={13} style={{width:"100%",height:"100%",position:"sticky", top:"0", left:"0"}}>
+      <MapContainer center={position} zoom={5} style={{width:"100%",height:"100%",position:"sticky", top:"0", left:"0"}}>
         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'/>
-        {
-          markers.map((marker) =>
-            <Marker position={marker.geocode} icon={DefaultIcon}  >
-              <Popup ><Card/></Popup>
-            </Marker>
-          )
-        }
+        <Markers address={address} setPosition={setPosition} />
       </MapContainer>
     </>
   );

@@ -15,7 +15,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useRef, useState } from "react";
-import useHandlePopUp from "@/lib/useHandlePopUp";
+import useHandlePopUp from "@/hooks/useHandlePopUp";
 import { Container } from "@/components";
 
 export default function Header() {
@@ -32,7 +32,7 @@ export default function Header() {
   );
 
   return (
-    <header className="Container bg-sky-50  ">
+    <header className="Container  ">
       <Container className="h-20 max-sm:h-22 font-medium |  flex justify-between items-center font-sans">
         <span className="text-4xl text-blue-800 font-sans ">EstateElite</span>
         <ul className="flex gap-4  max-sm:hidden font-rubik">

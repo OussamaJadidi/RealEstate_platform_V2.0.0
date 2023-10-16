@@ -31,10 +31,10 @@ type CardPropsType={
   TailwindCSS?: String,
 }
 
-export default function Card({TailwindCSS}: CardPropsType) {
+export default function Card({TailwindCSS ="undefined"}: CardPropsType) {
   return (
-    <div className={`${TailwindCSS} rounded-lg overflow-hidden group/card border`}>
-    <span className='relative'>
+    <div className={`${TailwindCSS} rounded-lg overflow-hidden group/card border `}>
+    <span className={`relative    ${TailwindCSS!=="undefined" ? "lg:w-[20rem] w-full" : ""}`} >
     <Swiper
       spaceBetween={0}
       slidesPerView={1}
@@ -44,22 +44,23 @@ export default function Card({TailwindCSS}: CardPropsType) {
     //   scrollbar={{ draggable: true }}
       onSlideChange={() => console.log('slide change')}
       onSwiper={(swiper) => console.log(swiper)}
+      style={{height:"15rem"}}
     >
       <SwiperControlle />
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className='h-[15rem] w-full' /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
     </Swiper>
     </span>
-        <section className='p-3 flex flex-col gap-4 text-gray-500 text-sm bg-white '>
+        <section className='p-3 flex flex-col justify-between gap-4 text-gray-500 text-sm bg-white '>
           <div>
             <p  >Appartement</p>
             <div className=' text-blue-800 text-[1.1rem] '><span>1900</span> $/<span>month</span> </div>

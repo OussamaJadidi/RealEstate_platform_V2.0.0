@@ -7,7 +7,7 @@ import Value from "./Value"
 import LatestPosts from "./LatestPosts"
 import Card from "./Card"
 import CTA from "./CTA"
-import FilterBar from "./FilterBar"
+import FilterForm from "./FilterForm"
 import FlexCard from "./FlexCard"
 import Map from "./Map"
 export {
@@ -20,7 +20,7 @@ export {
     LatestPosts,
     Card,
     CTA,
-    FilterBar,
+    FilterForm,
     FlexCard,
     Map
 }
