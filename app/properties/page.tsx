@@ -6,7 +6,7 @@ export default function page() {
       <Container>
         <div className="flex gap-x-[.5rem] items-center lg:hidden">
           <div className="flex gap-5 items-center">
-            <select className="border border-gray-500 rounded-md px-4 py-2  text-gray-500 outline-none">
+            <select className="border border-gray-500 bg-white rounded-md px-4 py-2  text-gray-500 outline-none">
               <option value="">Sorted by</option>
               <option value="ascending price">ascending price</option>
               <option value="descending price">descending price</option>

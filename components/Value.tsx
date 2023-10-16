@@ -7,10 +7,10 @@ export default function Value() {
       <div className="w-fit ">
         <h2 className="font-rubik text-3xl pb-8">Easy & Simple way to Find your Next Home</h2>
         <ul className=" h-[13rem] flex flex-col justify-between">
-          <li ><span className=" bg-blue-800 inline-flex justify-center items-center rounded-full w-[3rem] h-[2rem]  text-white mr-[1.5rem]">01</span>Search your desire location</li>
-          <li ><span className=" bg-blue-800 inline-flex justify-center items-center rounded-full w-[3rem] h-[2rem]  text-white mr-[1.5rem]">02</span>Book visits, Contact owners</li>
-          <li ><span className=" bg-blue-800 inline-flex justify-center items-center rounded-full w-[3rem] h-[2rem]  text-white mr-[1.5rem]">03</span>Pick what fit you</li>
-          <li ><span className=" bg-blue-800 inline-flex justify-center items-center rounded-full w-[3rem] h-[2rem]  text-white mr-[1.5rem]">04</span>Enjoy your House</li>
+          <li className="text-gray-500" ><span className=" bg-blue-800 inline-flex justify-center items-center rounded-full w-[3rem] h-[2rem]  text-white mr-[1.2rem]">01</span>Search your desire location</li>
+          <li className="text-gray-500" ><span className=" bg-blue-800 inline-flex justify-center items-center rounded-full w-[3rem] h-[2rem]  text-white mr-[1.2rem]">02</span>Book visits, Contact owners</li>
+          <li className="text-gray-500" ><span className=" bg-blue-800 inline-flex justify-center items-center rounded-full w-[3rem] h-[2rem]  text-white mr-[1.2rem]">03</span>Pick what fit you</li>
+          <li className="text-gray-500" ><span className=" bg-blue-800 inline-flex justify-center items-center rounded-full w-[3rem] h-[2rem]  text-white mr-[1.2rem]">04</span>Enjoy your House</li>
         </ul>
       </div>
     </Container>
