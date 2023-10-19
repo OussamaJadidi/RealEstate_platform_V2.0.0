@@ -17,42 +17,63 @@ import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useRef, useState } from "react";
 import useHandlePopUp from "@/hooks/useHandlePopUp";
 import { Container } from "@/components";
-
+import SignIn from "./SignIn";
+import { signOut, useSession } from "next-auth/react";
 export default function Header() {
   // const [open, setOpen] = useState(false)
-  const popupRef = useRef<HTMLDivElement | null>(null);
-  const popupTriggerRef = useRef<HTMLSpanElement | null>(null);
-  const [open, togglePopup] = useHandlePopUp(popupTriggerRef, popupRef);
-
-  const hambergerNavbar = useRef<HTMLDivElement | null>(null);
-  const mobileNavBar = useRef<HTMLDivElement | null>(null);
-  const [openMenu, toggleMenuPopup] = useHandlePopUp(
-    hambergerNavbar,
-    mobileNavBar
+  const menuPopupRef = useRef<HTMLDivElement | null>(null);
+  const menuPopupTriggerRef = useRef<HTMLSpanElement | null>(null);
+  const [menuPopupIsOpen, handleMenuPopup] = useHandlePopUp(
+    menuPopupTriggerRef,
+    menuPopupRef
   );
 
+  const signInPopupRef = useRef<HTMLDivElement | null>(null);
+  const signInPopupTriggerRef = useRef<HTMLLIElement | null>(null);
+  const [SignInPopupIsOpen, handleSignInPopup] = useHandlePopUp(
+    signInPopupTriggerRef,
+    signInPopupRef
+  );
+
+  const { data: session, status } = useSession();
+
+  // if user already have account accountState=true
+  const [accountState, setAccountState] = useState(false);
+  function handleAccountState() {
+    setAccountState((state) => !state);
+  }
+  // background of header will be sky-50 just if we are in the home page
+  if (window.location.pathname == "/") {
+    var inTheHomePage = true;
+  } else {
+    var inTheHomePage = false;
+  }
   return (
-    <header className="Container  ">
+    <header className={`Container ${inTheHomePage == true ? "bg-sky-50" : ""}`}>
       <Container className="h-20 max-sm:h-22 font-medium |  flex justify-between items-center font-sans">
+        {/* Logo  */}
         <span className="text-4xl text-blue-800 font-sans ">EstateElite</span>
-        <ul className="flex gap-4  max-sm:hidden font-rubik">
-          <li className="cursor-pointer hover:text-blue-800 transition-all">
+        <ul className="flex gap-4  font-rubik">
+          {/* Start links for desktop screen */}
+          <li className="max-sm:hidden cursor-pointer hover:text-blue-800 transition-all ">
             Buy
           </li>
-          <li className="cursor-pointer hover:text-blue-800 transition-all">
+          <li className="max-sm:hidden cursor-pointer hover:text-blue-800 transition-all">
             Rent
           </li>
-          <li className="cursor-pointer hover:text-blue-800 transition-all">
+          <li className="max-sm:hidden cursor-pointer hover:text-blue-800 transition-all">
             Add Property
           </li>
+          {/* End links for desktop screen */}
+          {/* Start PopUp menu  */}
           <li>
-            <div className="">
-              <span className="text-xl flex gap-2 relative">
-                <span
-                  onClick={togglePopup}
-                  ref={popupTriggerRef}
-                  className=" cursor-pointer"
-                >
+            <div className="text-xl flex gap-2 relative ">
+              <span
+                onClick={handleMenuPopup}
+                ref={menuPopupTriggerRef}
+                className=" cursor-pointer"
+              >
+                <span className="hidden sm:block">
                   <FontAwesomeIcon
                     icon={faCircleUser}
                     style={{ width: "1.5rem" }}
@@ -62,129 +83,128 @@ export default function Header() {
                     style={{ width: ".75rem" }}
                   />
                 </span>
-                {open && (
-                  <div
-                    ref={popupRef}
-                    className="z-20 absolute top-[2rem] right-0 left-[-9rem] | w-40 h-60"
-                  >
-                    <ul className="w-[12rem] bg-white rounded-xl font-sans font-sm cursor-pointer border border-gray-400 overflow-hidden py-2">
-                      <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                        <FontAwesomeIcon
-                          style={{ paddingInline: ".7rem" }}
-                          icon={faCalendarDays}
-                        />
-                        Bookings
-                      </li>
-                      <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                        <FontAwesomeIcon
-                          style={{ paddingInline: ".7rem" }}
-                          icon={faHeart}
-                        />
-                        Favorites
-                      </li>
-                      <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                        <FontAwesomeIcon
-                          style={{ paddingInline: ".7rem" }}
-                          icon={faUserPlus}
-                        />
-                        Sign up
-                      </li>
-                      <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                        <FontAwesomeIcon
-                          style={{ paddingInline: ".7rem" }}
-                          icon={faRightFromBracket}
-                        />
-                        Sign out
-                      </li>
-                      <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                        <FontAwesomeIcon
-                          style={{ paddingInline: ".7rem" }}
-                          icon={faUser}
-                        />
-                        Sign in
-                      </li>
-                    </ul>
-                  </div>
-                )}
+                <span className="sm:hidden block ">
+                  <FontAwesomeIcon
+                    style={{ fontSize: "1.5rem" }}
+                    icon={faBars}
+                  />
+                </span>
               </span>
+              {menuPopupIsOpen && (
+                <div
+                  ref={menuPopupRef}
+                  className="z-20 absolute top-[2rem] right-0 left-[-9.5rem] | w-40 h-60"
+                >
+                  <ul className="w-[12rem] bg-white rounded-xl font-sans font-sm cursor-pointer border border-gray-400 overflow-hidden py-2">
+                    <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 block sm:hidden ">
+                      <FontAwesomeIcon
+                        style={{ paddingInline: ".7rem" }}
+                        icon={faHouseChimneyWindow}
+                      />
+                      Buy
+                    </li>
+                    <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300  sm:hidden">
+                      <FontAwesomeIcon
+                        style={{ paddingInline: ".7rem" }}
+                        icon={faHouseSignal}
+                      />
+                      Rent
+                    </li>
+                    <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300  sm:hidden ">
+                      <FontAwesomeIcon
+                        style={{ paddingInline: ".7rem" }}
+                        icon={faCircleDown}
+                      />
+                      Add Property
+                    </li>
+                    <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
+                      <FontAwesomeIcon
+                        style={{ paddingInline: ".7rem" }}
+                        icon={faCalendarDays}
+                      />
+                      Bookings
+                    </li>
+                    <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
+                      <FontAwesomeIcon
+                        style={{ paddingInline: ".7rem" }}
+                        icon={faHeart}
+                      />
+                      Favorites
+                    </li>
+                    {status !== "authenticated" && (
+                      <>
+                        <li
+                          ref={signInPopupTriggerRef}
+                          className="text-[1rem] hover:bg-slate-300 "
+                        >
+                          <button
+                            className="w-full h-full py-2 px-4 text-left"
+                            onClick={() => {
+                              setAccountState(false);
+                              handleMenuPopup();
+                              handleSignInPopup();
+                            }}
+                          >
+                            <FontAwesomeIcon
+                              style={{ paddingInline: ".7rem" }}
+                              icon={faUserPlus}
+                            />
+                            Sign up
+                          </button>
+                        </li>
+                        <li
+                          ref={signInPopupTriggerRef}
+                          className="text-[1rem] hover:bg-slate-300 "
+                        >
+                          <button
+                            onClick={() => {
+                              setAccountState(true);
+                              handleMenuPopup();
+                              handleSignInPopup();
+                            }}
+                            className="w-full h-full py-2 px-4 text-left "
+                          >
+                            <FontAwesomeIcon
+                              style={{ paddingInline: ".7rem" }}
+                              icon={faUser}
+                            />
+                            Sign in
+                          </button>
+                        </li>
+                      </>
+                    )}
+
+                    {status == "authenticated" && (
+                      <li className="  text-[1rem] hover:bg-slate-300 ">
+                        <button
+                          className="w-full h-full py-2 px-4 text-left" 
+                          onClick={() => signOut()}
+                        >
+                          <FontAwesomeIcon
+                            style={{ paddingInline: ".7rem" }}
+                            icon={faRightFromBracket}
+                          />
+                          Sign out
+                        </button>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              )}
             </div>
           </li>
+          {/* End PopUp menu  */}
         </ul>
-        <div className="sm:hidden relative z-30">
-          <span
-            ref={hambergerNavbar}
-            onClick={toggleMenuPopup}
-            className=" cursor-pointer"
-          >
-            <FontAwesomeIcon style={{ fontSize: "1.5rem" }} icon={faBars} />
-          </span>
-          {openMenu && (
-            <div
-              className="absolute top-[2rem] right-0 cursor-pointer "
-              ref={mobileNavBar}
-            >
-              <ul className="w-[12rem] bg-white rounded-xl  font-roboto font-sm cursor-pointer border border-gray-400 overflow-hidden py-2 shadow-2xl">
-                <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                  <FontAwesomeIcon
-                    style={{ paddingInline: ".7rem" }}
-                    icon={faHouseChimneyWindow}
-                  />
-                  Buy
-                </li>
-                <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                  <FontAwesomeIcon
-                    style={{ paddingInline: ".7rem" }}
-                    icon={faHouseSignal}
-                  />
-                  Rent
-                </li>
-                <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                  <FontAwesomeIcon
-                    style={{ paddingInline: ".7rem" }}
-                    icon={faCircleDown}
-                  />
-                  Add Property
-                </li>
-                <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                  <FontAwesomeIcon
-                    style={{ paddingInline: ".7rem" }}
-                    icon={faCalendarDays}
-                  />
-                  Bookings
-                </li>
-                <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                  <FontAwesomeIcon
-                    style={{ paddingInline: ".7rem" }}
-                    icon={faHeart}
-                  />
-                  Favorites
-                </li>
-                <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                  <FontAwesomeIcon
-                    style={{ paddingInline: ".7rem" }}
-                    icon={faUserPlus}
-                  />
-                  Sign up
-                </li>
-                <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                  <FontAwesomeIcon
-                    style={{ paddingInline: ".7rem" }}
-                    icon={faRightFromBracket}
-                  />
-                  Sign out
-                </li>
-                <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
-                  <FontAwesomeIcon
-                    style={{ paddingInline: ".7rem" }}
-                    icon={faUser}
-                  />
-                  Sign in
-                </li>
-              </ul>
-            </div>
-          )}
-        </div>
       </Container>
+      {SignInPopupIsOpen && (
+        <div ref={signInPopupRef}>
+          <SignIn
+            togglePopUp={handleSignInPopup}
+            alreadyHaveAccount={accountState}
+            toggleAccountState={handleAccountState}
+          />
+        </div>
+      )}
     </header>
   );
 }

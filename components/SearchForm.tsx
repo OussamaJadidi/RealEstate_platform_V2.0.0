@@ -696,6 +696,13 @@ export default function SearchForm({showAllOptions = false}) {
           </div>
         </ul>
         <span className=" flex flex-wrap-reverse ml-auto w-fit justify-center  items-center gap-2 text-xs text-gray-400  ">
+        {showAllOptions == false && <button
+            type="button"
+            className="text-left  underline outline-none" 
+            onClick={handleExtraOptions}
+          >
+            Rent
+          </button>}
           {showAllOptions == false && <button
             type="button"
             className="text-left  underline outline-none" 

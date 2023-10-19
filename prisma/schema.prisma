@@ -13,12 +13,12 @@ datasource db {
 model User {
   id       String  @id @default(uuid())
   name     String?
-  email    String
+  email    String @unique
   password String
   image    String?
   phone    String?
 
-  ownedPropertiesToBuy PropertyToBuy[] @relation("ownedPropertiesToBuy")
+  ownedPropertiesToSell PropertyToSell[] @relation("ownedPropertiesToSell")
   ownedPropertiesToRent PropertyToRent[] @relation("ownedPropertiesToRent")
 
   bookedVisits          Json?
@@ -26,7 +26,7 @@ model User {
 }
 
 
-model PropertyToBuy {
+model PropertyToSell {
   id          String   @id @default(uuid())
   title       String
   description String
@@ -49,7 +49,7 @@ model PropertyToBuy {
   globalLikesNumber Int?   @default(0)
   ViewByNumber      Int?   @default(0)
   clickedBy         Int?   @default(0)
-  User              User   @relation("ownedPropertiesToBuy", fields: [ownerId], references: [id])
+  User              User   @relation("ownedPropertiesToSell", fields: [ownerId], references: [id])
   ownerId           String
 
   ownerEmail String?

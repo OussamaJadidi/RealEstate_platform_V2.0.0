@@ -22,5 +22,6 @@ export {
     CTA,
     FilterForm,
     FlexCard,
-    Map
+    Map,
+    
 }

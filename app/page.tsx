@@ -1,5 +1,6 @@
 import {  Hero , LatestPosts, Value, CTA} from "@/components";
-export default function Home() {
+import { hash } from "bcryptjs";
+export default async function Home() {
   return (
     <main className=" max-lg:!px-0  font-medium ">
       <Hero />
