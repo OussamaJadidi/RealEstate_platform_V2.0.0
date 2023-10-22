@@ -7,6 +7,7 @@ import {FormEvent, useState} from "react"
 import {toast} from "react-hot-toast"
 import axios from "axios"
 import { hash } from 'bcryptjs'
+import { redirect } from 'next/dist/server/api-utils'
 type SignInPropsType ={
     togglePopUp: () => void,
     alreadyHaveAccount: Boolean,
@@ -66,7 +67,7 @@ export default function SignIn({togglePopUp,alreadyHaveAccount,toggleAccountStat
         }
     }
     function handleGoogleAuth(){
-        signIn('google')
+        signIn('google',{redirect:false})
     }
   return (
     <div 

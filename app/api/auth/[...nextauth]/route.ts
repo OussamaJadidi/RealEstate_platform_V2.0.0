@@ -1,23 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-import NextAuth ,{type NextAuthOptions} from "next-auth";
+import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import GoogleProvider from "next-auth/providers/google"
-import {compare} from "bcryptjs"
+import GoogleProvider from "next-auth/providers/google";
+import { compare } from "bcryptjs";
 import { JWT } from "next-auth/jwt";
-import toast from "react-hot-toast";
+import { User as NextAuthUser } from "next-auth";
 
-interface ExtendedJWT extends JWT {
-  id?: number;
-  bookedVisits?: any; // Replace 'any' with the actual type
-  FavoritesPropertiesId?: any; // Replace 'any' with the actual type
-}
-interface User {
-  name: string;
-  email: string;
-  // other properties...
-}
-
-export const authOptions: NextAuthOptions ={
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
@@ -26,7 +15,7 @@ export const authOptions: NextAuthOptions ={
     GoogleProvider({
       clientId: process.env.GOOGLE_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
-  }),
+    }),
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
       name: "Credentials",
@@ -38,22 +27,25 @@ export const authOptions: NextAuthOptions ={
         Email: { label: "email", type: "text", placeholder: "Email" },
         Password: { label: "password", type: "password" },
       },
-      async authorize(credentials)  {
+      async authorize(credentials) {
         if (!credentials?.Email || !credentials?.Password) {
-          throw new Error("A filed is missed")
+          throw new Error("A filed is missed");
         }
 
         const prisma = new PrismaClient();
         const user = await prisma.user.findUnique({
           where: {
-              email: credentials.Email,
+            email: credentials.Email,
           },
         });
-        
-        if (!user) throw new Error("User not found")
-        const isPasswordCorrect = await compare(credentials.Password,user.password)
-        if(!isPasswordCorrect){
-          throw new Error("Wrong infromations")
+
+        if (!user) throw new Error("User not found");
+        const isPasswordCorrect = await compare(
+          credentials.Password,
+          user.password
+        );
+        if (!isPasswordCorrect) {
+          throw new Error("Wrong infromations");
         }
         const disconnect = await prisma.$disconnect();
         return {
@@ -67,39 +59,36 @@ export const authOptions: NextAuthOptions ={
     }),
   ],
   callbacks: {
-   
-    async jwt({ token, user,profile,account}) {
-      const profile = profile as unknown as null
-      if (user) {
-        if(account?.provider=="google"){
-          const u = user as unknown as any
+    async signIn({profile}){
+      try{
+        const p = profile as unknown as any;
           const prisma = new PrismaClient();
-          let dbUser = await prisma.user.findUnique({
+          //check if a user already exist
+          const userAlreadyExist = await prisma.user.findUnique({
             where: {
               email: p.email ,
             },
           });
-  
-          if (!dbUser) {
-            try {
-              const response = await fetch("/api/signUp", {
-                  method: "POST",
-                  body: JSON.stringify({email: p.email,password: "",name : p.name}),
-              });
-             
-              if (response.ok) {
-                toast.success("User registered successfully");
-              } else {
-                  // Handle the error response from the API
-                const errorResponse = await response.json();
-                toast.error(errorResponse.error);
+          //if not create a new ueser and save it into the database
+          if(!userAlreadyExist){
+             const creatUser =  await prisma.user.create({
+              data:{
+                email: p.email,
+                name: p.name,
+                password: "any"
               }
-            } catch (error) {
-              // Handle any other unexpected errors
-              toast.error("An error occurred while registering, Try again");
-            }
+              });
           }
-        }
+
+          return true
+      } catch (error) {
+          console.log("Error in google providers");
+          return false
+      }
+  },
+    async jwt({ token, user }) {
+      if (user) {
+        const u = user as unknown as any;
         return {
           ...token,
           id: u.id,
@@ -119,15 +108,9 @@ export const authOptions: NextAuthOptions ={
           FavoritesPropertiesId: token.FavoritesPropertiesId,
         },
       };
-    },    
+    },
   },
-  // async signIn(){
-  //     return "/Homme"
-  // },
-  // pages: {
-  //   signIn: '/login',
-  //   signOut:  '/login'
-  // }
 };
-const handler =NextAuth(authOptions);
-export { handler as GET, handler as POST}
+
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

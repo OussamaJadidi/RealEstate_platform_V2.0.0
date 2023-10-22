@@ -11,6 +11,7 @@ export const POST = async (req: Request) => {
       password,
       name
     } = body;
+    console.log("kayn : ",{email,password,name})
     if (!email || !password) {
       throw new Error("Missing fields");
     }

@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 export default function Footer() {
   return (
-    <footer className=" bg-gray-950 text-white ">
+    <footer className=" bg-gray-800 text-white ">
       <Container className="flex flex-wrap max-sm:flex-col justify-center gap-x-20 items-start px-8 pb-8">
 
         <div className="max-w-[25rem] ">
@@ -16,7 +16,7 @@ export default function Footer() {
             EstateElite
           </span>
           <p className="">
-            Looking to buy, sell, or rent property? Your search ends here.
+            Looking to buy, sell, or rent property?<br />Your search ends here.<br />
             Explore our groundbreaking real estate platform that seamlessly
             connects buyers and sellers, revolutionizing the property market
             experience.

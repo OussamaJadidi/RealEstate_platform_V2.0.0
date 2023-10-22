@@ -19,6 +19,7 @@ import useHandlePopUp from "@/hooks/useHandlePopUp";
 import { Container } from "@/components";
 import SignIn from "./SignIn";
 import { signOut, useSession } from "next-auth/react";
+import Link from "next/link";
 export default function Header() {
   // const [open, setOpen] = useState(false)
   const menuPopupRef = useRef<HTMLDivElement | null>(null);
@@ -34,20 +35,21 @@ export default function Header() {
     signInPopupTriggerRef,
     signInPopupRef
   );
-
   const { data: session, status } = useSession();
-
   // if user already have account accountState=true
   const [accountState, setAccountState] = useState(false);
   function handleAccountState() {
     setAccountState((state) => !state);
   }
   // background of header will be sky-50 just if we are in the home page
-  if (window.location.pathname == "/") {
-    var inTheHomePage = true;
-  } else {
-    var inTheHomePage = false;
-  }
+  const [inTheHomePage, setInTheHomePage] = useState(false)
+  useEffect(()=>{
+    if (window.location.pathname == "/") {
+       setInTheHomePage(true)
+    } else {
+       setInTheHomePage(false)
+    }
+  })
   return (
     <header className={`Container ${inTheHomePage == true ? "bg-sky-50" : ""}`}>
       <Container className="h-20 max-sm:h-22 font-medium |  flex justify-between items-center font-sans">
@@ -62,7 +64,7 @@ export default function Header() {
             Rent
           </li>
           <li className="max-sm:hidden cursor-pointer hover:text-blue-800 transition-all">
-            Add Property
+            <Link href="/addProperty">Add Property</Link>
           </li>
           {/* End links for desktop screen */}
           {/* Start PopUp menu  */}
@@ -110,12 +112,17 @@ export default function Header() {
                       />
                       Rent
                     </li>
-                    <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300  sm:hidden ">
-                      <FontAwesomeIcon
-                        style={{ paddingInline: ".7rem" }}
-                        icon={faCircleDown}
-                      />
-                      Add Property
+                    <li className=" text-[1rem] hover:bg-slate-300 sm:hidden ">
+                      <Link
+                        className="w-full h-full block py-2 px-4 text-left"
+                        href="/addProperty"
+                      >
+                        <FontAwesomeIcon
+                          style={{ paddingInline: ".7rem" }}
+                          icon={faCircleDown}
+                        />
+                        Add Property
+                      </Link>
                     </li>
                     <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                       <FontAwesomeIcon
@@ -177,7 +184,7 @@ export default function Header() {
                     {status == "authenticated" && (
                       <li className="  text-[1rem] hover:bg-slate-300 ">
                         <button
-                          className="w-full h-full py-2 px-4 text-left" 
+                          className="w-full h-full py-2 px-4 text-left"
                           onClick={() => signOut()}
                         >
                           <FontAwesomeIcon
