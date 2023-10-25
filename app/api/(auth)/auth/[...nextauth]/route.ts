@@ -59,36 +59,54 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({profile}){
-      try{
-        const p = profile as unknown as any;
+    async signIn({profile,account}){
+      if(account?.provider =="google"){
+        try{
+          const p = profile as unknown as any;
+            const prisma = new PrismaClient();
+            //check if a user already exist
+            const userAlreadyExist = await prisma.user.findUnique({
+              where: {
+                email: p.email ,
+              },
+            });
+            //if not create a new ueser and save it into the database
+            if(!userAlreadyExist){
+               const creatUser =  await prisma.user.create({
+                data:{
+                  email: p.email,
+                  name: p.name,
+                  password: "any"
+                }
+                });
+            }
+            return true
+          } catch (error) {
+            console.log("Error in google providers");
+            return false
+          }
+        }else{
+          return true
+        }
+      },
+      async jwt({ token, user,account }) {
+      if (user) {
+        let isNewUser=true
+        let u = user as unknown as any;
+        if(account?.provider === "google"){
+  
           const prisma = new PrismaClient();
           //check if a user already exist
           const userAlreadyExist = await prisma.user.findUnique({
             where: {
-              email: p.email ,
+              email: u.email ,
             },
           });
-          //if not create a new ueser and save it into the database
-          if(!userAlreadyExist){
-             const creatUser =  await prisma.user.create({
-              data:{
-                email: p.email,
-                name: p.name,
-                password: "any"
-              }
-              });
+          if(userAlreadyExist){
+            u = userAlreadyExist;
           }
+        }
 
-          return true
-      } catch (error) {
-          console.log("Error in google providers");
-          return false
-      }
-  },
-    async jwt({ token, user }) {
-      if (user) {
-        const u = user as unknown as any;
         return {
           ...token,
           id: u.id,
@@ -98,7 +116,8 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    async session({ session, token }) {
+    async session({ session, token}) {
+      console.log("tokens a sat : ",token)
       return {
         ...session,
         user: {

@@ -10,6 +10,7 @@ import CTA from "./CTA"
 import FilterForm from "./FilterForm"
 import FlexCard from "./FlexCard"
 import Map from "./Map"
+import FilterFormTest from "./FilterFormTest"
 export {
     Header,
     Footer,
@@ -23,5 +24,5 @@ export {
     FilterForm,
     FlexCard,
     Map,
-    
+    FilterFormTest,
 }

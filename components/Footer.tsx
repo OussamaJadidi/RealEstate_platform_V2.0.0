@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 export default function Footer() {
   return (
-    <footer className=" bg-gray-800 text-white ">
+    <footer className=" bg-slate-900 text-white ">
       <Container className="flex flex-wrap max-sm:flex-col justify-center gap-x-20 items-start px-8 pb-8">
 
         <div className="max-w-[25rem] ">
@@ -49,7 +49,10 @@ export default function Footer() {
           </form>
         </div>
       </Container>
-        <div className=" bg-gray-900 text-white text-center">Copyright © 2023 All Rights Reserved, by <span className=" whitespace-nowrap"> Oussama Jadidi</span></div>
+        {/* <div className=" bg-gray-900 text-white text-center">Copyright © 2023 All Rights Reserved, by <span className=" whitespace-nowrap"> Oussama Jadidi</span></div> */}
+        {/* <div className=" "><div className="w-full border-t border-gray-50"></div></div> */}
+
+        <div className=" bg-gray-950 text-white text-center ">© 2023<span className=" whitespace-nowrap"> JADIDI Oussama</span> All Rights Reserved</div>
     </footer>
   );
 }

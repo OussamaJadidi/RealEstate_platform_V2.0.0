@@ -3,7 +3,9 @@ import {Container} from "./"
 export default function Value() {
   return (
     <Container className="Container flex max-lg:flex-col items-center justify-center gap-x-16 gap-y-8 py-[4rem] ">
-      <Image src="/assets/c.jpg" width="500" height="500" className=" rounded-xl w-[25rem] max-lg:w-screen sm:max-lg:h-[20rem] " alt="marketing img"/>
+      <div className=" shadow-xl ">
+        <Image src="/assets/c.jpg" width="500" height="500" className="  rounded-xl w-[25rem] max-lg:w-screen sm:max-lg:h-[20rem] " alt="marketing img"/>
+      </div>
       <div className="w-fit ">
         <h2 className="font-rubik text-3xl pb-8">Easy & Simple way to Find your Next Home</h2>
         <ul className=" h-[13rem] flex flex-col justify-between">

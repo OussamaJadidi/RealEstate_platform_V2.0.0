@@ -115,7 +115,7 @@ export default function SignIn({togglePopUp,alreadyHaveAccount,toggleAccountStat
                     onChange={(e)=>{setCredentials({ ...credentials , password: e.target.value})}}
                 />
                 <button 
-                    className='bg-blue-800 text-white w-full py-1 rounded-md font-semibold hover:bg-blue-900 border border-red-800'
+                    className='bg-blue-800 text-white w-full py-1 rounded-md font-semibold hover:bg-blue-900'
                     onClick={handleSubmit}
                 >
                     {alreadyHaveAccount===false ? "Sign Up" : "Sign In"}

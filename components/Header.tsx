@@ -36,6 +36,7 @@ export default function Header() {
     signInPopupRef
   );
   const { data: session, status } = useSession();
+  
   // if user already have account accountState=true
   const [accountState, setAccountState] = useState(false);
   function handleAccountState() {
@@ -50,11 +51,12 @@ export default function Header() {
        setInTheHomePage(false)
     }
   })
+
   return (
     <header className={`Container ${inTheHomePage == true ? "bg-sky-50" : ""}`}>
       <Container className="h-20 max-sm:h-22 font-medium |  flex justify-between items-center font-sans">
         {/* Logo  */}
-        <span className="text-4xl text-blue-800 font-sans ">EstateElite</span>
+        <span className="text-4xl text-blue-800 font-sans "><Link href="/">EstateElite</Link></span>
         <ul className="flex gap-4  font-rubik">
           {/* Start links for desktop screen */}
           <li className="max-sm:hidden cursor-pointer hover:text-blue-800 transition-all ">

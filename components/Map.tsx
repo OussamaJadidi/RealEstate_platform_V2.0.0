@@ -25,7 +25,7 @@ export default function Map({ address }: MapPropsType) {
 
   return (
     <>
-      <MapContainer center={position} zoom={5} style={{width:"100%",height:"100%",position:"sticky", top:"0", left:"0"}}>
+      <MapContainer center={position} zoom={5} style={{width:"100%",height:"100%",position:"sticky", top:"0", left:"0",borderRadius: ".5rem",}}>
         <TileLayer url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'/>
         <Markers address={address} setPosition={setPosition} />
       </MapContainer>

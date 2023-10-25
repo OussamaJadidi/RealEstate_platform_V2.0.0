@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
 import { hash } from "bcryptjs";
-import { NextApiRequest,NextApiResponse } from "next";
 
 
 export const POST = async (req: Request) => {

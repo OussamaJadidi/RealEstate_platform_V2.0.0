@@ -30,28 +30,24 @@ export default function Hero() {
           <Image
             className="w-[75rem] lg:w-[40rem] xl:w-[35rem] / max-sm:h-[15rem] sm:max-lg:h-[15rem] / xl:p-1 lg:rounded-2xl "
             src="/assets/pexels-jean-van-der-meulen-1457842.jpg"
-            // src="/assets/sean-pollock-PhYq704ffdA-unsplash.jpg"
-            // src="/assets/jason-dent-w3eFhqXjkZE-unsplash.jpg"
-            // src="/assets/andrea-davis-VOWXF7lsAN0-unsplash.jpg"
-
             alt="House picture"
-            width="2500"
-            height="2500"
+            width="500"
+            height="313"
           />
           <span className="max-xl:hidden ">
             <Image
               className="h-[50%] w-[21rem] p-1 rounded-2xl"
               src="/assets/sean-pollock-PhYq704ffdA-unsplash.jpg"
               alt="House picture"
-              width="1000"
-              height="1000"
+              width="500"
+              height="313"
             />
             <Image
               className="h-[50%] w-[21rem] p-1 rounded-2xl"
               src="/assets/jason-dent-w3eFhqXjkZE-unsplash.jpg"
               alt="House picture"
-              width="1000"
-              height="1000"
+              width="500"
+              height="313"
             />
           </span>
         </div>
