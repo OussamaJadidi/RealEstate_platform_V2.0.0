@@ -12,6 +12,9 @@ import {
   faCircleDown,
   faHouseChimneyWindow,
   faHouseSignal,
+  faBell,
+  faGear,
+  faBullhorn,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
 import { useEffect, useRef, useState } from "react";
@@ -20,8 +23,8 @@ import { Container } from "@/components";
 import SignIn from "./SignIn";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 export default function Header() {
-  // const [open, setOpen] = useState(false)
   const menuPopupRef = useRef<HTMLDivElement | null>(null);
   const menuPopupTriggerRef = useRef<HTMLSpanElement | null>(null);
   const [menuPopupIsOpen, handleMenuPopup] = useHandlePopUp(
@@ -36,27 +39,20 @@ export default function Header() {
     signInPopupRef
   );
   const { data: session, status } = useSession();
-  
+
   // if user already have account accountState=true
   const [accountState, setAccountState] = useState(false);
   function handleAccountState() {
     setAccountState((state) => !state);
   }
-  // background of header will be sky-50 just if we are in the home page
-  const [inTheHomePage, setInTheHomePage] = useState(false)
-  useEffect(()=>{
-    if (window.location.pathname == "/") {
-       setInTheHomePage(true)
-    } else {
-       setInTheHomePage(false)
-    }
-  })
 
   return (
-    <header className={`Container ${inTheHomePage == true ? "bg-sky-50" : ""}`}>
+    <header className="Container bg-transparent">
       <Container className="h-20 max-sm:h-22 font-medium |  flex justify-between items-center font-sans">
         {/* Logo  */}
-        <span className="text-4xl text-blue-800 font-sans "><Link href="/">EstateElite</Link></span>
+        <span className="text-4xl text-blue-800 font-sans ">
+          <Link href="/">EstateElite</Link>
+        </span>
         <ul className="flex gap-4  font-rubik">
           {/* Start links for desktop screen */}
           <li className="max-sm:hidden cursor-pointer hover:text-blue-800 transition-all ">
@@ -77,22 +73,34 @@ export default function Header() {
                 ref={menuPopupTriggerRef}
                 className=" cursor-pointer"
               >
-                <span className="hidden sm:block">
-                  <FontAwesomeIcon
-                    icon={faCircleUser}
-                    style={{ width: "1.5rem" }}
+                {status === "authenticated" && session?.user?.image ? (
+                  <Image
+                    width="100"
+                    height="100"
+                    src={session?.user.image}
+                    alt="profile image"
+                    className=" rounded-full h-[30px] w-[30px]"
                   />
-                  <FontAwesomeIcon
-                    icon={faChevronDown}
-                    style={{ width: ".75rem" }}
-                  />
-                </span>
-                <span className="sm:hidden block ">
-                  <FontAwesomeIcon
-                    style={{ fontSize: "1.5rem" }}
-                    icon={faBars}
-                  />
-                </span>
+                ) : (
+                  <>
+                    <span className="hidden sm:block">
+                      <FontAwesomeIcon
+                        icon={faCircleUser}
+                        style={{ width: "1.5rem" }}
+                      />
+                      <FontAwesomeIcon
+                        icon={faChevronDown}
+                        style={{ width: ".75rem" }}
+                      />
+                    </span>
+                    <span className="sm:hidden block ">
+                      <FontAwesomeIcon
+                        style={{ fontSize: "1.5rem" }}
+                        icon={faBars}
+                      />
+                    </span>
+                  </>
+                )}
               </span>
               {menuPopupIsOpen && (
                 <div
@@ -133,6 +141,20 @@ export default function Header() {
                       />
                       Bookings
                     </li>
+                    {status == "authenticated" && (
+                      <li className="  text-[1rem] hover:bg-slate-300 ">
+                        <button
+                          className="w-full h-full py-2 px-4 text-left"
+                          onClick={() => signOut()}
+                        >
+                          <FontAwesomeIcon
+                            style={{ paddingInline: ".7rem" }}
+                            icon={faBell}
+                          />
+                          Notifications
+                        </button>
+                      </li>
+                    )}
                     <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                       <FontAwesomeIcon
                         style={{ paddingInline: ".7rem" }}
@@ -184,18 +206,44 @@ export default function Header() {
                     )}
 
                     {status == "authenticated" && (
-                      <li className="  text-[1rem] hover:bg-slate-300 ">
-                        <button
-                          className="w-full h-full py-2 px-4 text-left"
-                          onClick={() => signOut()}
-                        >
-                          <FontAwesomeIcon
-                            style={{ paddingInline: ".7rem" }}
-                            icon={faRightFromBracket}
-                          />
-                          Sign out
-                        </button>
-                      </li>
+                      <>
+                       <li className="  text-[1rem] hover:bg-slate-300 ">
+                          <button
+                            className="w-full h-full py-2 px-4 text-left"
+                            onClick={() => signOut()}
+                          >
+                            <FontAwesomeIcon
+                              style={{ paddingInline: ".7rem" }}
+                              icon={faBullhorn}
+                            />
+                            My Announces
+                          </button>
+                        </li>
+                        <li className="  text-[1rem] hover:bg-slate-300 ">
+                          <button
+                            className="w-full h-full py-2 px-4 text-left"
+                            onClick={() => signOut()}
+                          >
+                            <FontAwesomeIcon
+                              style={{ paddingInline: ".7rem" }}
+                              icon={faGear}
+                            />
+                            Profile
+                          </button>
+                        </li>
+                        <li className="  text-[1rem] hover:bg-slate-300 ">
+                          <button
+                            className="w-full h-full py-2 px-4 text-left"
+                            onClick={() => signOut()}
+                          >
+                            <FontAwesomeIcon
+                              style={{ paddingInline: ".7rem" }}
+                              icon={faRightFromBracket}
+                            />
+                            Sign out
+                          </button>
+                        </li>
+                      </>
                     )}
                   </ul>
                 </div>

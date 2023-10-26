@@ -4,24 +4,36 @@ import {
   faChevronDown,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
-import { useRef, useState } from "react";
+import { FormEvent, Fragment, useRef, useState } from "react";
 import useHandlePopUp from "@/hooks/useHandlePopUp";
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
-import '@fortawesome/fontawesome-svg-core/styles.css';
+import "@fortawesome/fontawesome-svg-core/styles.css";
 // Prevent fontawesome from adding its CSS since we did it manually above:
 // import { config } from '@fortawesome/fontawesome-svg-core';
 // config.autoAddCss = false; /* eslint-disable import/first */
 import getCountries from "@/utils/getCountries";
+import { useRouter } from "next/navigation";
+import { UrlObject } from "url";
 
-export default function SearchForm({showAllOptions = false}) {
+type searchFormProps = {
+  isForSell: Boolean;
+  handleIsForSell: () => void;
+  showAllOptions?: Boolean;
+};
+
+export default function SearchForm({
+  isForSell,
+  handleIsForSell,
+  showAllOptions = false,
+}: searchFormProps) {
   const [extraOptions, setExtraOptions] = useState(showAllOptions);
-// Start handle PopUp appearence    
+  // Start handle PopUp appearence
   const propertyTypePopUptrigger = useRef<HTMLButtonElement | null>(null);
   const propertyTypePopUp = useRef<HTMLUListElement | null>(null);
 
-  const meublePopUptrigger = useRef<HTMLButtonElement | null>(null);
-  const meublePopUp = useRef<HTMLUListElement | null>(null);
+  const furniturePopUptrigger = useRef<HTMLButtonElement | null>(null);
+  const furniturePopUp = useRef<HTMLUListElement | null>(null);
 
   const surfacePopUptrigger = useRef<HTMLButtonElement | null>(null);
   const sufacePopUp = useRef<HTMLUListElement | null>(null);
@@ -44,72 +56,92 @@ export default function SearchForm({showAllOptions = false}) {
     bedsAndBathsPopUptrigger,
     bedsAndBathsPopUp
   );
-  const [meublePopUpIsOpen, handleMeublePopUp] = useHandlePopUp(
-    meublePopUptrigger,
-    meublePopUp
+  const [furniturePopUpIsOpen, handleFurniturePopUp] = useHandlePopUp(
+    furniturePopUptrigger,
+    furniturePopUp
   );
   const [propertyTypePopUpIsOpen, handlePropertyTypePopUp] = useHandlePopUp(
     propertyTypePopUptrigger,
     propertyTypePopUp
   );
-// End handle PopUp appearence   
-// Start handle Submi Form 
-    const countyName = useRef();
-    const cityName = useRef();
-    const propertyType = useRef();
-    const minPrice = useRef();
-    const maxPrice = useRef();
-    const bedsNumber = useRef();
-    const bathsNumber = useRef();
-    const meuble = useRef();
-    const minSurface = useRef();
-    const maxsurface = useRef();
-    const hashtag = useRef();
-// End handle Submi Form 
-// Start Fetching countries Name
-  const countries = getCountries()
+  // End handle PopUp appearence
+  const router = useRouter()
+  // Start Fetching countries Name
+  const countries = getCountries();
   function handleExtraOptions() {
     setExtraOptions((state) => !state);
   }
-// Start Fetching countries Name
+  // End Fetching countries Name
+
+  // Start handle Submit Form
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    // Prevent the browser from reloading the page
+    e.preventDefault();
+    // Read the form data
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    // plain object:
+    const formJson = Object.fromEntries(formData.entries()) as Record<string, string>;
+    console.log(formJson);
+
+    router.push("/properties"+"?" + new URLSearchParams(Object.entries(formJson)));
+  }
+  // End handle Submit Form
   return (
     <>
-      <form action="" className="">
+     
+      <form action="" method="post" onSubmit={handleSubmit} className="">
         <ul className="flex  flex-col gap-1 ">
           <div className="flex flex-wrap gap-1  ">
             <li>
-              <input className="Input w-[8rem]" list="country" placeholder="Country" />
+              <input
+                name="country"
+                className="Input w-[8rem]"
+                list="country"
+                placeholder="Country"
+              />
               <datalist className="marker:text-red-600" id="country">
-                {countries.map(country=>{
-                  return(<option value={country.name}>{country.label}</option>)
+                {countries.map((country) => {
+                  return <option value={country.name}>{country.label}</option>;
                 })}
               </datalist>
             </li>
+
             <li>
-              <input className="Input w-[8rem]" type="text" placeholder="City" autoComplete="address-level2" />
-            
+              <input
+                name="city"
+                className="Input w-[8rem]"
+                type="text"
+                placeholder="City"
+                autoComplete="address-level2"
+              />
             </li>
-            
-          <li>
-            <button
-              type="button"
-              className="Input cursor-pointer whitespace-nowrap "
-              onClick={handlePropertyTypePopUp}
-              ref={propertyTypePopUptrigger}
-            >
-              Property type <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}}/>
-            </button>
-            {propertyTypePopUpIsOpen && (
-              <ul
-                ref={propertyTypePopUp}
-                className="border absolute rounded-md px-4 mt-[2px] pt-6 pb-6 z-10  bg-white  flex max-lg:justify-center flex-wrap gap-x-1 gap-y-4 max-w-[29rem]"
+
+            <li>
+              <button
+                type="button"
+                className="Input cursor-pointer whitespace-nowrap "
+                onClick={handlePropertyTypePopUp}
+                ref={propertyTypePopUptrigger}
               >
-                <li>
+                Property type{" "}
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  style={{ width: "1rem" }}
+                />
+              </button>
+              <ul
+                key="propertyType"
+                ref={propertyTypePopUp}
+                className={` ${propertyTypePopUpIsOpen ? "" : "hidden"}
+                border absolute rounded-md px-4 mt-[2px] pt-6 pb-6 z-10  bg-white  flex max-lg:justify-center flex-wrap gap-x-1 gap-y-4 max-w-[29rem]`}
+              >
+                <li key="apprtment">
                   <input
                     type="checkbox"
                     id="Apartment"
-                    autoComplete="off"
-                    value="Apartment"
+                    name="Apartment"
                     className="hidden"
                   />
                   <label htmlFor="Apartment" className="box">
@@ -120,8 +152,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Villa"
-                    autoComplete="off"
-                    value="Villa"
+                    name="Villa"
                     className="hidden"
                   />
                   <label htmlFor="Villa" className="box">
@@ -132,8 +163,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="House"
-                    autoComplete="off"
-                    value="House"
+                    name="House"
                     className="hidden"
                   />
                   <label htmlFor="House" className="box">
@@ -144,8 +174,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Duplex"
-                    autoComplete="off"
-                    value="Duplex"
+                    name="Duplex"
                     className="hidden"
                   />
                   <label htmlFor="Duplex" className="box">
@@ -156,8 +185,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Building"
-                    autoComplete="off"
-                    value="Building"
+                    name="Building"
                     className="hidden"
                   />
                   <label htmlFor="Building" className="box">
@@ -168,8 +196,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Ground"
-                    autoComplete="off"
-                    value="Ground"
+                    name="Ground"
                     className="hidden"
                   />
                   <label htmlFor="Ground" className="box">
@@ -180,8 +207,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Bungalow"
-                    autoComplete="off"
-                    value="Bungalow"
+                    name="Bungalow"
                     className="hidden"
                   />
                   <label htmlFor="Bungalow" className="box">
@@ -192,8 +218,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Cottage"
-                    autoComplete="off"
-                    value="Cottage"
+                    name="Cottage"
                     className="hidden"
                   />
                   <label htmlFor="Cottage" className="box">
@@ -204,8 +229,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Factory"
-                    autoComplete="off"
-                    value="Factory"
+                    name="Factory"
                     className="hidden"
                   />
                   <label htmlFor="Factory" className="box">
@@ -216,8 +240,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Riad"
-                    autoComplete="off"
-                    value="Riad"
+                    name="Riad"
                     className="hidden"
                   />
                   <label htmlFor="Riad" className="box">
@@ -228,8 +251,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Triplex"
-                    autoComplete="off"
-                    value="Triplex"
+                    name="Triplex"
                     className="hidden"
                   />
                   <label htmlFor="Triplex" className="box">
@@ -240,8 +262,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Studio"
-                    autoComplete="off"
-                    value="Studio"
+                    name="Studio"
                     className="hidden"
                   />
                   <label htmlFor="Studio" className="box">
@@ -252,8 +273,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="PentHouse"
-                    autoComplete="off"
-                    value="PentHouse"
+                    name="PentHouse"
                     className="hidden"
                   />
                   <label htmlFor="PentHouse" className="box">
@@ -264,8 +284,7 @@ export default function SearchForm({showAllOptions = false}) {
                   <input
                     type="checkbox"
                     id="Hangar"
-                    autoComplete="off"
-                    value="Hangar"
+                    name="Hangar"
                     className="hidden"
                   />
                   <label htmlFor="Hangar" className="box">
@@ -273,22 +292,26 @@ export default function SearchForm({showAllOptions = false}) {
                   </label>
                 </li>
               </ul>
-            )}
-          </li>
-          <li>
-            <button
-              type="button"
-              ref={pricePopUptrigger}
-              className="Input whitespace-nowrap"
-              onClick={handlePricePopUp}
-            >
-              Price <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}} />
-            </button>
-            <div>
-              {PricePopUpIsOpen && (
+            </li>
+
+            <li>
+              <button
+                type="button"
+                ref={pricePopUptrigger}
+                className="Input whitespace-nowrap"
+                onClick={handlePricePopUp}
+              >
+                Price{" "}
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  style={{ width: "1rem" }}
+                />
+              </button>
+              <div>
                 <ul
                   ref={pricePopUp}
-                  className="border-2  gap-2 rounded-md absolute max-lg:right-[0] mx-[5px] mt-[2px] z-10 pt-2 pb-6  bg-white  px-4 w-fit"
+                  className={` ${PricePopUpIsOpen ? "" : "hidden"}
+                  border-2  gap-2 rounded-md absolute max-lg:right-[0] mx-[5px] mt-[2px] z-10 pt-2 pb-6  bg-white  px-4 w-fit `}
                 >
                   <li>
                     <h3 className="py-2">Price</h3>
@@ -296,6 +319,7 @@ export default function SearchForm({showAllOptions = false}) {
                       <li>
                         <input
                           type="number"
+                          name="minPrice"
                           placeholder="Min Price $"
                           className="box w-[13rem] "
                         />
@@ -303,6 +327,7 @@ export default function SearchForm({showAllOptions = false}) {
                       <li>
                         <input
                           type="number"
+                          name="maxprice"
                           placeholder="Max Price $"
                           className="box w-[13rem] "
                         />
@@ -310,55 +335,62 @@ export default function SearchForm({showAllOptions = false}) {
                     </ul>
                   </li>
 
-                  <li>
-                    <h3 className="py-2">Rental Period</h3>
-                    <ul className="flex flex-wrap gap-x-2 gap-y-4 justify-center">
-                      <li>
-                        <input
-                          type="radio"
-                          name="rentalPeriod"
-                          placeholder="Per Day"
-                          id="PerDay"
-                          className="hidden"
-                        />
-                        <label htmlFor="PerDay" className="box">
-                          <span>Per Day</span>
-                        </label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          name="rentalPeriod"
-                          placeholder="Per Month"
-                          id="PerMonth"
-                          className="hidden"
-                        />
-                        <label htmlFor="PerMonth" className="box">
-                          <span>Per Month</span>
-                        </label>
-                      </li>
-                      <li>
-                        <input
-                          type="radio"
-                          name="rentalPeriod"
-                          placeholder="Per Year"
-                          id="PerYear"
-                          className="hidden"
-                        />
-                        <label htmlFor="PerYear" className="box">
-                          <span>Per Year</span>
-                        </label>
-                      </li>
-                    </ul>
-                  </li>
+                  {!isForSell && (
+                    <li>
+                      <h3 className="py-2">Rental Period</h3>
+                      <ul className="flex flex-wrap gap-x-2 gap-y-4 justify-center">
+                        <li>
+                          <input
+                            type="radio"
+                            name="rentalPeriod"
+                            placeholder="Per Day"
+                            id="PerDay"
+                            value="PerDay"
+                            className="hidden"
+                          />
+                          <label htmlFor="PerDay" className="box">
+                            <span>Per Day</span>
+                          </label>
+                        </li>
+                        <li>
+                          <input
+                            type="radio"
+                            name="rentalPeriod"
+                            placeholder="Per Month"
+                            id="PerMonth"
+                            value="PerMonth"
+                            className="hidden"
+                            defaultChecked
+                          />
+                          <label htmlFor="PerMonth" className="box">
+                            <span>Per Month</span>
+                          </label>
+                        </li>
+                        <li>
+                          <input
+                            type="radio"
+                            name="rentalPeriod"
+                            placeholder="Per Year"
+                            id="PerYear"
+                            value="perYear"
+                            className="hidden"
+                          />
+                          <label htmlFor="PerYear" className="box">
+                            <span>Per Year</span>
+                          </label>
+                        </li>
+                      </ul>
+                    </li>
+                  )}
                 </ul>
-              )}
-            </div>
-          </li>
-          
+              </div>
+            </li>
           </div>
-          <div className="flex  flex-wrap items-center gap-1">
-          {extraOptions && (
+          <div
+            className={`${
+              extraOptions ? "flex" : "hidden"
+            }  flex-wrap items-center gap-1`}
+          >
             <li>
               <button
                 type="button"
@@ -366,294 +398,296 @@ export default function SearchForm({showAllOptions = false}) {
                 onClick={handleBedsAndBathsPopUp}
                 ref={bedsAndBathsPopUptrigger}
               >
-                Beds & Baths <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}} />
+                Beds & Baths{" "}
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  style={{ width: "1rem" }}
+                />
               </button>
               <div>
-                {bedsAndBathsPopUpIsOpen && (
-                  <ul
-                    ref={bedsAndBathsPopUp}
-                    className="border absolute rounded-md px-4 mt-[2px] pt-2 pb-6 z-10  bg-white w-fit"
-                  >
-                    <li className="">
-                      <h3 className="p-2">Beds</h3>
-                      <ul className="flex flex-wrap gap-y-4 gap-x-1">
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="0"
-                            autoComplete="off"
-                            value="0"
-                            className="hidden"
-                          />
-                          <label htmlFor="0" className="box">
-                            <span>Studio</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="1"
-                            autoComplete="off"
-                            value="1"
-                            className="hidden"
-                          />
-                          <label htmlFor="1" className="box">
-                            <span>1</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="2"
-                            autoComplete="off"
-                            value="2"
-                            className="hidden"
-                          />
-                          <label htmlFor="2" className="box">
-                            <span>2</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="3"
-                            autoComplete="off"
-                            value="3"
-                            className="hidden"
-                          />
-                          <label htmlFor="3" className="box">
-                            <span>3</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="4"
-                            autoComplete="off"
-                            value="4"
-                            className="hidden"
-                          />
-                          <label htmlFor="4" className="box">
-                            <span>4</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="5"
-                            autoComplete="off"
-                            value="5"
-                            className="hidden"
-                          />
-                          <label htmlFor="5" className="box">
-                            <span>5</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="6"
-                            autoComplete="off"
-                            value="6"
-                            className="hidden"
-                          />
-                          <label htmlFor="6" className="box">
-                            <span>6</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="7"
-                            autoComplete="off"
-                            value="7"
-                            className="hidden"
-                          />
-                          <label htmlFor="7" className="box">
-                            <span>7</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="8"
-                            autoComplete="off"
-                            value="8"
-                            className="hidden"
-                          />
-                          <label htmlFor="8" className="box">
-                            <span>7+</span>
-                          </label>
-                        </li>
-                      </ul>
-                    </li>
-                    <li className="">
-                      <h3 className="p-2">Baths</h3>
-                      <ul className="flex flex-wrap gap-y-4 gap-x-1 ">
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="11"
-                            autoComplete="off"
-                            value="11"
-                            className="hidden"
-                          />
-                          <label htmlFor="11" className="box">
-                            <span>1</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="12"
-                            autoComplete="off"
-                            value="12"
-                            className="hidden"
-                          />
-                          <label htmlFor="12" className="box">
-                            <span>2</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="13"
-                            autoComplete="off"
-                            value="13"
-                            className="hidden"
-                          />
-                          <label htmlFor="13" className="box">
-                            <span>3</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="14"
-                            autoComplete="off"
-                            value="14"
-                            className="hidden"
-                          />
-                          <label htmlFor="14" className="box">
-                            <span>4</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="15"
-                            autoComplete="off"
-                            value="15"
-                            className="hidden"
-                          />
-                          <label htmlFor="15" className="box">
-                            <span>5</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="16"
-                            autoComplete="off"
-                            value="16"
-                            className="hidden"
-                          />
-                          <label htmlFor="16" className="box">
-                            <span>6</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="17"
-                            autoComplete="off"
-                            value="17"
-                            className="hidden"
-                          />
-                          <label htmlFor="17" className="box">
-                            <span>7</span>
-                          </label>
-                        </li>
-                        <li>
-                          <input
-                            type="checkbox"
-                            id="18"
-                            autoComplete="off"
-                            value="18"
-                            className="hidden"
-                          />
-                          <label htmlFor="18" className="box">
-                            <span>7+</span>
-                          </label>
-                        </li>
-                      </ul>
-                    </li>
-                  </ul>
-                )}
+                <ul
+                  ref={bedsAndBathsPopUp}
+                  className={`${bedsAndBathsPopUpIsOpen ? "" : "hidden"}
+                      border absolute rounded-md px-4 mt-[2px] pt-2 pb-6 z-10  bg-white w-fit`}
+                >
+                  <li className="">
+                    <h3 className="p-2">Beds</h3>
+                    <ul className="flex flex-wrap gap-y-4 gap-x-1">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="0"
+                          name="beds0"
+                          autoComplete="off"
+                          className="hidden"
+                        />
+                        <label htmlFor="0" className="box">
+                          <span>Studio</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="1"
+                          name="beds1"
+                          autoComplete="off"
+                          className="hidden"
+                        />
+                        <label htmlFor="1" className="box">
+                          <span>1</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="2"
+                          name="beds2"
+                          autoComplete="off"
+                          className="hidden"
+                        />
+                        <label htmlFor="2" className="box">
+                          <span>2</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="3"
+                          name="beds3"
+                          autoComplete="off"
+                          className="hidden"
+                        />
+                        <label htmlFor="3" className="box">
+                          <span>3</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="4"
+                          name="beds4"
+                          autoComplete="off"
+                          className="hidden"
+                        />
+                        <label htmlFor="4" className="box">
+                          <span>4</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="5"
+                          name="beds5"
+                          autoComplete="off"
+                          className="hidden"
+                        />
+                        <label htmlFor="5" className="box">
+                          <span>5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="6"
+                          name="beds6"
+                          autoComplete="off"
+                          className="hidden"
+                        />
+                        <label htmlFor="6" className="box">
+                          <span>6</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="7"
+                          name="beds7"
+                          autoComplete="off"
+                          className="hidden"
+                        />
+                        <label htmlFor="7" className="box">
+                          <span>7</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="7+"
+                          name="beds7+"
+                          autoComplete="off"
+                          className="hidden"
+                        />
+                        <label htmlFor="7+" className="box">
+                          <span>7+</span>
+                        </label>
+                      </li>
+                    </ul>
+                  </li>
+                  <li className="">
+                    <h3 className="p-2">Baths</h3>
+                    <ul className="flex flex-wrap gap-y-4 gap-x-1 ">
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="11"
+                          autoComplete="off"
+                          name="baths11"
+                          className="hidden"
+                        />
+                        <label htmlFor="11" className="box">
+                          <span>1</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="12"
+                          autoComplete="off"
+                          name="baths12"
+                          className="hidden"
+                        />
+                        <label htmlFor="12" className="box">
+                          <span>2</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="13"
+                          autoComplete="off"
+                          name="baths13"
+                          className="hidden"
+                        />
+                        <label htmlFor="13" className="box">
+                          <span>3</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="14"
+                          autoComplete="off"
+                          name="baths14"
+                          className="hidden"
+                        />
+                        <label htmlFor="14" className="box">
+                          <span>4</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="15"
+                          autoComplete="off"
+                          name="baths15"
+                          className="hidden"
+                        />
+                        <label htmlFor="15" className="box">
+                          <span>5</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="16"
+                          autoComplete="off"
+                          name="baths16"
+                          className="hidden"
+                        />
+                        <label htmlFor="16" className="box">
+                          <span>6</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="17"
+                          autoComplete="off"
+                          name="baths17"
+                          className="hidden"
+                        />
+                        <label htmlFor="17" className="box">
+                          <span>7</span>
+                        </label>
+                      </li>
+                      <li>
+                        <input
+                          type="checkbox"
+                          id="17+"
+                          autoComplete="off"
+                          name="baths17+"
+                          className="hidden"
+                        />
+                        <label htmlFor="17+" className="box">
+                          <span>7+</span>
+                        </label>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
               </div>
             </li>
-          )}
-         
-          {extraOptions && (
+
             <li>
               <button
                 type="button"
-                ref={meublePopUptrigger}
+                ref={furniturePopUptrigger}
                 className="Input whitespace-nowrap"
-                onClick={handleMeublePopUp}
+                onClick={handleFurniturePopUp}
               >
-                Meublement <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}} />
+                Furniture{" "}
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  style={{ width: "1rem" }}
+                />
               </button>
               <div>
-                {meublePopUpIsOpen && (
-                  <ul
-                    ref={meublePopUp}
-                    className="border-2  flex  flex-wrap gap-x-2 gap-y-4 rounded-md absolute max-sm:right-0 mx-[5px] justify-center mt-[2px] z-10 py-5  bg-white  px-4 w-fit"
-                  >
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="mebule"
-                        autoComplete="off"
-                        value="mebule"
-                        className="hidden"
-                      />
-                      <label htmlFor="mebule" className="box">
-                        <span>Meuble</span>
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="not-meuble"
-                        autoComplete="off"
-                        value="not-meuble"
-                        className="hidden"
-                      />
-                      <label htmlFor="not-meuble" className="box">
-                        <span className=" whitespace-nowrap">Not Meuble</span>
-                      </label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="partiellement-meuble"
-                        autoComplete="off"
-                        value="partiellement-meuble"
-                        className="hidden"
-                      />
-                      <label htmlFor="partiellement-meuble" className="box">
-                        <span className=" whitespace-nowrap">partiellemnt meuble</span>
-                      </label>
-                    </li>
-                  </ul>
-                )}
+                <ul
+                  ref={furniturePopUp}
+                  className={`${furniturePopUpIsOpen ? "" : "hidden"}
+                    border-2  flex  flex-wrap gap-x-2 gap-y-4 rounded-md absolute max-sm:right-0 mx-[5px] justify-center mt-[2px] z-10 py-5  bg-white  px-4 w-fit`}
+                >
+                  <li>
+                    <input
+                      type="checkbox"
+                      id="furnished"
+                      name="furnished"
+                      autoComplete="off"
+                      className="hidden"
+                    />
+                    <label htmlFor="furnished" className="box">
+                      <span>Furnished</span>
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      type="checkbox"
+                      id="unfurnished"
+                      name="unfurnished"
+                      autoComplete="off"
+                      className="hidden"
+                    />
+                    <label htmlFor="unfurnished" className="box">
+                      <span className=" whitespace-nowrap">Unfurnished</span>
+                    </label>
+                  </li>
+                  <li>
+                    <input
+                      type="checkbox"
+                      id="semi-furnished"
+                      name="semi-furnished"
+                      autoComplete="off"
+                      className="hidden"
+                    />
+                    <label htmlFor="semi-furnished" className="box">
+                      <span className=" whitespace-nowrap">Semi-furnished</span>
+                    </label>
+                  </li>
+                </ul>
               </div>
             </li>
-          )}
-          {extraOptions && ( 
-          <li>
-            
+
+            <li>
               <div className="">
                 <button
                   type="button"
@@ -661,79 +695,100 @@ export default function SearchForm({showAllOptions = false}) {
                   onClick={handleSurfacePopUp}
                   className="Input whitespace-nowrap"
                 >
-                  Surface (m²) <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem"}} />
+                  Surface (m²){" "}
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    style={{ width: "1rem" }}
+                  />
                 </button>
-                {surfacePopUpIsOpen && (
-                  <ul
-                    ref={sufacePopUp}
-                    className="border-2 flex flex-wrap justify-center max-lg:right-0 gap-2 mx-[5px] rounded-md absolute z-10  bg-white p-4 "
-                  >
-                    <li>
-                      <input
-                        type="number"
-                        placeholder="Min surface $"
-                        className="box "
-                      />
-                    </li>
-                    <li>
-                      <input
-                        type="number"
-                        placeholder="Max surface $"
-                        className="box "
-                      />
-                    </li>
-                  </ul>
-                )}
+                <ul
+                  ref={sufacePopUp}
+                  className={`${surfacePopUpIsOpen ? "" : "hidden"}
+                    border-2 flex flex-wrap justify-center max-lg:right-0 gap-2 mx-[5px] rounded-md absolute z-10  bg-white p-4 `}
+                >
+                  <li>
+                    <input
+                      type="number"
+                      placeholder="Min surface $"
+                      className="box "
+                      name="minSurface"
+                    />
+                  </li>
+                  <li>
+                    <input
+                      type="number"
+                      placeholder="Max surface $"
+                      className="box "
+                      name="maxSurface"
+                    />
+                  </li>
+                </ul>
               </div>
-           
-          </li> 
-          )}
-          </div >
+            </li>
+          </div>
           <div className="flex">
             <li>
-              {extraOptions && (
-                <div className="Input flex items-center">
-                  <span className="pr-4">
-                    <FontAwesomeIcon
-                      icon={faMagnifyingGlass}
-                      style={{ width: "1rem" }}
-                    />
-                  </span>
-                  <div>
-                    <input
-                      type="text"
-                      placeholder="hashtags: #pisicne#centre ville"
-                    />
-                  </div>
+              <div
+                className={`Input ${
+                  extraOptions ? "flex" : "hidden"
+                } items-center`}
+              >
+                <span className="pr-4">
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    style={{ width: "1rem" }}
+                  />
+                </span>
+                <div>
+                  <input
+                    type="text"
+                    name="hashtag"
+                    placeholder="hashtags: #pisicne#centre ville"
+                  />
                 </div>
-              )}
+              </div>
             </li>
           </div>
         </ul>
         <span className=" flex flex-wrap-reverse ml-auto w-fit justify-center  items-center gap-2 text-xs text-gray-400  ">
-        {showAllOptions == false && <button
-            type="button"
-            className="text-left  underline outline-none" 
-            onClick={handleExtraOptions}
+          {showAllOptions == false && (
+            <button
+              type="button"
+              className="text-left  underline outline-none "
+              onClick={handleIsForSell}
+            >
+              {isForSell ? "Go Rent" : "Go Buy"}
+            </button>
+          )}
+          {showAllOptions == false && (
+            <button
+              type="button"
+              className="text-left  underline outline-none"
+              onClick={handleExtraOptions}
+            >
+              Show {extraOptions ? "less" : "more"} options search{" "}
+              <FontAwesomeIcon
+                icon={faChevronDown}
+                style={{
+                  width: "1rem",
+                  transform: extraOptions ? "rotate(180deg)" : "",
+                }}
+              />
+            </button>
+          )}
+          <button
+            type="submit"
+            className=" bg-blue-800 text-white flex items-center p-2 rounded-md px-4 mt-2"
           >
-            Rent
-          </button>}
-          {showAllOptions == false && <button
-            type="button"
-            className="text-left  underline outline-none" 
-            onClick={handleExtraOptions}
-          >
-            Show {extraOptions ? "less" : "more"} options search <FontAwesomeIcon icon={faChevronDown}  style={{width: "1rem",transform: extraOptions ? "rotate(180deg)" : ""}} />
-          </button>}
-          <button type="button" className=" bg-blue-800 text-white flex items-center p-2 rounded-md px-4 mt-2">
             <span className="w-4 text-white px-1">
-               <FontAwesomeIcon
-              icon={faMagnifyingGlass}
-              // style={{ width: "1rem", color: "white", paddingInline: ".3rem" }}
-            />
+              <FontAwesomeIcon
+                icon={faMagnifyingGlass}
+                // style={{ width: "1rem", color: "white", paddingInline: ".3rem" }}
+              />
             </span>
-           
-            <span className="px-2 ">Search</span>
+
+            <span className="px-2 max-sm:hidden">Search</span>
+            <span className="px-2 sm:hidden ">Search {isForSell ? "To Buy" : "For Rent"}</span>
           </button>
         </span>
       </form>

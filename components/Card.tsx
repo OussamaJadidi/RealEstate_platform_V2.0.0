@@ -23,9 +23,7 @@ import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 // Import Swiper styles
 import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
+
 
 type CardPropsType={
   TailwindCSS?: String,
@@ -38,12 +36,7 @@ export default function Card({TailwindCSS ="undefined"}: CardPropsType) {
     <Swiper
       spaceBetween={0}
       slidesPerView={1}
-      modules={[Navigation, Pagination, Scrollbar, A11y]}
-      // navigation
-      // pagination={{ clickable: true }}
-    //   scrollbar={{ draggable: true }}
-      onSlideChange={() => console.log('slide change')}
-      onSwiper={(swiper) => console.log(swiper)}
+      modules={[A11y]}
       style={{height:"15rem"}}
     >
       <SwiperControlle />
@@ -63,7 +56,7 @@ export default function Card({TailwindCSS ="undefined"}: CardPropsType) {
         <section className='p-3 flex flex-col justify-between gap-4 text-gray-500 text-sm bg-white '>
           <div>
             <p  >Appartement</p>
-            <div className=' text-blue-800 text-[1.1rem] font-semibold'><span>1900</span> $/<span>month</span> </div>
+            <div className=' text-blue-800 text-[1.1rem] font-bold font-roboto'><span>1900</span> $/<span>month</span> </div>
             <h3 className=' text-black text-base '>Superbe appartment a louer bla blo Superbe appartment a louer bla blo </h3>
           </div>
           <div className='flex flex-col gap-1 font-normal'>

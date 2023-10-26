@@ -2,24 +2,18 @@ import React from "react";
 import {
   Container,
   FilterFormTest,
-  SearchForm,
   FilterForm,
+  Card,
+  Map
 } from "@/components";
 import dynamic from "next/dynamic"
 export default function page() {
-  const Card = dynamic(()=>import("@/components/Card") ,
-  {
-    loading: () => <p>Loading...</p>,
-  })
-  const Map = dynamic(()=>import("@/components/Map")   ,
-  {
-    loading: () => <p>Loading...</p>,
-  })
+ 
   return (
     <div className="Container">
       <Container>
         <div className="max-lg:hidden">
-          <FilterFormTest />
+          <FilterForm lgScreen={true}/>
         </div>
         <div className="lg:hidden">
           <div>

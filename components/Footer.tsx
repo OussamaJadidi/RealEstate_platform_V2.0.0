@@ -52,7 +52,7 @@ export default function Footer() {
         {/* <div className=" bg-gray-900 text-white text-center">Copyright © 2023 All Rights Reserved, by <span className=" whitespace-nowrap"> Oussama Jadidi</span></div> */}
         {/* <div className=" "><div className="w-full border-t border-gray-50"></div></div> */}
 
-        <div className=" bg-gray-950 text-white text-center ">© 2023<span className=" whitespace-nowrap"> JADIDI Oussama</span> All Rights Reserved</div>
+        <div className=" bg-gray-950 text-white text-center ">© 2023<span className=" whitespace-nowrap"> JADIDI Oussama,</span> All Rights Reserved</div>
     </footer>
   );
 }

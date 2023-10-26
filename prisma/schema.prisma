@@ -42,7 +42,7 @@ model PropertyToSell {
   propertyType String
   bedsNumber   Int
   bathsNumber  Int
-  meublement   String
+  furniture   String
   surface      Float
   Hashtags     Json?
 
@@ -76,7 +76,7 @@ model PropertyToRent {
   propertyType String
   bedsNumber   Int
   bathsNumber  Int
-  meublement   String
+  furniture   String
   surface      Float
   Hashtags     Json?
 
