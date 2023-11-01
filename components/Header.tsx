@@ -105,7 +105,7 @@ export default function Header() {
               {menuPopupIsOpen && (
                 <div
                   ref={menuPopupRef}
-                  className="z-20 absolute top-[2rem] right-0 left-[-9.5rem] | w-40 h-60"
+                  className="z-20 absolute top-[2rem] right-0 left-[-9.5rem] | w-40 h-60 animate-drive-in"
                 >
                   <ul className="w-[12rem] bg-white rounded-xl font-sans font-sm cursor-pointer border border-gray-400 overflow-hidden py-2">
                     <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 block sm:hidden ">

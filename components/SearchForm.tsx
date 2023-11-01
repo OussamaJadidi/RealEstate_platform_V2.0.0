@@ -4,7 +4,7 @@ import {
   faChevronDown,
   faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
-import { FormEvent, Fragment, useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import useHandlePopUp from "@/hooks/useHandlePopUp";
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:

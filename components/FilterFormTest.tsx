@@ -97,7 +97,7 @@ export default function FilterForm() {
                 onClick={handlePropertyTypePopUp}
                 ref={propertyTypePopUptrigger}
               >
-                Property type{" "}
+                Property type
                 <FontAwesomeIcon
                   icon={faChevronDown}
                   style={{ width: "1rem" }}

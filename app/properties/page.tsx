@@ -1,19 +1,12 @@
 import React from "react";
-import {
-  Container,
-  FilterFormTest,
-  FilterForm,
-  Card,
-  Map
-} from "@/components";
-import dynamic from "next/dynamic"
+import { Container, FilterFormTest, FilterForm, Card, Map } from "@/components";
+import dynamic from "next/dynamic";
 export default function page() {
- 
   return (
     <div className="Container">
       <Container>
         <div className="max-lg:hidden">
-          <FilterForm lgScreen={true}/>
+          <FilterForm lgScreen={true} />
         </div>
         <div className="lg:hidden">
           <div>
@@ -26,7 +19,7 @@ export default function page() {
               </span>
               <div className="flex gap-[.5rem]  ">
                 <div className="flex gap-5 items-center">
-                  <select className="border border-gray-500 rounded-md px-4 py-2  text-gray-500 outline-none">
+                  <select className="border border-gray-500 rounded-md px-4 h-[2.5rem]  bg-white  text-gray-500 outline-none">
                     <option value="">Sorted by</option>
                     <option value="ascending price">ascending price</option>
                     <option value="descending price">descending price</option>
@@ -53,7 +46,7 @@ export default function page() {
                   15 Results
                 </span>
                 <div className="flex gap-5 items-center">
-                  <select className="border border-gray-500 rounded-md px-4 py-2  text-gray-500 outline-none">
+                  <select className="border border-gray-500 rounded-md px-4 py-2 bg-white  text-gray-500 outline-none">
                     <option value="">Sorted by</option>
                     <option value="ascending price">ascending price</option>
                     <option value="descending price">descending price</option>

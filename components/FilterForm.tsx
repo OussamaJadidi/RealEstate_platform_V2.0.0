@@ -133,7 +133,7 @@ export default function FilterForm({ lgScreen = false }) {
                   onClick={handlePropertyTypePopUp}
                   ref={propertyTypePopUptrigger}
                 >
-                  Property type{" "}
+                  Property type
                   <FontAwesomeIcon
                     icon={faChevronDown}
                     style={{ width: "1rem" }}
@@ -142,7 +142,7 @@ export default function FilterForm({ lgScreen = false }) {
                 <ul
                   ref={propertyTypePopUp}
                   className={`${propertyTypePopUpIsOpen ? "" : "hidden"}
-                    border absolute left-0 rounded-md px-4 mt-[2px] pt-6 pb-6 z-10  bg-white  flex max-lg:justify-center flex-wrap gap-x-1 gap-y-4 max-w-[29rem]`}
+                    border absolute  rounded-md px-4 mt-[2px] pt-6 pb-6 z-10  bg-white  flex max-lg:justify-center flex-wrap gap-x-1 gap-y-4 max-w-[29rem]`}
                 >
                   <li>
                     <input
@@ -321,7 +321,7 @@ export default function FilterForm({ lgScreen = false }) {
                   className="Input whitespace-nowrap"
                   onClick={handlePricePopUp}
                 >
-                  Price{" "}
+                  Price
                   <FontAwesomeIcon
                     icon={faChevronDown}
                     style={{ width: "1rem" }}
@@ -331,7 +331,7 @@ export default function FilterForm({ lgScreen = false }) {
                   <ul
                     ref={pricePopUp}
                     className={`${PricePopUpIsOpen ? "" : "hidden"}
-                      border-2  gap-2 rounded-md absolute left-0  mt-[2px] z-10 pt-2 pb-6  bg-white  px-4 w-fit`}
+                      border-2  gap-2 rounded-md absolute  mt-[2px] z-10 pt-2 pb-6  bg-white  px-4 w-fit`}
                   >
                     <li>
                       <h3 className="py-2">Price</h3>

@@ -71,11 +71,11 @@ export default function SignIn({togglePopUp,alreadyHaveAccount,toggleAccountStat
     }
   return (
     <div 
-        className='h-full w-full flex justify-center items-center bg-black bg-opacity-50   fixed left-0 right-0 bottom-0 top-0 z-50'
+        className='h-full w-full flex justify-center items-center bg-black bg-opacity-50   fixed left-0 right-0 bottom-0 top-0 z-50 transform '
         onClick={togglePopUp}
     >
         <div 
-            className='absolute ml-auto sm:max-w-[25rem] w-full max-sm:justify-center  max-sm:h-full bg-white flex flex-col items-center py-8 px-[2rem] sm:px-[3rem] sm:rounded-md'
+            className={`animate-pop-up absolute ml-auto sm:max-w-[25rem] w-full max-sm:justify-center  max-sm:h-full bg-white flex flex-col items-center py-8 px-[2rem] sm:px-[3rem] sm:rounded-md`}
             onClick={(e)=>e.stopPropagation()}        
         >
             <button 

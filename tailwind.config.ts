@@ -18,7 +18,26 @@ const config: Config = {
         rubik:["Rubik","sans-serif"],
         vietnam: ["Be Vietnam Pro","sans serif"],
         pixel:['Pixelify Sans',"cursive"]
-      }
+      },
+      animation: {
+        'drive-in': 'driveIn .2s ease-in-out',
+        'drive-out': 'driveOut .2s ease-in-out',
+        'pop-up': "popUp .2s ease-out"
+      },
+      keyframes: {
+        driveIn: {
+          '0%': { transform: 'translateY(-15%)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        popUp:{
+          '0%': { transform: 'scale(.7)' },
+          '100%': { transform: 'scale(1)' },
+        },
+        driveOut: {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(-100%)' },
+        },
+      },
     },
     screens: {
       'sm': '641px',
@@ -37,7 +56,8 @@ const config: Config = {
       'max-2xl': {'max': '1536px'},
       
     },
+    
   },
-  plugins: [],
+
 }
 export default config

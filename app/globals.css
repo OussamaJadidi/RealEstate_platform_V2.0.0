@@ -102,7 +102,7 @@ input[type="radio"]:checked + label{
 .textPublicitaire {
 
   -webkit-text-fill-color: white;
-  -webkit-text-stroke-width: 0.5px;
+  -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-width: blue;
 }
 

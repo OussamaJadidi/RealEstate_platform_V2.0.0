@@ -27,7 +27,7 @@ export default () => {
     <div className='relative group/cards  py-8 '>
       <Container>
 
-      <h2 className='text-3xl font-rubik pb-4 block px-8 '>Check the latest announces :</h2>
+      <h2 className='text-3xl font-rubik pb-8 block px-8 '>Take a look at The latest announces: :</h2>
       <Swiper
       style={{paddingBottom: "2.5rem", paddingInline:"2rem"}}
         spaceBetween={50}

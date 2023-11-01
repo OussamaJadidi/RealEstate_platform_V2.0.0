@@ -13,7 +13,7 @@ export default function Hero() {
         <HeroForm/>
         <div className=" sm:h-40rem flex absolute right-0  max-lg:top-0 max-md:bottom-0">
           <span className="absolute top-0 right-0 left-0 bottom-0 sm:hidden">
-            <h1 className=" text-[2.5rem] sm:text-[3rem] sm:pt-16 516px:max-sm:pt-20 text-blue-800 textPublicitaire font-semiBold p-12  text-center max-sm:h-[15rem] sm:max-lg:h-[20rem]">
+            <h1 className=" text-[2.5rem] sm:text-[3rem] sm:pt-16 516px:max-sm:pt-20 text-blue-800 textPublicitaire font-bold p-12  text-center max-sm:h-[15rem] sm:max-lg:h-[20rem]">
               Find your Future Home
             </h1>
           </span>
