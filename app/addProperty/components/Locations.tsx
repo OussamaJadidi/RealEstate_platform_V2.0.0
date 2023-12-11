@@ -74,7 +74,7 @@ export default function Locations() {
           </div>
           <div className="w-full lg:w-1/2 px-8">
             <h2 className=" pb-2 font-roboto text-slate-950 font-semibold ">
-              Zoom and specify your location manually <span className="text-red-700">*</span>
+              Zoom and specify The Exact location <span className="text-red-700">*</span>
             </h2>
             <div className="w-full h-[15rem] border border-black rounded-md">
               <Map

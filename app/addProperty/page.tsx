@@ -1,5 +1,4 @@
-import Locations from "./components/Locations";
-import PropertyInfo from "./components/PropertyInfo";
+import { Locations, OwnerInfo, PropertyInfo, UploadImages} from "./components"
 
 export default function page() {
   return (
@@ -11,7 +10,9 @@ export default function page() {
           <span className="border rounded-full text-blue-800">4</span>
       </div>
       {/* <Locations /> */}
-      <PropertyInfo />
+      {/* <PropertyInfo /> */}
+      {/* <OwnerInfo /> */}
+      <UploadImages />
     </>
   )
 }
