@@ -106,4 +106,9 @@ input[type="radio"]:checked + label{
   -webkit-text-stroke-width: blue;
 }
 
+.wrapper{
+  margin: auto;
+  max-width: 1350px;
+}
+
 

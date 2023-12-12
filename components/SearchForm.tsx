@@ -14,7 +14,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 // config.autoAddCss = false; /* eslint-disable import/first */
 import getCountries from "@/utils/getCountries";
 import { useRouter } from "next/navigation";
-import { UrlObject } from "url";
 
 type searchFormProps = {
   isForSell: Boolean;
@@ -65,7 +64,7 @@ export default function SearchForm({
     propertyTypePopUp
   );
   // End handle PopUp appearence
-  const router = useRouter()
+  const router = useRouter();
   // Start Fetching countries Name
   const countries = getCountries();
   function handleExtraOptions() {
@@ -82,19 +81,23 @@ export default function SearchForm({
     const formData = new FormData(form);
 
     // plain object:
-    const formJson = Object.fromEntries(formData.entries()) as Record<string, string>;
+    const formJson = Object.fromEntries(formData.entries()) as Record<
+      string,
+      string
+    >;
     console.log(formJson);
 
-    router.push("/properties"+"?" + new URLSearchParams(Object.entries(formJson)));
+    router.push(
+      "/properties" + "?" + new URLSearchParams(Object.entries(formJson))
+    );
   }
   // End handle Submit Form
   return (
     <>
-     
       <form action="" method="post" onSubmit={handleSubmit} className="">
         <ul className="flex  flex-col gap-1 ">
-          <div className="flex flex-wrap gap-1  ">
-            <li>
+          <ul className="flex flex-wrap gap-1  ">
+            <li key="country">
               <input
                 name="country"
                 className="Input w-[8rem]"
@@ -103,12 +106,16 @@ export default function SearchForm({
               />
               <datalist className="marker:text-red-600" id="country">
                 {countries.map((country) => {
-                  return <option value={country.name}>{country.label}</option>;
+                  return (
+                    <option value={country.name} key={country.label}>
+                      {country.label}
+                    </option>
+                  );
                 })}
               </datalist>
             </li>
 
-            <li>
+            <li key="city">
               <input
                 name="city"
                 className="Input w-[8rem]"
@@ -118,7 +125,7 @@ export default function SearchForm({
               />
             </li>
 
-            <li>
+            <li key="propertyType">
               <button
                 type="button"
                 className="Input cursor-pointer whitespace-nowrap "
@@ -148,7 +155,7 @@ export default function SearchForm({
                     <span>Apartment</span>
                   </label>
                 </li>
-                <li>
+                <li key="villa">
                   <input
                     type="checkbox"
                     id="Villa"
@@ -159,7 +166,7 @@ export default function SearchForm({
                     <span>Villa</span>
                   </label>
                 </li>
-                <li>
+                <li key="house">
                   <input
                     type="checkbox"
                     id="House"
@@ -170,7 +177,7 @@ export default function SearchForm({
                     <span>House</span>
                   </label>
                 </li>
-                <li>
+                <li key="duplex">
                   <input
                     type="checkbox"
                     id="Duplex"
@@ -181,7 +188,7 @@ export default function SearchForm({
                     <span>Duplex</span>
                   </label>
                 </li>
-                <li>
+                <li key="building">
                   <input
                     type="checkbox"
                     id="Building"
@@ -192,7 +199,7 @@ export default function SearchForm({
                     <span>Building</span>
                   </label>
                 </li>
-                <li>
+                <li key="ground">
                   <input
                     type="checkbox"
                     id="Ground"
@@ -203,7 +210,7 @@ export default function SearchForm({
                     <span>Ground</span>
                   </label>
                 </li>
-                <li>
+                <li key="bungalow">
                   <input
                     type="checkbox"
                     id="Bungalow"
@@ -214,7 +221,7 @@ export default function SearchForm({
                     <span>Bungalow</span>
                   </label>
                 </li>
-                <li>
+                <li key="cottage">
                   <input
                     type="checkbox"
                     id="Cottage"
@@ -225,7 +232,7 @@ export default function SearchForm({
                     <span>Cottage</span>
                   </label>
                 </li>
-                <li>
+                <li key="factory">
                   <input
                     type="checkbox"
                     id="Factory"
@@ -236,7 +243,7 @@ export default function SearchForm({
                     <span>Factory</span>
                   </label>
                 </li>
-                <li>
+                <li key="riad">
                   <input
                     type="checkbox"
                     id="Riad"
@@ -247,7 +254,7 @@ export default function SearchForm({
                     <span>Riad</span>
                   </label>
                 </li>
-                <li>
+                <li key="triplex">
                   <input
                     type="checkbox"
                     id="Triplex"
@@ -258,7 +265,7 @@ export default function SearchForm({
                     <span>Triplex</span>
                   </label>
                 </li>
-                <li>
+                <li key="studio">
                   <input
                     type="checkbox"
                     id="Studio"
@@ -269,7 +276,7 @@ export default function SearchForm({
                     <span>Studio</span>
                   </label>
                 </li>
-                <li>
+                <li key="penthouse">
                   <input
                     type="checkbox"
                     id="PentHouse"
@@ -280,7 +287,7 @@ export default function SearchForm({
                     <span>PentHouse</span>
                   </label>
                 </li>
-                <li>
+                <li key="hangar">
                   <input
                     type="checkbox"
                     id="Hangar"
@@ -294,7 +301,7 @@ export default function SearchForm({
               </ul>
             </li>
 
-            <li>
+            <li key="price">
               <button
                 type="button"
                 ref={pricePopUptrigger}
@@ -313,10 +320,10 @@ export default function SearchForm({
                   className={` ${PricePopUpIsOpen ? "" : "hidden"}
                   border-2  gap-2 rounded-md absolute max-lg:right-[0] mx-[5px] mt-[2px] z-10 pt-2 pb-6  bg-white  px-4 w-fit `}
                 >
-                  <li>
+                  <li key="price">
                     <h3 className="py-2">Price</h3>
                     <ul className="flex flex-wrap gap-x-2 gap-y-1 justify-center">
-                      <li>
+                      <li key="minPrice">
                         <input
                           type="number"
                           name="minPrice"
@@ -324,7 +331,7 @@ export default function SearchForm({
                           className="box w-[13rem] "
                         />
                       </li>
-                      <li>
+                      <li key="maxPrice">
                         <input
                           type="number"
                           name="maxprice"
@@ -336,10 +343,10 @@ export default function SearchForm({
                   </li>
 
                   {!isForSell && (
-                    <li>
+                    <li key="rentPeriod">
                       <h3 className="py-2">Rental Period</h3>
                       <ul className="flex flex-wrap gap-x-2 gap-y-4 justify-center">
-                        <li>
+                        <li key="perday">
                           <input
                             type="radio"
                             name="rentalPeriod"
@@ -352,7 +359,7 @@ export default function SearchForm({
                             <span>Per Day</span>
                           </label>
                         </li>
-                        <li>
+                        <li key="perMonth">
                           <input
                             type="radio"
                             name="rentalPeriod"
@@ -366,7 +373,7 @@ export default function SearchForm({
                             <span>Per Month</span>
                           </label>
                         </li>
-                        <li>
+                        <li key="perYear">
                           <input
                             type="radio"
                             name="rentalPeriod"
@@ -385,13 +392,14 @@ export default function SearchForm({
                 </ul>
               </div>
             </li>
-          </div>
+          </ul>
+
           <div
             className={`${
               extraOptions ? "flex" : "hidden"
             }  flex-wrap items-center gap-1`}
           >
-            <li>
+            <li key="bedAndBaths">
               <button
                 type="button"
                 className="Input cursor-pointer whitespace-nowrap"
@@ -410,10 +418,10 @@ export default function SearchForm({
                   className={`${bedsAndBathsPopUpIsOpen ? "" : "hidden"}
                       border absolute rounded-md px-4 mt-[2px] pt-2 pb-6 z-10  bg-white w-fit`}
                 >
-                  <li className="">
+                  <li key="beds">
                     <h3 className="p-2">Beds</h3>
                     <ul className="flex flex-wrap gap-y-4 gap-x-1">
-                      <li>
+                      <li key="0">
                         <input
                           type="checkbox"
                           id="0"
@@ -425,7 +433,7 @@ export default function SearchForm({
                           <span>Studio</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="1">
                         <input
                           type="checkbox"
                           id="1"
@@ -437,7 +445,7 @@ export default function SearchForm({
                           <span>1</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="2">
                         <input
                           type="checkbox"
                           id="2"
@@ -449,7 +457,7 @@ export default function SearchForm({
                           <span>2</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="3">
                         <input
                           type="checkbox"
                           id="3"
@@ -461,7 +469,7 @@ export default function SearchForm({
                           <span>3</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="4">
                         <input
                           type="checkbox"
                           id="4"
@@ -473,7 +481,7 @@ export default function SearchForm({
                           <span>4</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="5">
                         <input
                           type="checkbox"
                           id="5"
@@ -485,7 +493,7 @@ export default function SearchForm({
                           <span>5</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="6">
                         <input
                           type="checkbox"
                           id="6"
@@ -497,7 +505,7 @@ export default function SearchForm({
                           <span>6</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="7">
                         <input
                           type="checkbox"
                           id="7"
@@ -509,7 +517,7 @@ export default function SearchForm({
                           <span>7</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="7+">
                         <input
                           type="checkbox"
                           id="7+"
@@ -523,10 +531,10 @@ export default function SearchForm({
                       </li>
                     </ul>
                   </li>
-                  <li className="">
+                  <li key="baths" className="">
                     <h3 className="p-2">Baths</h3>
                     <ul className="flex flex-wrap gap-y-4 gap-x-1 ">
-                      <li>
+                      <li key="bath11">
                         <input
                           type="checkbox"
                           id="11"
@@ -538,7 +546,7 @@ export default function SearchForm({
                           <span>1</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="bath12">
                         <input
                           type="checkbox"
                           id="12"
@@ -550,7 +558,7 @@ export default function SearchForm({
                           <span>2</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="bath13">
                         <input
                           type="checkbox"
                           id="13"
@@ -562,7 +570,7 @@ export default function SearchForm({
                           <span>3</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="bath14">
                         <input
                           type="checkbox"
                           id="14"
@@ -574,7 +582,7 @@ export default function SearchForm({
                           <span>4</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="bath15">
                         <input
                           type="checkbox"
                           id="15"
@@ -586,7 +594,7 @@ export default function SearchForm({
                           <span>5</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="bath16">
                         <input
                           type="checkbox"
                           id="16"
@@ -598,7 +606,7 @@ export default function SearchForm({
                           <span>6</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="bath17">
                         <input
                           type="checkbox"
                           id="17"
@@ -610,7 +618,7 @@ export default function SearchForm({
                           <span>7</span>
                         </label>
                       </li>
-                      <li>
+                      <li key="bath17+">
                         <input
                           type="checkbox"
                           id="17+"
@@ -628,7 +636,7 @@ export default function SearchForm({
               </div>
             </li>
 
-            <li>
+            <li key="isFurniture">
               <button
                 type="button"
                 ref={furniturePopUptrigger}
@@ -647,7 +655,7 @@ export default function SearchForm({
                   className={`${furniturePopUpIsOpen ? "" : "hidden"}
                     border-2  flex  flex-wrap gap-x-2 gap-y-4 rounded-md absolute max-sm:right-0 mx-[5px] justify-center mt-[2px] z-10 py-5  bg-white  px-4 w-fit`}
                 >
-                  <li>
+                  <li key="furnished">
                     <input
                       type="checkbox"
                       id="furnished"
@@ -659,7 +667,7 @@ export default function SearchForm({
                       <span>Furnished</span>
                     </label>
                   </li>
-                  <li>
+                  <li key="unfurnished">
                     <input
                       type="checkbox"
                       id="unfurnished"
@@ -671,7 +679,7 @@ export default function SearchForm({
                       <span className=" whitespace-nowrap">Unfurnished</span>
                     </label>
                   </li>
-                  <li>
+                  <li key="semiFurnished">
                     <input
                       type="checkbox"
                       id="semi-furnished"
@@ -687,7 +695,7 @@ export default function SearchForm({
               </div>
             </li>
 
-            <li>
+            <li key="surface">
               <div className="">
                 <button
                   type="button"
@@ -706,7 +714,7 @@ export default function SearchForm({
                   className={`${surfacePopUpIsOpen ? "" : "hidden"}
                     border-2 flex flex-wrap justify-center max-lg:right-0 gap-2 mx-[5px] rounded-md absolute z-10  bg-white p-4 `}
                 >
-                  <li>
+                  <li key="minSurface">
                     <input
                       type="number"
                       placeholder="Min surface $"
@@ -714,7 +722,7 @@ export default function SearchForm({
                       name="minSurface"
                     />
                   </li>
-                  <li>
+                  <li key="maxSurface">
                     <input
                       type="number"
                       placeholder="Max surface $"
@@ -727,7 +735,7 @@ export default function SearchForm({
             </li>
           </div>
           <div className="flex">
-            <li>
+            <li key="hashtag">
               <div
                 className={`Input ${
                   extraOptions ? "flex" : "hidden"
@@ -788,7 +796,9 @@ export default function SearchForm({
             </span>
 
             <span className="px-2 max-sm:hidden">Search</span>
-            <span className="px-2 sm:hidden ">Search {isForSell ? "To Buy" : "For Rent"}</span>
+            <span className="px-2 sm:hidden ">
+              Search {isForSell ? "To Buy" : "For Rent"}
+            </span>
           </button>
         </span>
       </form>

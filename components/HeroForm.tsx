@@ -20,14 +20,6 @@ export default function HeroForm() {
           Sell your property at the best Price
         </p>
         <div>
-          {/* <div className="fixed mb-[10rem]  border-red-800 bg-white">
-            <h1 className="text-4xl font-semiBold max-sm:hidden font-rubik pb-2">
-              <span className="text-blue-800">"Buy" </span>
-            </h1>
-            <h1 className="text-4xl font-semiBold max-sm:hidden font-rubik pb-2">
-              <span className="text-blue-800">"Rent"</span>
-            </h1>
-          </div> */}
           <SearchForm isForSell={isForSell} handleIsForSell={handleIsForSell} />
         </div>
       </div>

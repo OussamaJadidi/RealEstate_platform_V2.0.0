@@ -4,9 +4,20 @@ const nextConfig = {
         serverComponentsExternalPackages: ["@prisma/client","bcryptjs"]
         
     },
-    images:{
-        domains:['lh3.googleusercontent.com','files.edgestore.dev']
-    }
+    images: {
+        remotePatterns: [
+          {
+            protocol: 'https',
+            hostname: 'lh3.googleusercontent.com',
+            pathname: '**',
+          },
+          {
+            protocol: "https",
+            hostname: 'files.edgestore.dev',
+            pathname: "**"
+          }
+        ],
+      },
 }
 
 module.exports = nextConfig

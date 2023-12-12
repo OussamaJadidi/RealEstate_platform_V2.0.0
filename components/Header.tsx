@@ -17,9 +17,8 @@ import {
   faBullhorn,
 } from "@fortawesome/free-solid-svg-icons";
 import { faCircleUser } from "@fortawesome/free-regular-svg-icons";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import useHandlePopUp from "@/hooks/useHandlePopUp";
-import { Container } from "@/components";
 import SignIn from "./SignIn";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -48,10 +47,10 @@ export default function Header() {
 
   return (
     <header className="Container bg-transparent">
-      <Container className="h-20 max-sm:h-22 font-medium |  flex justify-between items-center font-sans">
+      <div className="wrapper | h-20 max-sm:h-22 font-medium |  flex justify-between items-center font-sans">
         {/* Logo  */}
         <span className="text-4xl text-blue-800 font-sans ">
-          <Link href="/">EstateElite</Link>
+          <Link href="/" >EstateElite</Link>
         </span>
         <ul className="flex gap-4  font-rubik">
           {/* Start links for desktop screen */}
@@ -252,7 +251,7 @@ export default function Header() {
           </li>
           {/* End PopUp menu  */}
         </ul>
-      </Container>
+      </div>
       {SignInPopupIsOpen && (
         <div ref={signInPopupRef}>
           <SignIn

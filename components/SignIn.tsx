@@ -5,9 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import {FormEvent, useState} from "react"
 import {toast} from "react-hot-toast"
-import axios from "axios"
-import { hash } from 'bcryptjs'
-import { redirect } from 'next/dist/server/api-utils'
+
 type SignInPropsType ={
     togglePopUp: () => void,
     alreadyHaveAccount: Boolean,
@@ -15,7 +13,7 @@ type SignInPropsType ={
 }
 export default function SignIn({togglePopUp,alreadyHaveAccount,toggleAccountState} : SignInPropsType) {
     const [credentials, setCredentials] = useState({ email: "", password: "" });
-
+    
     async function handleSubmit(e: FormEvent) {
         e.preventDefault();
         // Sign In login
@@ -88,7 +86,7 @@ export default function SignIn({togglePopUp,alreadyHaveAccount,toggleAccountStat
             </h2>
             <button 
                 className='border border-gray-300 hover:bg-gray-50 rounded-md font-rubik font-medium text-[1rem] min-w-0 w-full flex items-center px-4 py-2 '
-                onClick={handleGoogleAuth}    
+                onClick={()=>{handleGoogleAuth();toast.loading("redirecting to google accounts")}}    
             >
                 <Image src="/assets/google-icon.png" width="20" height="20" alt="google icon"/>
                 <span className=' whitespace-nowrap  w-full text-center'>Continue with Google</span>

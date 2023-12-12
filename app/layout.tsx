@@ -19,10 +19,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="relative">
         <SessionProvider>
-          <Header />
+          {/* <Header /> */}
           <ToastContext />
           <EdgeStoreProvider>{children}</EdgeStoreProvider>
-          <Footer />
+          {/* <Footer /> */}
         </SessionProvider>
       </body>
     </html>
