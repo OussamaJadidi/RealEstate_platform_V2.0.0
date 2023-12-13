@@ -1,10 +1,9 @@
-import React from "react";
-import { Container, FilterFormTest, FilterForm, Card, Map } from "@/components";
-import dynamic from "next/dynamic";
+import FilterForm from "@/components/FilterForm";
+import Card from "@/components/Card";
+import Map from "@/components/Map"
 export default function page() {
   return (
-    <div className="Container">
-      <Container>
+    <div className="Container wrapper">
         <div className="max-lg:hidden">
           <FilterForm lgScreen={true} />
         </div>
@@ -69,7 +68,6 @@ export default function page() {
             <Card TailwindCSS="flex max-lg:flex-col" />
           </div>
         </div>
-      </Container>
     </div>
   );
 }

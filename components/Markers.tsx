@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { Marker, Popup, useMap } from "react-leaflet";
 import { LatLngExpression } from "leaflet";
 import * as L from "leaflet";
-import { Card } from "./";
 import "leaflet/dist/leaflet.css";
 
 // Define the type for your markers

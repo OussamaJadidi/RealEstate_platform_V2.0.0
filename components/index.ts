@@ -1,6 +1,5 @@
 import Header from "./Header"
 import Footer from "./Footer"
-import Container from "./Container"
 import SearchForm from "./SearchForm"
 import Hero from "./Hero"
 import Value from "./Value"
@@ -14,7 +13,6 @@ import FilterFormTest from "./FilterFormTest"
 export {
     Header,
     Footer,
-    Container,
     SearchForm,
     Hero,
     Value,

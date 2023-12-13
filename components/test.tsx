@@ -40,17 +40,17 @@ export default function Card({TailwindCSS ="undefined"}: CardPropsType) {
       style={{height:"15rem"}}
     >
       <SwiperControlle />
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="500" height="300" className={'w-full h-full'} /></SwiperSlide>
     </Swiper>
     </span>
         <section className='p-3 flex flex-col justify-between gap-4 text-gray-500 text-sm bg-white '>
