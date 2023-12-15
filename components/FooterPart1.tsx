@@ -2,7 +2,7 @@ import React from 'react'
 
 function Ar() {
   return (
-    <div className="max-w-[25rem] ">
+    <div className="max-w-[25rem] sm:max-lg:text-center">
     <span className="text-4xl text-blue-800 font-sans font-semibold py-6 block">
       EstateElite
     </span>

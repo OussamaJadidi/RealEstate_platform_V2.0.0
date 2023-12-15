@@ -24,7 +24,7 @@ export default () => {
     <>
       <div className="wrapper relative group/Cards  py-8 ">
         <h2 className="text-3xl font-rubik pb-8 block px-8 ">
-          Take a look at The laCard announces: :
+          Take a look at The latest announces :
         </h2>
         <Swiper
           style={{ paddingBottom: "2.5rem", paddingInline: "2rem" }}
@@ -92,6 +92,7 @@ function SwiperControlle() {
       <button
         onClick={() => swiper.slidePrev()}
         className="text-blue-700 text-xl px-[-2rem] py-1  font-bold z-20 block p-[.5rem] "
+        aria-label="swipe slider to left"
       >
         {" "}
         <FontAwesomeIcon icon={faChevronLeft} style={{ width: "1rem" }} />{" "}
@@ -99,6 +100,8 @@ function SwiperControlle() {
       <button
         onClick={() => swiper.slideNext()}
         className="text-blue-700 text-xl px-[-2rem] py-1  font-bold z-20 block p-[.5rem] "
+        aria-label="swipe slider to right"
+
       >
         {" "}
         <FontAwesomeIcon icon={faChevronRight} style={{ width: "1rem" }} />{" "}

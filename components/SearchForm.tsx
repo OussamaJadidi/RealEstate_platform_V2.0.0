@@ -96,303 +96,305 @@ export default function SearchForm({
     <>
       <form action="" method="post" onSubmit={handleSubmit} className="">
         <ul className="flex  flex-col gap-1 ">
-          <ul className="flex flex-wrap gap-1  ">
-            <li key="country">
-              <input
-                name="country"
-                className="Input w-[8rem]"
-                list="country"
-                placeholder="Country"
-              />
-              <datalist className="marker:text-red-600" id="country">
-                {countries.map((country) => {
-                  return (
-                    <option value={country.name} key={country.label}>
-                      {country.label}
-                    </option>
-                  );
-                })}
-              </datalist>
-            </li>
-
-            <li key="city">
-              <input
-                name="city"
-                className="Input w-[8rem]"
-                type="text"
-                placeholder="City"
-                autoComplete="address-level2"
-              />
-            </li>
-
-            <li key="propertyType">
-              <button
-                type="button"
-                className="Input cursor-pointer whitespace-nowrap "
-                onClick={handlePropertyTypePopUp}
-                ref={propertyTypePopUptrigger}
-              >
-                Property type{" "}
-                <FontAwesomeIcon
-                  icon={faChevronDown}
-                  style={{ width: "1rem" }}
+          <li>
+            <ul className="flex flex-wrap gap-1  ">
+              <li key="country">
+                <input
+                  name="country"
+                  className="Input w-[8rem] max-sm:w-[10rem]"
+                  list="country"
+                  placeholder="Country"
                 />
-              </button>
-              <ul
-                key="propertyType"
-                ref={propertyTypePopUp}
-                className={` ${propertyTypePopUpIsOpen ? "" : "hidden"}
-                border absolute rounded-md px-4 mt-[2px] pt-6 pb-6 z-10  bg-white  flex max-lg:justify-center flex-wrap gap-x-1 gap-y-4 max-w-[29rem]`}
-              >
-                <li key="apprtment">
-                  <input
-                    type="checkbox"
-                    id="Apartment"
-                    name="Apartment"
-                    className="hidden"
-                  />
-                  <label htmlFor="Apartment" className="box">
-                    <span>Apartment</span>
-                  </label>
-                </li>
-                <li key="villa">
-                  <input
-                    type="checkbox"
-                    id="Villa"
-                    name="Villa"
-                    className="hidden"
-                  />
-                  <label htmlFor="Villa" className="box">
-                    <span>Villa</span>
-                  </label>
-                </li>
-                <li key="house">
-                  <input
-                    type="checkbox"
-                    id="House"
-                    name="House"
-                    className="hidden"
-                  />
-                  <label htmlFor="House" className="box">
-                    <span>House</span>
-                  </label>
-                </li>
-                <li key="duplex">
-                  <input
-                    type="checkbox"
-                    id="Duplex"
-                    name="Duplex"
-                    className="hidden"
-                  />
-                  <label htmlFor="Duplex" className="box">
-                    <span>Duplex</span>
-                  </label>
-                </li>
-                <li key="building">
-                  <input
-                    type="checkbox"
-                    id="Building"
-                    name="Building"
-                    className="hidden"
-                  />
-                  <label htmlFor="Building" className="box">
-                    <span>Building</span>
-                  </label>
-                </li>
-                <li key="ground">
-                  <input
-                    type="checkbox"
-                    id="Ground"
-                    name="Ground"
-                    className="hidden"
-                  />
-                  <label htmlFor="Ground" className="box">
-                    <span>Ground</span>
-                  </label>
-                </li>
-                <li key="bungalow">
-                  <input
-                    type="checkbox"
-                    id="Bungalow"
-                    name="Bungalow"
-                    className="hidden"
-                  />
-                  <label htmlFor="Bungalow" className="box">
-                    <span>Bungalow</span>
-                  </label>
-                </li>
-                <li key="cottage">
-                  <input
-                    type="checkbox"
-                    id="Cottage"
-                    name="Cottage"
-                    className="hidden"
-                  />
-                  <label htmlFor="Cottage" className="box">
-                    <span>Cottage</span>
-                  </label>
-                </li>
-                <li key="factory">
-                  <input
-                    type="checkbox"
-                    id="Factory"
-                    name="Factory"
-                    className="hidden"
-                  />
-                  <label htmlFor="Factory" className="box">
-                    <span>Factory</span>
-                  </label>
-                </li>
-                <li key="riad">
-                  <input
-                    type="checkbox"
-                    id="Riad"
-                    name="Riad"
-                    className="hidden"
-                  />
-                  <label htmlFor="Riad" className="box">
-                    <span>Riad</span>
-                  </label>
-                </li>
-                <li key="triplex">
-                  <input
-                    type="checkbox"
-                    id="Triplex"
-                    name="Triplex"
-                    className="hidden"
-                  />
-                  <label htmlFor="Triplex" className="box">
-                    <span>Triplex</span>
-                  </label>
-                </li>
-                <li key="studio">
-                  <input
-                    type="checkbox"
-                    id="Studio"
-                    name="Studio"
-                    className="hidden"
-                  />
-                  <label htmlFor="Studio" className="box">
-                    <span>Studio</span>
-                  </label>
-                </li>
-                <li key="penthouse">
-                  <input
-                    type="checkbox"
-                    id="PentHouse"
-                    name="PentHouse"
-                    className="hidden"
-                  />
-                  <label htmlFor="PentHouse" className="box">
-                    <span>PentHouse</span>
-                  </label>
-                </li>
-                <li key="hangar">
-                  <input
-                    type="checkbox"
-                    id="Hangar"
-                    name="Hangar"
-                    className="hidden"
-                  />
-                  <label htmlFor="Hangar" className="box">
-                    <span>Hangar</span>
-                  </label>
-                </li>
-              </ul>
-            </li>
+                <datalist className="marker:text-red-600" id="country">
+                  {countries.map((country) => {
+                    return (
+                      <option value={country.name} key={country.label}>
+                        {country.label}
+                      </option>
+                    );
+                  })}
+                </datalist>
+              </li>
 
-            <li key="price">
-              <button
-                type="button"
-                ref={pricePopUptrigger}
-                className="Input whitespace-nowrap"
-                onClick={handlePricePopUp}
-              >
-                Price{" "}
-                <FontAwesomeIcon
-                  icon={faChevronDown}
-                  style={{ width: "1rem" }}
+              <li key="city">
+                <input
+                  name="city"
+                  className="Input w-[8rem] max-sm:w-[10rem]"
+                  type="text"
+                  placeholder="City"
+                  autoComplete="address-level2"
                 />
-              </button>
-              <div>
-                <ul
-                  ref={pricePopUp}
-                  className={` ${PricePopUpIsOpen ? "" : "hidden"}
-                  border-2  gap-2 rounded-md absolute max-lg:right-[0] mx-[5px] mt-[2px] z-10 pt-2 pb-6  bg-white  px-4 w-fit `}
+              </li>
+
+              <li key="propertyType">
+                <button
+                  type="button"
+                  className="Input cursor-pointer whitespace-nowrap max-sm:w-[10rem]"
+                  onClick={handlePropertyTypePopUp}
+                  ref={propertyTypePopUptrigger}
                 >
-                  <li key="price">
-                    <h3 className="py-2">Price</h3>
-                    <ul className="flex flex-wrap gap-x-2 gap-y-1 justify-center">
-                      <li key="minPrice">
-                        <input
-                          type="number"
-                          name="minPrice"
-                          placeholder="Min Price $"
-                          className="box w-[13rem] "
-                        />
-                      </li>
-                      <li key="maxPrice">
-                        <input
-                          type="number"
-                          name="maxprice"
-                          placeholder="Max Price $"
-                          className="box w-[13rem] "
-                        />
-                      </li>
-                    </ul>
+                  Property type{" "}
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    style={{ width: "1rem" }}
+                  />
+                </button>
+                <ul
+                  key="propertyType"
+                  ref={propertyTypePopUp}
+                  className={` ${propertyTypePopUpIsOpen ? "" : "hidden"}
+                  border absolute rounded-md px-4 mt-[2px] pt-6 pb-6 z-10  bg-white  flex max-lg:justify-center flex-wrap gap-x-1 gap-y-4 max-w-[29rem]`}
+                >
+                  <li key="apprtment">
+                    <input
+                      type="checkbox"
+                      id="Apartment"
+                      name="Apartment"
+                      className="hidden"
+                    />
+                    <label htmlFor="Apartment" className="box">
+                      <span>Apartment</span>
+                    </label>
                   </li>
+                  <li key="villa">
+                    <input
+                      type="checkbox"
+                      id="Villa"
+                      name="Villa"
+                      className="hidden"
+                    />
+                    <label htmlFor="Villa" className="box">
+                      <span>Villa</span>
+                    </label>
+                  </li>
+                  <li key="house">
+                    <input
+                      type="checkbox"
+                      id="House"
+                      name="House"
+                      className="hidden"
+                    />
+                    <label htmlFor="House" className="box">
+                      <span>House</span>
+                    </label>
+                  </li>
+                  <li key="duplex">
+                    <input
+                      type="checkbox"
+                      id="Duplex"
+                      name="Duplex"
+                      className="hidden"
+                    />
+                    <label htmlFor="Duplex" className="box">
+                      <span>Duplex</span>
+                    </label>
+                  </li>
+                  <li key="building">
+                    <input
+                      type="checkbox"
+                      id="Building"
+                      name="Building"
+                      className="hidden"
+                    />
+                    <label htmlFor="Building" className="box">
+                      <span>Building</span>
+                    </label>
+                  </li>
+                  <li key="ground">
+                    <input
+                      type="checkbox"
+                      id="Ground"
+                      name="Ground"
+                      className="hidden"
+                    />
+                    <label htmlFor="Ground" className="box">
+                      <span>Ground</span>
+                    </label>
+                  </li>
+                  <li key="bungalow">
+                    <input
+                      type="checkbox"
+                      id="Bungalow"
+                      name="Bungalow"
+                      className="hidden"
+                    />
+                    <label htmlFor="Bungalow" className="box">
+                      <span>Bungalow</span>
+                    </label>
+                  </li>
+                  <li key="cottage">
+                    <input
+                      type="checkbox"
+                      id="Cottage"
+                      name="Cottage"
+                      className="hidden"
+                    />
+                    <label htmlFor="Cottage" className="box">
+                      <span>Cottage</span>
+                    </label>
+                  </li>
+                  <li key="factory">
+                    <input
+                      type="checkbox"
+                      id="Factory"
+                      name="Factory"
+                      className="hidden"
+                    />
+                    <label htmlFor="Factory" className="box">
+                      <span>Factory</span>
+                    </label>
+                  </li>
+                  <li key="riad">
+                    <input
+                      type="checkbox"
+                      id="Riad"
+                      name="Riad"
+                      className="hidden"
+                    />
+                    <label htmlFor="Riad" className="box">
+                      <span>Riad</span>
+                    </label>
+                  </li>
+                  <li key="triplex">
+                    <input
+                      type="checkbox"
+                      id="Triplex"
+                      name="Triplex"
+                      className="hidden"
+                    />
+                    <label htmlFor="Triplex" className="box">
+                      <span>Triplex</span>
+                    </label>
+                  </li>
+                  <li key="studio">
+                    <input
+                      type="checkbox"
+                      id="Studio"
+                      name="Studio"
+                      className="hidden"
+                    />
+                    <label htmlFor="Studio" className="box">
+                      <span>Studio</span>
+                    </label>
+                  </li>
+                  <li key="penthouse">
+                    <input
+                      type="checkbox"
+                      id="PentHouse"
+                      name="PentHouse"
+                      className="hidden"
+                    />
+                    <label htmlFor="PentHouse" className="box">
+                      <span>PentHouse</span>
+                    </label>
+                  </li>
+                  <li key="hangar">
+                    <input
+                      type="checkbox"
+                      id="Hangar"
+                      name="Hangar"
+                      className="hidden"
+                    />
+                    <label htmlFor="Hangar" className="box">
+                      <span>Hangar</span>
+                    </label>
+                  </li>
+                </ul>
+              </li>
 
-                  {!isForSell && (
-                    <li key="rentPeriod">
-                      <h3 className="py-2">Rental Period</h3>
-                      <ul className="flex flex-wrap gap-x-2 gap-y-4 justify-center">
-                        <li key="perday">
+              <li key="price">
+                <button
+                  type="button"
+                  ref={pricePopUptrigger}
+                  className="Input whitespace-nowrap max-sm:w-[10rem]"
+                  onClick={handlePricePopUp}
+                >
+                  Price{" "}
+                  <FontAwesomeIcon
+                    icon={faChevronDown}
+                    style={{ width: "1rem" }}
+                  />
+                </button>
+                <div>
+                  <ul
+                    ref={pricePopUp}
+                    className={` ${PricePopUpIsOpen ? "" : "hidden"}
+                    border-2  gap-2 rounded-md absolute max-lg:right-[0] mx-[5px] mt-[2px] z-10 pt-2 pb-6  bg-white  px-4 w-fit `}
+                  >
+                    <li key="price">
+                      <h3 className="py-2">Price</h3>
+                      <ul className="flex flex-wrap gap-x-2 gap-y-1 justify-center">
+                        <li key="minPrice">
                           <input
-                            type="radio"
-                            name="rentalPeriod"
-                            placeholder="Per Day"
-                            id="PerDay"
-                            value="PerDay"
-                            className="hidden"
+                            type="number"
+                            name="minPrice"
+                            placeholder="Min Price $"
+                            className="box w-[13rem] "
                           />
-                          <label htmlFor="PerDay" className="box">
-                            <span>Per Day</span>
-                          </label>
                         </li>
-                        <li key="perMonth">
+                        <li key="maxPrice">
                           <input
-                            type="radio"
-                            name="rentalPeriod"
-                            placeholder="Per Month"
-                            id="PerMonth"
-                            value="PerMonth"
-                            className="hidden"
-                            defaultChecked
+                            type="number"
+                            name="maxprice"
+                            placeholder="Max Price $"
+                            className="box w-[13rem] "
                           />
-                          <label htmlFor="PerMonth" className="box">
-                            <span>Per Month</span>
-                          </label>
-                        </li>
-                        <li key="perYear">
-                          <input
-                            type="radio"
-                            name="rentalPeriod"
-                            placeholder="Per Year"
-                            id="PerYear"
-                            value="perYear"
-                            className="hidden"
-                          />
-                          <label htmlFor="PerYear" className="box">
-                            <span>Per Year</span>
-                          </label>
                         </li>
                       </ul>
                     </li>
-                  )}
-                </ul>
-              </div>
-            </li>
-          </ul>
+
+                    {!isForSell && (
+                      <li key="rentPeriod">
+                        <h3 className="py-2">Rental Period</h3>
+                        <ul className="flex flex-wrap gap-x-2 gap-y-4 justify-center">
+                          <li key="perday">
+                            <input
+                              type="radio"
+                              name="rentalPeriod"
+                              placeholder="Per Day"
+                              id="PerDay"
+                              value="PerDay"
+                              className="hidden"
+                            />
+                            <label htmlFor="PerDay" className="box">
+                              <span>Per Day</span>
+                            </label>
+                          </li>
+                          <li key="perMonth">
+                            <input
+                              type="radio"
+                              name="rentalPeriod"
+                              placeholder="Per Month"
+                              id="PerMonth"
+                              value="PerMonth"
+                              className="hidden"
+                              defaultChecked
+                            />
+                            <label htmlFor="PerMonth" className="box">
+                              <span>Per Month</span>
+                            </label>
+                          </li>
+                          <li key="perYear">
+                            <input
+                              type="radio"
+                              name="rentalPeriod"
+                              placeholder="Per Year"
+                              id="PerYear"
+                              value="perYear"
+                              className="hidden"
+                            />
+                            <label htmlFor="PerYear" className="box">
+                              <span>Per Year</span>
+                            </label>
+                          </li>
+                        </ul>
+                      </li>
+                    )}
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </li>
 
           <div
             className={`${
@@ -402,7 +404,7 @@ export default function SearchForm({
             <li key="bedAndBaths">
               <button
                 type="button"
-                className="Input cursor-pointer whitespace-nowrap"
+                className="Input cursor-pointer whitespace-nowrap max-sm:w-[10rem]"
                 onClick={handleBedsAndBathsPopUp}
                 ref={bedsAndBathsPopUptrigger}
               >
@@ -640,7 +642,7 @@ export default function SearchForm({
               <button
                 type="button"
                 ref={furniturePopUptrigger}
-                className="Input whitespace-nowrap"
+                className="Input whitespace-nowrap max-sm:w-[10rem]"
                 onClick={handleFurniturePopUp}
               >
                 Furniture{" "}
@@ -701,7 +703,7 @@ export default function SearchForm({
                   type="button"
                   ref={surfacePopUptrigger}
                   onClick={handleSurfacePopUp}
-                  className="Input whitespace-nowrap"
+                  className="Input whitespace-nowrap max-sm:w-[10rem]"
                 >
                   Surface (m²){" "}
                   <FontAwesomeIcon
@@ -739,7 +741,7 @@ export default function SearchForm({
               <div
                 className={`Input ${
                   extraOptions ? "flex" : "hidden"
-                } items-center`}
+                } items-center `}
               >
                 <span className="pr-4">
                   <FontAwesomeIcon

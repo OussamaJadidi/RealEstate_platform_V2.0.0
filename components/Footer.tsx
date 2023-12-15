@@ -9,9 +9,11 @@ import Link from "next/link";
 import FooterPart1 from "./FooterPart1";
 export default function Footer() {
   return (
-    <footer className=" bg-slate-900 text-white Container  | flex flex-wrap max-sm:flex-col justify-center gap-x-20 items-start px-8 pb-8">
+    <footer className=" bg-slate-900 text-white Container  ">
+      <div className="wrapper | flex flex-wrap max-sm:flex-col justify-around gap-x-20 items-start px-8 pb-8">
+        
       <FooterPart1 />
-      <div>
+      <div className="sm:max-lg:text-center">
         <h2 className="font-semibold text-3xl py-6">Links</h2>
         <div className="flex flex-col gap-y-3  ">
           <span>
@@ -41,26 +43,8 @@ export default function Footer() {
           </span>
         </div>
       </div>
-      <div>
-        <form action="" className="flex flex-col gap-y-1 justify-center ">
-          <h2 className="font-semibold text-3xl py-6">Contact us</h2>
-          <input
-            type="text"
-            className="bg-sky-50 rounded-sm text-black"
-            placeholder=" email"
-          />
-          <textarea
-            id=""
-            cols={30}
-            rows={10}
-            className="bg-sky-50 rounded-sm h-[4rem] text-black"
-            placeholder=" what do you want"
-          ></textarea>
-          <button className="px-2 py-1 font-rubik rounded-md bg-blue-800 text-white  font-base">
-            Explore now
-          </button>
-        </form>
       </div>
+     
     </footer>
   );
 }

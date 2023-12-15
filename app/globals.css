@@ -13,11 +13,6 @@ html,body{
  box-sizing: border-box;
 }
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -100,10 +95,18 @@ input[type="radio"]:checked + label{
 }
 
 .textPublicitaire {
-
   -webkit-text-fill-color: white;
   -webkit-text-stroke-width: 1px;
   -webkit-text-stroke-width: blue;
+  -moz-text-fill-color: white;
+  -moz-text-stroke-width: 1px;
+  -moz-text-stroke-width: blue;
+  -o-text-fill-color: white;
+  -o-text-stroke-width: 1px;
+  -o-text-stroke-width: blue;
+  -ms-text-fill-color: white;
+  -ms-text-stroke-width: 1px;
+  -ms-text-stroke-width: blue;
 }
 
 .wrapper{

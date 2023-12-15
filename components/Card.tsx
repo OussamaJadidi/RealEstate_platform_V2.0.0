@@ -31,7 +31,7 @@ type CardPropsType={
 
 export default function Card({TailwindCSS ="undefined"}: CardPropsType) {
   return (
-    <div className={`${TailwindCSS} rounded-lg overflow-hidden group/card border  `}>
+    <div className={`${TailwindCSS} rounded-lg overflow-hidden group/card border `}>
     <span className={`relative    ${TailwindCSS!=="undefined" ? "lg:w-[20rem] w-full" : ""} `} >
     <Swiper
       spaceBetween={0}
@@ -41,6 +41,7 @@ export default function Card({TailwindCSS ="undefined"}: CardPropsType) {
     >
       <SwiperControlle />
         <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
+        {/* <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
         <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
         <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
         <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
@@ -49,8 +50,7 @@ export default function Card({TailwindCSS ="undefined"}: CardPropsType) {
         <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
         <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
         <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
-        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide>
+        <SwiperSlide><Image src="/assets/c.jpg" alt="propertyImg" width="394" height="240" className={'w-full h-full'} /></SwiperSlide> */}
     </Swiper>
     </span>
         <section className='p-3 flex flex-col justify-between gap-4 text-gray-500 text-sm bg-white '>
@@ -75,7 +75,8 @@ export default function Card({TailwindCSS ="undefined"}: CardPropsType) {
 function SwiperControlle(){
   const swiper = useSwiper();
   return<div className='hidden absolute top-0 bottom-0 left-0 right-0 z-10 group-hover/card:flex justify-between items-center '>
-     <button onClick={()=>swiper.slidePrev()} className='text-white text-xl px-2 py-1  font-bold '> <FontAwesomeIcon icon={faChevronLeft}  style={{width: "1rem"}}/> </button>
-     <button onClick={()=>swiper.slideNext()} className='text-white text-xl px-2 py-1  font-bold '> <FontAwesomeIcon icon={faChevronRight}  style={{width: "1rem"}}/> </button> 
+     <button onClick={()=>swiper.slidePrev()} className='text-white text-xl px-2 py-1  font-bold '         aria-label="swipe slider to left"
+> <FontAwesomeIcon icon={faChevronLeft}  style={{width: "1rem"}}/> </button>
+     <button onClick={()=>swiper.slideNext()} className='text-white text-xl px-2 py-1  font-bold ' aria-label="swipe slider to left"> <FontAwesomeIcon icon={faChevronRight}  style={{width: "1rem"}}/> </button> 
   </div>
 } 
