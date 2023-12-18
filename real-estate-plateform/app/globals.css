@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&family=Nunito+Sans:wght@300;600;800&family=Pixelify+Sans:wght@400;500;600;700&family=Poppins&family=Roboto+Slab:wght@100;300;500;700;900&family=Roboto:wght@100;300;400;500;700;900&family=Rubik:wght@300;400;500;600;700;800;900&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @import url('https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&family=Nunito+Sans:wght@300;600;800&family=Poppins&family=Roboto+Slab:wght@100;300;500;700;900&family=Roboto:wght@100;300;400;500;700;900&family=Rubik:wght@300;400;500;600;700;800;900&display=swap'); */
+
+@layer base {
+  html {
+    font-family: "roboto-500",;
+  }
+}
+html,body{
+ box-sizing: border-box;
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+html, body{
+  height: -webkit-fill-available;
+}
+
+.Container{
+  max-width: 13300px;
+  padding-inline: 5rem;
+}
+@media(max-width: 70em){
+  .Container{
+    max-width: 12180px;
+    padding-inline: 3rem;
+  }
+}
+@media(max-width: 50em){
+  .Container{
+    max-width: 12180px;
+    padding-inline: 2rem;
+  }
+}
+
+
+
+
+/* End hide the default marker of the <details> html tag  */
+
+
+input{
+  outline: none;
+  
+}
+
+/* Style the elements Search Form  */
+.Input{
+  padding: .5rem;
+  border: 1px solid gray;
+  border-radius: .3rem;
+  font-weight: 500;
+  font-size: .9rem;
+  background-color: white;
+  height: 2.5rem;
+  color: gray;
+  font-weight: 400;
+}
+.Input::placeholder{
+  color: gray;
+  font-weight: 400;
+  font-size: .9rem;
+}
+.box{
+  padding-block: .4rem;
+  padding-inline: .9rem;
+  background-color: rgb(229, 229, 229);
+  border-radius: .3rem;
+  color: black;
+  background-color: #f1f5f9;
+}
+.box span{
+  font-weight: 400;
+}
+input[type="checkbox"]:checked + label{
+  background-color: #e0f2fe;
+  color: #1e40af;
+  border: 1px solid #1e40af;
+}
+
+input[type="radio"]:checked + label{
+  background-color: #e0f2fe;
+  color: #1e40af;
+  border: 1px solid #1e40af;
+}
+
+.textPublicitaire {
+  -webkit-text-fill-color: white;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-width: blue;
+  -moz-text-fill-color: white;
+  -moz-text-stroke-width: 1px;
+  -moz-text-stroke-width: blue;
+  -o-text-fill-color: white;
+  -o-text-stroke-width: 1px;
+  -o-text-stroke-width: blue;
+  -ms-text-fill-color: white;
+  -ms-text-stroke-width: 1px;
+  -ms-text-stroke-width: blue;
+}
+
+.wrapper{
+  margin: auto;
+  max-width: 1350px;
+}
+
+
