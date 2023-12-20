@@ -115,3 +115,25 @@ input[type="radio"]:checked + label{
 }
 
 
+/* Start Properties page */
+.propertiesResults{
+  container-name: properties ;
+  container-type: inline-size;
+}
+.gridF{
+  display: grid;
+  gap:1rem;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+@container properties (min-width: 45rem){
+  .gridF{
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@container properties (min-width: 70rem){
+  .gridF{
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* End Properties page */

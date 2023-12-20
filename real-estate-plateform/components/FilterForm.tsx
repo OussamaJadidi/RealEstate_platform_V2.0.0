@@ -93,11 +93,13 @@ export default function FilterForm({ lgScreen = false }) {
           height="20"
           alt="filter icon"
         />
-        Filters
+        <span className="max-400px:hidden">
+          Filters
+        </span>
       </button>
         <div
           ref={FilterPopUp}
-          className={`${filterPopUpIsOpen || lgScreen ? "" : "hidden"} ${!lgScreen ? "absolute left-0 min-w-0  max-w-max z-30 bg-white p-4 border border-gray-500 mt-1 rounded-md" : ""} `}
+          className={`${filterPopUpIsOpen || lgScreen ? "" : "hidden"} ${!lgScreen ? "absolute right-0 min-w-0  max-w-max z-30 bg-white p-4 border border-gray-500 mt-1 rounded-md" : ""} `}
         >
           <form action="" className=" w-full" onSubmit={handleSubmit}>
             <ul className=" w- full flex flex-wrap  gap-1 ">
