@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(uuid())
+  name     String?
+  email    String @unique
+  password String
+  image    String?
+  phone    String?
+
+  ownedPropertiesToSell PropertyToSell[] @relation("ownedPropertiesToSell")
+  ownedPropertiesToRent PropertyToRent[] @relation("ownedPropertiesToRent")
+
+  bookedVisits          Json?
+  FavoritesPropertiesId Json?
+}
+
+
+model PropertyToSell {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  images      Json
+
+  country String
+  city    String
+  address String
+
+  propertyType String
+  bedsNumber   Int
+  bathsNumber  Int
+  furniture   String
+  surface      Float
+  Hashtags     Json?
+
+  globalLikesNumber Int?   @default(0)
+  ViewByNumber      Int?   @default(0)
+  clickedBy         Int?   @default(0)
+  User              User   @relation("ownedPropertiesToSell", fields: [ownerId], references: [id])
+  ownerId           String
+
+  ownerEmail String?
+  ownerPhone String?
+
+  @@unique(fields: [address, ownerEmail])
+}
+
+
+model PropertyToRent {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  price       Float
+  rentalPeriod String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  images      Json
+
+  country String
+  city    String
+  address String
+
+  propertyType String
+  bedsNumber   Int
+  bathsNumber  Int
+  furniture   String
+  surface      Float
+  Hashtags     Json?
+
+  globalLikesNumber Int?   @default(0)
+  ViewByNumber      Int?   @default(0)
+  clickedBy         Int?   @default(0)
+  User              User   @relation("ownedPropertiesToRent", fields: [ownerId], references: [id])
+  ownerId          String
+
+  ownerEmail String?
+  ownerPhone String?
+
+  @@unique(fields: [address, ownerEmail])
+}
