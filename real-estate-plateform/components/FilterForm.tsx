@@ -85,7 +85,7 @@ export default function FilterForm({ lgScreen = false }) {
       <button
         ref={FilterPopUpTrigger}
         onClick={handleFilterPopUp}
-        className={`${!lgScreen ? "border border-gray-500 rounded-md px-4 py-2 text-gray-500 outline-none flex justify-between items-center gap-x-2" : "hidden"} `}
+        className={"border border-gray-500 rounded-md px-4 py-2 text-gray-500 outline-none flex justify-between items-center gap-x-2"}
       >
         <Image
           src="/assets/filters.png"
@@ -98,10 +98,10 @@ export default function FilterForm({ lgScreen = false }) {
         </span>
       </button>
         <div
-          ref={FilterPopUp}
-          className={`${filterPopUpIsOpen || lgScreen ? "" : "hidden"} ${!lgScreen ? "absolute right-0 min-w-0  max-w-max z-30 bg-white p-4 border border-gray-500 mt-1 rounded-md" : ""} `}
+          ref={FilterPopUp} 
+          className={`${filterPopUpIsOpen ? "absolute right-[2rem] ml-[2rem] min-w-0 max-w-[45rem] z-30 bg-white p-4 border border-gray-500 mt-1 rounded-md max-516px:max-w-min" : "hidden"}`}
         >
-          <form action="" className=" w-full" onSubmit={handleSubmit}>
+          <form action="" className=" w-full flex items-center max-341px:flex-col max-341px:justify-center" onSubmit={handleSubmit}>
             <ul className=" w- full flex flex-wrap  gap-1 ">
               <li>
                 <input
@@ -127,11 +127,10 @@ export default function FilterForm({ lgScreen = false }) {
                   name="city"
                 />
               </li>
-
               <li>
                 <button
                   type="button"
-                  className="Input cursor-pointer whitespace-nowrap "
+                  className="Input cursor-pointer whitespace-nowrap w-[8rem]"
                   onClick={handlePropertyTypePopUp}
                   ref={propertyTypePopUptrigger}
                 >
@@ -320,7 +319,7 @@ export default function FilterForm({ lgScreen = false }) {
                 <button
                   type="button"
                   ref={pricePopUptrigger}
-                  className="Input whitespace-nowrap"
+                  className="Input whitespace-nowrap w-[8rem]"
                   onClick={handlePricePopUp}
                 >
                   Price
@@ -404,11 +403,10 @@ export default function FilterForm({ lgScreen = false }) {
                   </ul>
                 </div>
               </li>
-
               <li>
                 <button
                   type="button"
-                  className="Input cursor-pointer whitespace-nowrap"
+                  className="Input cursor-pointer whitespace-nowrap w-[8rem]"
                   onClick={handleBedsAndBathsPopUp}
                   ref={bedsAndBathsPopUptrigger}
                 >
@@ -641,12 +639,11 @@ export default function FilterForm({ lgScreen = false }) {
                   </ul>
                 </div>
               </li>
-
               <li>
                 <button
                   type="button"
                   ref={furniturePopUptrigger}
-                  className="Input whitespace-nowrap"
+                  className="Input whitespace-nowrap w-[8rem]"
                   onClick={handleFurniturePopUp}
                 >
                   Furniture
@@ -659,7 +656,7 @@ export default function FilterForm({ lgScreen = false }) {
                   <ul
                     ref={furniturePopUp}
                     className={`${furniturePopUpIsOpen ? "" : "hidden"}
-                      border-2  flex  flex-wrap gap-x-2 gap-y-4 rounded-md absolute max-sm:right-0 mx-[5px] justify-center mt-[2px] z-10 py-5  bg-white  px-4 w-fit`}
+                      border-2  flex  flex-wrap gap-x-2 gap-y-4 rounded-md absolute   justify-center mt-[2px] z-10 py-5  bg-white  px-4 w-fit`}
                   >
                     <li>
                       <input
@@ -703,12 +700,11 @@ export default function FilterForm({ lgScreen = false }) {
                 </div>
               </li>
               <li>
-                <div className="">
                   <button
                     type="button"
                     ref={surfacePopUptrigger}
                     onClick={handleSurfacePopUp}
-                    className="Input whitespace-nowrap"
+                    className="Input whitespace-nowrap w-[8rem]"
                   >
                     Surface (m²){" "}
                     <FontAwesomeIcon
@@ -719,7 +715,7 @@ export default function FilterForm({ lgScreen = false }) {
                     <ul
                       ref={sufacePopUp}
                       className={`${surfacePopUpIsOpen ? "flex" : "hidden" } 
-                        border-2  flex-wrap justify-center max-lg:right-0 gap-2 mx-[5px] rounded-md absolute z-10  bg-white p-4 `}
+                        border-2  flex-wrap justify-center gap-2 rounded-md absolute z-10  bg-white p-4 `}
                     >
                       <li>
                         <input
@@ -738,23 +734,37 @@ export default function FilterForm({ lgScreen = false }) {
                         />
                       </li>
                     </ul>
+              </li>
+              <li key="hashtag" className=" Input flex items-center w-[8rem] ">
+                <span className="pr-4">
+                  <FontAwesomeIcon
+                    icon={faMagnifyingGlass}
+                    style={{ width: "1rem" }}
+                  />
+                </span>
+                <div>
+                  <input
+                    type="text"
+                    name="hashtag"
+                    className="w-full"
+                    placeholder="hashtags: #pisicne#centre ville"
+                  />
                 </div>
-              </li>
-              <li className="">
-                <button
-                  type="submit"
-                  className=" bg-blue-800 text-white flex items-center p-2 rounded-md px-4 "
-                >
-                  <span className="w-4 text-white px-1">
-                    <FontAwesomeIcon
-                      icon={faMagnifyingGlass}
-                    />
-                  </span>
-
-                  <span className="px-2 "> Filter</span>
-                </button>
-              </li>
+            </li>
             </ul>
+            <button
+              type="submit"
+              className=" bg-blue-800 text-white flex items-center p-2 rounded-md px-4 w-[8rem]"
+            >
+              <span className="w-4 text-white px-1">
+                <FontAwesomeIcon
+                  icon={faMagnifyingGlass}
+                />
+              </span>
+
+              <span className="px-2 "> Filter</span>
+            </button>
+              
           </form>
         </div>
     </div>

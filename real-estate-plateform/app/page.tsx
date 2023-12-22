@@ -2,6 +2,7 @@ import Hero from "@/components/Hero"
 import LatestPosts from "@/components/LatestPosts"
 import Value from "@/components/Value"
 import CTA from "@/components/CTA"
+
 export default async function Home() {
   return (
     <main className=" max-lg:!px-0  font-medium ">

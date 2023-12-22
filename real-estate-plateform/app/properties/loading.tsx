@@ -18,14 +18,14 @@ function loading() {
           </span>
           <div className="flex gap-2 justify-end">
             <div className="flex gap-5 items-center">
-              <select className="border border-gray-500 rounded-md px-4 py-2 bg-white  text-gray-500 outline-none">
-                <option value="">Sorted by</option>
-                <option value="ascending price">ascending price</option>
-                <option value="descending price">descending price</option>
-                <option value="recent posts">Recent Posts</option>
-                <option value="rldest posts">Old Posts</option>
-              </select>
-            </div>
+                <select className="border border-gray-500 rounded-md px-4 py-2 w-[8rem] h-[2.5rem] bg-white  text-gray-500 outline-none">
+                  <option value="">Sorted by</option>
+                  <option value="ascending price">ascending price</option>
+                  <option value="descending price">descending price</option>
+                  <option value="recent posts">Recent Posts</option>
+                  <option value="rldest posts">Old Posts</option>
+                </select>
+              </div>
             <FilterForm />
           </div>
         </div>
@@ -33,31 +33,31 @@ function loading() {
       {/* <Card TailwindCSS="flex max-lg:flex-col" /> */}
       <div className="gridF">
       
-        <div className="">
+        <div>
           <CardSkelaton />
         </div>
-        <div className="">
+        <div>
           <CardSkelaton />
         </div>
-        <div className="">
+        <div>
           <CardSkelaton />
         </div>
-        <div className="">
+        <div>
           <CardSkelaton />
         </div>
-        <div className="">
+        <div>
           <CardSkelaton />
         </div>
-        <div className="">
+        <div>
           <CardSkelaton />
         </div>
-        <div className="">
+        <div>
           <CardSkelaton />
         </div>
-        <div className="">
+        <div>
           <CardSkelaton />
         </div>
-        <div className="">
+        <div>
           <CardSkelaton />
         </div>
       </div>
