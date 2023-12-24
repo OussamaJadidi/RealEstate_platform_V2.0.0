@@ -4,8 +4,7 @@ import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
-// import 'swiper/css/navigation';
-// import 'swiper/css/pagination';
+import 'swiper/css/pagination';
 import "swiper/css/scrollbar";
 import  Card  from "@/components/Card";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,9 +27,10 @@ export default () => {
         </h2>
           <Swiper
             style={{ paddingBottom: "2.5rem", paddingInline: "2rem" }}
-
             spaceBetween={50}
             slidesPerView={1}
+            modules={[Pagination]}
+            pagination={{ clickable: true }}
             breakpoints={{
               480: {
                 slidesPerView: 1,
@@ -42,9 +42,6 @@ export default () => {
                 slidesPerView: 3,
               },
             }}
-            modules={[Pagination]}
-            // navigation
-            pagination={{ clickable: true }}
           >
             <SwiperControlle />
             <SwiperSlide className="max-w-[784px] 850px:max-w-[541px] 1200px:max-w-[394px] mr-[50px]">
@@ -85,8 +82,7 @@ function SwiperControlle() {
         className="text-blue-700 text-xl px-[-2rem] py-1  font-bold z-20 block p-[.5rem] "
         aria-label="swipe slider to left"
       >
-        {" "}
-        <FontAwesomeIcon icon={faChevronLeft} style={{ width: "1rem" }} />{" "}
+        <FontAwesomeIcon icon={faChevronLeft} style={{ width: "1rem" }} />
       </button>
       <button
         onClick={() => swiper.slideNext()}
@@ -94,8 +90,7 @@ function SwiperControlle() {
         aria-label="swipe slider to right"
 
       >
-        {" "}
-        <FontAwesomeIcon icon={faChevronRight} style={{ width: "1rem" }} />{" "}
+        <FontAwesomeIcon icon={faChevronRight} style={{ width: "1rem" }} />
       </button>
     </div>
   );

@@ -163,25 +163,25 @@ export default function Card({ TailwindCSS = "undefined" }: CardPropsType) {
         <div>
           <p>Appartement</p>
           <div className=" text-blue-800 text-[1.1rem] font-bold font-roboto">
-            <span>1900</span> $/<span>month</span>{" "}
+            <span>1900</span> $/<span>month</span>
           </div>
           <h3 className=" text-black text-base ">
             Superbe appartment a louer bla blo Superbe appartment a louer bla
-            blo{" "}
+            blo
           </h3>
         </div>
         <div className="flex flex-col gap-1 font-normal">
           <p>
-            <FontAwesomeIcon icon={faLocationDot} /> <span>Morroco, oujda</span>{" "}
+            <FontAwesomeIcon icon={faLocationDot} /> <span>Morroco, oujda</span>
           </p>
           <div className="flex flex-wrap">
             <span className="whitespace-nowrap">
-              <FontAwesomeIcon icon={faBed} /> <span>3</span> bedrooms{" "}
-            </span>{" "}
+              <FontAwesomeIcon icon={faBed} /> <span>3</span> bedrooms
+            </span>
             <span className="px-2">|</span>
             <span className="whitespace-nowrap">
-              <FontAwesomeIcon icon={faBath} /> <span>2</span> bathrooms{" "}
-            </span>{" "}
+              <FontAwesomeIcon icon={faBath} /> <span>2</span> bathrooms
+            </span>
             <span className="px-2">|</span>
             <span className="whitespace-nowrap">
               <FontAwesomeIcon icon={faTentArrowLeftRight} /> <span>120</span>m²
@@ -201,15 +201,14 @@ function SwiperControlle() {
         className="text-white text-xl px-2 py-1  font-bold "
         aria-label="swipe to next image"
       >
-        <FontAwesomeIcon icon={faChevronLeft} style={{ width: "1rem" }} />{" "}
+        <FontAwesomeIcon icon={faChevronLeft} style={{ width: "1rem" }} />
       </button>
       <button
         onClick={() => swiper.slideNext()}
         className="text-white text-xl px-2 py-1  font-bold "
         aria-label="swipe previous image"
       >
-        {" "}
-        <FontAwesomeIcon icon={faChevronRight} style={{ width: "1rem" }} />{" "}
+        <FontAwesomeIcon icon={faChevronRight} style={{ width: "1rem" }} />
       </button>
     </div>
   );
