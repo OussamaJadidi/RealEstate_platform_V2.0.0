@@ -4,6 +4,7 @@ import { Marker, Popup, useMap } from "react-leaflet";
 import { LatLngExpression } from "leaflet";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import  MiniCard  from "./MiniCard";
 
 // Define the type for your markers
 type MarkerData = {
@@ -31,21 +32,21 @@ export default function Markers({
   setPosition,
 }: MarkersPropsType) {
   //  const [g,setG] = useState(position)
-  //   const map = useMap()
-  //   const markers: MarkerData[] = [
-  //     {
-  //       geocode: [34.6949524,-1.9006104],
-  //       popUp: "Hello I am a pop Up",
-  //     },
-  //     {
-  //       geocode: [34.6557527,-1.9112698],
-  //       popUp: "Hello I am a pop Up"
-  //     },
-  //     {
-  //       geocode: [34.6981051,-1.8913764],
-  //       popUp: "Hello I am a pop Up"
-  //     },
-  //   ];
+    // var map = useMap()
+    const markers: MarkerData[] = [
+      {
+        geocode: [34.6949524,-1.9006104],
+        popUp: "Hello I am a pop Up",
+      },
+      {
+        geocode: [34.6557527,-1.9112698],
+        popUp: "Hello I am a pop Up"
+      },
+      {
+        geocode: [34.6981051,-1.8913764],
+        popUp: "Hello I am a pop Up"
+      },
+    ];
 
   // let arr: [number,number] = [lat,lng];  // This is your array of two numbers
   // let ltlng: LatLngExpression = arr;
@@ -77,18 +78,18 @@ export default function Markers({
   },[position])
   return (
     <>
-      {/* {markers.map((marker)=> */}
+      {markers.map((marker)=>
 
       <Marker
-        // position={marker.geocode}
-        position={position || [1, 1]}
+        position={marker.geocode}
+        // position={position || [1, 1]}
         icon={DefaultIcon}
       >
         <Popup>
-          <div>your location </div>
+          <MiniCard />
         </Popup>
       </Marker>
-      {/* )} */}
+       )} 
     </>
   );
 }

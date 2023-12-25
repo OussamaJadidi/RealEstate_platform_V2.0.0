@@ -1,11 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import SearchForm from "./SearchForm";
+import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 export default function HeroForm() {
-  const [isForSell, setIsForSell] = useState(true);
+  const params = useSearchParams();
+  const urlParams = new URLSearchParams(params);
+  let forRentOrSell = true;
+  if(urlParams.has("ToBuy") && urlParams.get("ToBuy") === "false"){
+    forRentOrSell = false;
+  }
+
+  const [isForSell, setIsForSell] = useState(forRentOrSell);
+  const router = useRouter()
   function handleIsForSell() {
+    router.push(`/?ToBuy=${!isForSell}`)
     setIsForSell(!isForSell);
   }
+ 
   return (
     <>
       <div className="min-w-[12rem] w-[90%] 516px:max-sm:w-[95%]  sm:w-max z-10  max-lg:mx-auto / max-w-4xl p-6 sm:p-8 shadow-xl rounded-md bg-white | flex flex-col max-lg:h-max max-lg:mt-52 ">

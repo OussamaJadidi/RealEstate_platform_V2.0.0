@@ -41,7 +41,7 @@ export default function Card({ TailwindCSS = "undefined" }: CardPropsType) {
           spaceBetween={0}
           slidesPerView={1}
           modules={[A11y]}
-          style={{ height: "15rem" }}
+          style={{ height: "13.5rem" }}
           className="group/img"
         >
           <SwiperControlle />

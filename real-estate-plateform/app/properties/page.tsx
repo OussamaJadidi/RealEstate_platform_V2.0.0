@@ -10,12 +10,12 @@ export default function page({searchParams}:{searchParams: {[key: string]: strin
   return (
     <main className=" w-full flex max-lg:flex-col">
       <div className="w-1/2 first-let max-lg:w-full max-lg:px-[2rem] max-lg:py-[1rem]   max-lg:aspect-square lg:h-[100vh] lg:sticky top-0   ">
-        {/* <Map /> */}
+        <Map showMultiplePositions={true} />
       </div>
       <div className=" propertiesResults  lg:w-1/2 p-[.75rem] max-lg:px-[2rem] flex flex-col gap-y-4  ">
         <div>
           <h1 className="font-semibold text-black font-rubik text-[2rem] max-lg:hidden ">
-            Properties for Sell 
+            Properties for {searchParams["intentionTo"] === "Rent" ? "Rent" : "Sell"}
           </h1>
           <div className="flex justify-between items-center">
             <span className="font-semibold text-gray-400 font-rubic whitespace-nowrap">

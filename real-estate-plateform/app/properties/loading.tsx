@@ -74,7 +74,7 @@ function CardSkelaton() {
       className={` rounded-lg overflow-hidden group/card border `}
     >
       <div>
-        <Skeleton className="h-[15rem] w-full " />
+        <Skeleton className="h-[13.5rem] w-full " />
       </div>
       <section className="p-3 flex flex-col justify-between gap-4 text-gray-500 text-sm bg-white ">
         <div>

@@ -85,10 +85,9 @@ export default function SearchForm({
       string,
       string
     >;
-    console.log(formJson);
-
+    const Buy_Rent = isForSell ? "Buy" : "Rent"
     router.push(
-      "/properties" + "?" + new URLSearchParams(Object.entries(formJson))
+      "/properties" + "?" + new URLSearchParams(Object.entries(formJson)) + "&intentionTo="+ Buy_Rent
     );
   }
   // End handle Submit Form
