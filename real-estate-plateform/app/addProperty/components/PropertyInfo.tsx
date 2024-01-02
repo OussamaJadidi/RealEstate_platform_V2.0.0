@@ -1,5 +1,4 @@
 "use client";
-import { Container } from "@/components";
 import { faVcard } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 
@@ -24,9 +23,9 @@ export default function PropertyInfo() {
   return (
     <div className="Container">
       <h1 className="font-bold text-black text-[2rem] p-4">Property Information</h1>
-      <Container>
+      <div className="wrapper">
       <h1 className="font-bold text-black text-[1.5rem] p-4 pb-6">Basic Informations</h1>
-        <div className="flex">
+        <div className="flex max-sm:flex-wrap">
           <div className="flex flex-col flex-nowrap lg:justify-center pb-4 px-8 gap-4 w-full  lg:w-1/2">
             <span>
               <h2 className="pb-2 font-roboto text-slate-950 font-semibold">
@@ -131,9 +130,9 @@ export default function PropertyInfo() {
         </div>
       <h1 className="font-bold text-black text-[1.5rem] p-4 pb-6">Suplemetary Informations</h1>
 
-        <div className="flex gap-4 px-8">
-          <span className="lg:w-[33%]">
-            <h2 className="pb-2 font-roboto text-slate-950 font-semibold">
+        <div className="flex gap-4 px-8 max-sm:flex-wrap">
+          <span className="lg:w-[33%] w-full">
+            <h2 className="pb-2 font-roboto text-slate-950 font-semibold whitespace-nowrap">
               Bed rooms <span className="text-red-700">*</span>
             </h2>
             <select name="" id="" className="Input w-full">
@@ -148,8 +147,8 @@ export default function PropertyInfo() {
               <option value="">7+</option>
             </select>
           </span>
-          <span className="lg:w-[33%]">
-            <h2 className="pb-2 font-roboto text-slate-950 font-semibold">
+          <span className="lg:w-[33%] w-full">
+            <h2 className="pb-2 font-roboto text-slate-950 font-semibold whitespace-nowrap">
               Bath rooms <span className="text-red-700">*</span>
             </h2>
             <select name="" id="" className="Input w-full">
@@ -163,8 +162,8 @@ export default function PropertyInfo() {
               <option value="">7+</option>
             </select>
           </span>
-          <span className="lg:w-[33%]">
-            <h2 className="pb-2 font-roboto text-slate-950 font-semibold">
+          <span className="lg:w-[33%] w-full">
+            <h2 className="pb-2 font-roboto text-slate-950 font-semibold whitespace-nowrap">
               Furniture <span className="text-red-700">*</span>
             </h2>
             <select name="" id="" className="Input w-full">
@@ -175,7 +174,7 @@ export default function PropertyInfo() {
           </span>
         </div>
 
-        <div className="flex justify-between gap-4 px-8 pt-8">
+        <div className="flex flex-wrap justify-center gap-4 px-8 pt-8">
           <span>
             <label className="flex gap-4 items-stretch justify-start pb-4 whitespace-nowrap">
               <input
@@ -280,7 +279,7 @@ export default function PropertyInfo() {
           >
             Next
           </button>
-      </Container>
+      </div>
     </div>
   );
 }

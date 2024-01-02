@@ -8,7 +8,7 @@ const es = initEdgeStore.create();
  */
 const edgeStoreRouter = es.router({
   publicFiles: es
-  .fileBucket()
+  .imageBucket()
   // this input will be required for every upload request
   .input(
     z.object({
@@ -22,9 +22,9 @@ const edgeStoreRouter = es.router({
     // { author: ctx.userId },
   ])
   // this metadata will be added to every file in this bucket
-  .metadata(({ ctx, input }) => ({
-    userRole: ctx.userRole,
-  })),
+  // .metadata(({ ctx, input }) => ({
+  //   userRole: ctx.userRole,
+  // })),
   // publicFiles: es.imageBucket(),
 });
  

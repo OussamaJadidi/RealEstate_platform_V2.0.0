@@ -9,8 +9,8 @@ export default async function Home() {
       {/* bg-sky-50 for the header only in home page */}
       <div className="absolute top-0 left-0 right-0 h-20 max-sm:h-22 bg-sky-50 z-[-1]"></div>
       <Hero />
-      <LatestPosts />
       <Value />
+      <LatestPosts />
       <CTA /> 
     </main>
   );

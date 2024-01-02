@@ -1,5 +1,4 @@
 "use client";
-import { Container } from "@/components";
 import { faVcard } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
 
@@ -15,7 +14,7 @@ export default function OwnerInfo() {
   return (
     <div className="Container">
       <h1 className="font-bold text-black text-[2rem] p-4">Owner Contacts</h1>
-      <Container className="flex max-md:flex-col justify-between w-full ">
+      <div className="wrapper flex max-md:flex-col justify-between w-full ">
         <div className="w-full">
           <h1 className="font-bold text-black text-[1.5rem] p-4 pb-6">
             Necessary Informations
@@ -76,7 +75,7 @@ export default function OwnerInfo() {
             <div className="flex flex-col flex-nowrap lg:justify-center pb-4 px-8 gap-4 w-full ">
               <span>
                 <h2 className="pb-2 font-roboto text-slate-950 font-semibold">
-                  Facebook Link <span className="text-red-700">*</span>
+                  Facebook Link 
                 </h2>
                 <input
                   name="facebook"
@@ -90,7 +89,7 @@ export default function OwnerInfo() {
               </span>
               <span>
                 <h2 className="pb-2 font-roboto text-slate-950 font-semibold">
-                  Instagram Link <span className="text-red-700">*</span>
+                  Instagram Link 
                 </h2>
                 <input
                   name="instagram"
@@ -104,7 +103,7 @@ export default function OwnerInfo() {
               </span>
               <span>
                 <h2 className="pb-2 font-roboto text-slate-950 font-semibold">
-                  Twitter Link <span className="text-red-700">*</span>
+                  Twitter Link 
                 </h2>
                 <input
                   name="twitter"
@@ -120,7 +119,7 @@ export default function OwnerInfo() {
           </div>
         </div>
 
-      </Container>
+      </div>
         <button
           type="submit"
           className=" bg-blue-800 text-white px-8 py-2 rounded-md  my-12 mx-auto block"

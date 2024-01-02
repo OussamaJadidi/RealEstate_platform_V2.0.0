@@ -9,13 +9,11 @@ import { useState } from "react";
 
 type MapPropsType = {
   address?: string;
-  specifyLocationManually?: Boolean;
   showMultiplePositions: Boolean;
 };
 
 export default function Map({
   address,
-  specifyLocationManually = true,
   showMultiplePositions,
 }: MapPropsType) {
   const [position, setPosition] = useState<[number, number]>([32, -5]);

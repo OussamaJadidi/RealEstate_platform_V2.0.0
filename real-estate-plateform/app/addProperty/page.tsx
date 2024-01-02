@@ -12,7 +12,7 @@ export default function page() {
       {/* <Locations /> */}
       {/* <PropertyInfo /> */}
       {/* <OwnerInfo /> */}
-      <UploadImages />
+      {/* <UploadImages /> */}
     </>
   )
 }
