@@ -5,15 +5,32 @@ import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-export default function UploadImages() {
-  const [file, setFile] = useState<File>();
-  const [urls, setUrls] = useState<{
-    url: string;
-  }>();
-  const [progress,setProgress] = useState<number>()
+
+type ImagesProps = {
+  images:  string[] | undefined,
+  currentStepIndex?: number
+}
+type UploadImagesProps = ImagesProps & {
+  updateData: (updatedData: Partial<ImagesProps>) => void
+}
+
+export default function UploadImages({images,updateData,currentStepIndex}: UploadImagesProps) {
   const { edgestore } = useEdgeStore();
+  const [file,setFile] = useState<File>()
+  const [urls, setUrls] = useState<string[]>([]);
+  const [localUrl,setLocalUrl] = useState("")
+  const [progress,setProgress] = useState<number>()
+  let reader = new FileReader()
+  function generateImage(){
+    if(file) reader.readAsDataURL(file)
+    reader.onload= function(){
+      const res = reader.result as string
+      setLocalUrl(res)
+    }
+  }
+  generateImage()
   return (
-    <div className="Container">
+    <div className={`Container ${currentStepIndex !== 3 ? "hidden" : "" }`}>
       <h1 className="font-bold text-black text-[1.5rem] p-4 pb-6">
         Upload the property's Pictures
       </h1>
@@ -23,19 +40,18 @@ export default function UploadImages() {
         </h2>
         <label
           htmlFor="file1"
-          className="border border-black max-w-[40rem] mx-auto h-[20rem] flex flex-col justify-center items-center hover:bg-gray-100 transition-all duration-500 group"
+          className=" relative border border-black max-w-[40rem] mx-auto h-[20rem] flex flex-col justify-center items-center  transition-all duration-500 group"
         >
           <input
           id="file1"
-            className="hidden"
+            className=" hidden absolute inset-0"
             type="file"
             onChange={(e) => {
               setFile(e.target.files?.[0]);
             }}
           />
-          {urls?.url && <Link href={urls.url} target="_blank">Url </Link>}
-          {urls?.url ? (
-            <Image src={urls.url} alt ="Main Image of property" width="500" height="500"/>
+          {localUrl ? (
+            <Image src={localUrl} alt ="Main Image of property" className=" w-full h-full" width="500" height="500"/>
           ) : (
             <>
               <FontAwesomeIcon
@@ -50,23 +66,24 @@ export default function UploadImages() {
               />
             </>
           )}
+          {/* {file ?(
+            // <Image src={()=>{let reader = new FileReader();reader.readAsDataURL(); return reader.reasult}}
+          )} */}
         </label>
       <button 
        onClick={async () => {
         if (file) {
-          const res = await edgestore.publicFiles.upload({
+          const res = await edgestore.myPublicImages.upload({
             file,
-            input: { type: "post" },
-            options:{
-              temporary: true
-            },
+            // input: { type: "post" },
+            // // options:{
+            // //   temporary: true
+            // // },
             onProgressChange: (progresss) => {
               setProgress(progresss)
             },
           });
-          setUrls({
-            url: res.url,
-          });
+          setUrls(prev => [...prev,res.url]);
        
         }
         console.log("kmlt1")
@@ -74,17 +91,12 @@ export default function UploadImages() {
         <h2 className="font-bold text-black text-[1.5rem] p-4 pb-6">
           The images uploaded :
         </h2>
+        {}
         <div className="flex flex-wrap gap-8">
         
         </div>
       </div>
-      <button
-        // onClick={
-        //   console.log("hi")
-        // }
-      >
-        finish the registratino
-      </button>
+     
     </div>
   );
 }

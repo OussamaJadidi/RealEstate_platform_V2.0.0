@@ -1,18 +1,21 @@
 "use client";
 import { faVcard } from "@fortawesome/free-solid-svg-icons";
 import React, { useState } from "react";
-
-export default function OwnerInfo() {
-  const [ownerInfo, setOwnerInfo] = useState({
-    name: "",
-    email: "",
-    phoneNumber: "",
-    facebook: "",
-    instagram: "",
-    twitter: "",
-  });
+type OwnerProps={
+  name: string,
+  email: string,
+  phoneNumber: string,
+  facebook: string,
+  instagram: string,
+  twitter: string,
+  currentStepIndex?:number,
+}
+type OwnerInfoProps= OwnerProps & {
+  updateData : (updatedData : Partial<OwnerProps>) => void
+}
+export default function OwnerInfo({name , email,currentStepIndex , phoneNumber , facebook , instagram, twitter,updateData}: OwnerInfoProps) {
   return (
-    <div className="Container">
+    <div className={`Container ${currentStepIndex !== 2 ? "hidden" : "" }`}>
       <h1 className="font-bold text-black text-[2rem] p-4">Owner Contacts</h1>
       <div className="wrapper flex max-md:flex-col justify-between w-full ">
         <div className="w-full">
@@ -29,9 +32,9 @@ export default function OwnerInfo() {
                   name="name"
                   className="Input w-full"
                   placeholder="Name"
-                  value={ownerInfo.name}
+                  value={name}
                   onChange={(e) => {
-                    setOwnerInfo({ ...ownerInfo, name: e.target.value });
+                    updateData({name: e.target.value });
                   }}
                 />
               </span>
@@ -43,9 +46,9 @@ export default function OwnerInfo() {
                   name="email"
                   className="Input w-full"
                   placeholder="Email"
-                  value={ownerInfo.email}
+                  value={email}
                   onChange={(e) => {
-                    setOwnerInfo({ ...ownerInfo, email: e.target.value });
+                    updateData({email: e.target.value });
                   }}
                 />
               </span>
@@ -58,9 +61,9 @@ export default function OwnerInfo() {
                   name="number"
                   className="Input w-full"
                   placeholder="Phone Number"
-                  value={ownerInfo.phoneNumber}
+                  value={phoneNumber}
                   onChange={(e) => {
-                    setOwnerInfo({ ...ownerInfo, phoneNumber: e.target.value });
+                    updateData({phoneNumber: e.target.value });
                   }}
                 />
               </span>
@@ -81,9 +84,9 @@ export default function OwnerInfo() {
                   name="facebook"
                   className="Input w-full"
                   placeholder="Facebook Link"
-                  value={ownerInfo.facebook}
+                  value={facebook}
                   onChange={(e) => {
-                    setOwnerInfo({ ...ownerInfo, facebook: e.target.value });
+                    updateData({facebook: e.target.value });
                   }}
                 />
               </span>
@@ -95,9 +98,9 @@ export default function OwnerInfo() {
                   name="instagram"
                   className="Input w-full"
                   placeholder="Instagram Link"
-                  value={ownerInfo.instagram}
+                  value={instagram}
                   onChange={(e) => {
-                    setOwnerInfo({ ...ownerInfo, instagram: e.target.value });
+                    updateData({instagram: e.target.value });
                   }}
                 />
               </span>
@@ -109,9 +112,9 @@ export default function OwnerInfo() {
                   name="twitter"
                   className="Input w-full"
                   placeholder="Twitter Link"
-                  value={ownerInfo.twitter}
+                  value={twitter}
                   onChange={(e) => {
-                    setOwnerInfo({ ...ownerInfo, twitter: e.target.value });
+                    updateData({twitter: e.target.value });
                   }}
                 />
               </span>
@@ -120,12 +123,7 @@ export default function OwnerInfo() {
         </div>
 
       </div>
-        <button
-          type="submit"
-          className=" bg-blue-800 text-white px-8 py-2 rounded-md  my-12 mx-auto block"
-        >
-          Next
-        </button>
+     
     </div>
   );
 }

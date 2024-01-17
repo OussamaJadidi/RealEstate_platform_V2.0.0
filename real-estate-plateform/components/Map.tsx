@@ -6,18 +6,27 @@ import { MapContainer, TileLayer } from "react-leaflet";
 import MultipleMarkers from "./MultipleMarkers";
 import SelectPositionMarker from "./SelectPositionMarker";
 import { useState } from "react";
+type LocationProp={
+  address: string,
+  country: string,
+  city: string,
+  latAndLng: [number,number] 
+}
 
 type MapPropsType = {
-  address?: string;
-  showMultiplePositions: Boolean;
+  address?: string,
+  showMultiplePositions: Boolean,
+  latAndLng: [number,number],
+  updateData: (latAndLng: Partial<LocationProp>) => void
 };
 
 export default function Map({
   address,
   showMultiplePositions,
+  updateData,
+  latAndLng,
 }: MapPropsType) {
-  const [position, setPosition] = useState<[number, number]>([32, -5]);
-
+  const [position, setPosition] = useState<[number, number]>(latAndLng || [32, -5]);
   return (
     <>
       <MapContainer
@@ -45,6 +54,8 @@ export default function Map({
             address={address}
             position={position}
             setPosition={setPosition}
+            updateData={updateData}
+            latAndLng={latAndLng}
           />
         )}
       </MapContainer>

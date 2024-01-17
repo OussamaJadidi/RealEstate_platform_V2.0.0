@@ -3,18 +3,22 @@ import Map from "@/components/Map";
 import getCountries from "@/utils/getCountries";
 import { LatLngExpression } from "leaflet";
 import { useState } from "react";
-
-export default function Locations() {
+type LocationProp={
+  address: string,
+  country: string,
+  city: string,
+  latAndLng: [number,number] 
+  currentStepIndex?: number
+}
+type LocationFormProps=LocationProp & {
+  
+  updateData: (updatedData: Partial<LocationProp>) => void
+}
+export default function Locations({address,country,city,latAndLng,currentStepIndex,updateData}: LocationFormProps) {
   const countries = getCountries();
 
-  const [location, setLocation] = useState({
-    address: "",
-    country: "",
-    city: "",
-  });
-
   return (
-    <div className="Container ">
+    <div className={`Container ${currentStepIndex !== 0 ? "hidden" : "" }`}>
       <div className="py-8 max-sm:h-22 wrapper ">
         <h1 className="font-bold text-black text-[2rem] p-4">Location</h1>
         <div className=" flex max-lg:flex-col items-center justify-between w-full ">
@@ -28,9 +32,9 @@ export default function Locations() {
                 className="Input w-full "
                 list="country"
                 placeholder="Country name"
-                value={location.country}
+                value={country}
                 onChange={(e) => {
-                  setLocation({ ...location, country: e.target.value });
+                  updateData({country: e.target.value});
                 }}
               />
               <datalist className="marker:text-red-600" id="country">
@@ -50,9 +54,9 @@ export default function Locations() {
                 type="text"
                 placeholder="City name"
                 autoComplete="address-level2"
-                value={location.city}
+                value={city}
                 onChange={(e) => {
-                  setLocation({ ...location, city: e.target.value });
+                  updateData({city: e.target.value });
                 }}
               />
             </span>
@@ -65,9 +69,9 @@ export default function Locations() {
                 className="Input w-full"
                 placeholder="Street address"
                 autoComplete="address-line1"
-                value={location.address}
+                value={address}
                 onChange={(e) => {
-                  setLocation({ ...location, address: e.target.value });
+                  updateData({address: e.target.value });
                 }}
               />
             </span>
@@ -80,17 +84,14 @@ export default function Locations() {
             <div className="w-full h-[15rem] border border-black rounded-md">
               <Map
                 showMultiplePositions={false}
-                address={`${location.country} ${location.city} ${location.address}`}
+                address={`${country} ${city} ${address}`}
+                latAndLng={latAndLng}
+                updateData={updateData}
               />
             </div>
           </div>
         </div>
-        <button
-          type="submit"
-          className=" bg-blue-800 text-white px-8 py-2 rounded-md  mt-16 mb-6 mx-auto block"
-        >
-          Next
-        </button>
+
       </div>
     </div>
   );

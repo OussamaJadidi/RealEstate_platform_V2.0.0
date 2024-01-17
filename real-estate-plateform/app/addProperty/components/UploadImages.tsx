@@ -5,16 +5,42 @@ import { faImage, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-export default function UploadImages() {
-  const [file, setFile] = useState<File>();
-  const [urls, setUrls] = useState<{
-    url: string;
-  }>();
-  const [progress,setProgress] = useState<number>()
+import {
+  type FileState,
+  MultiImageDropzone,
+} from "@/components/MultiImageDropzone";
+
+type ImagesProps = {
+  images: string[] | undefined;
+  currentStepIndex?: number;
+};
+type UploadImagesProps = ImagesProps & {
+  updateData: (updatedData: Partial<ImagesProps>) => void;
+};
+
+export default function UploadImages({
+  images,
+  updateData,
+  currentStepIndex,
+}: UploadImagesProps) {
   const { edgestore } = useEdgeStore();
-  let reader = new FileReader()
+  const [urls, setUrls] = useState<string[]>([]);
+  const [fileStates, setFileStates] = useState<FileState[]>([]);
+
+  function updateFileProgress(key: string, progress: FileState["progress"]) {
+    setFileStates((fileStates) => {
+      const newFileStates = structuredClone(fileStates);
+      const fileState = newFileStates.find(
+        (fileState) => fileState.key === key
+      );
+      if (fileState) {
+        fileState.progress = progress;
+      }
+      return newFileStates;
+    });
+  }
   return (
-    <div className="Container">
+    <div className={`Container ${currentStepIndex !== 3 ? "hidden" : ""}`}>
       <h1 className="font-bold text-black text-[1.5rem] p-4 pb-6">
         Upload the property's Pictures
       </h1>
@@ -22,73 +48,56 @@ export default function UploadImages() {
         <h2 className="font-bold text-black text-[1.5rem] p-4 pb-6">
           Upload Up to 7 Images
         </h2>
-        <label
-          htmlFor="file1"
-          className=" relative border border-black max-w-[40rem] mx-auto h-[20rem] flex flex-col justify-center items-center hover:bg-gray-100 transition-all duration-500 group"
+        <MultiImageDropzone
+          value={fileStates}
+          dropzoneOptions={{
+            maxFiles: 6,
+          }}
+          onChange={(files) => {
+            setFileStates(files);
+          }}
+          onFilesAdded={async (addedFiles) => {
+            setFileStates([...fileStates, ...addedFiles]);
+            await Promise.all(
+              addedFiles.map(async (addedFileState) => {
+                try {
+                  const res = await edgestore.myPublicImages.upload({
+                    file: addedFileState.file as File,
+                    input: { type: "property" },
+                    onProgressChange: async (progress) => {
+                      updateFileProgress(addedFileState.key, progress);
+                      if (progress === 100) {
+                        // wait 1 second to set it to complete
+                        // so that the user can see the progress bar at 100%
+                        await new Promise((resolve) =>
+                          setTimeout(resolve, 1000)
+                        );
+                        updateFileProgress(addedFileState.key, "COMPLETE");
+                      }
+                    },
+                    options: {
+                      temporary: true,
+                    },
+                  });
+                  setUrls((prevUrls) => [...prevUrls, res.url]);
+                  console.log(res);
+                } catch (err) {
+                  updateFileProgress(addedFileState.key, "ERROR");
+                }
+              })
+            );
+          }}
+        />
+        <button
+          type="submit"
+          className="flex justify-center items-center gap-4 my-12 bg-red-600 text-white  font-semibold px-8 py-2 rounded-md"
+          onClick={()=>{
+            setFileStates([])
+          }}
         >
-          <input
-          id="file1"
-            className=" border-2 border-red-800 absolute inset-0"
-            type="file"
-            onChange={(e) => {
-              setFile(e.target.files?.[0]);
-            }}
-          />
-          {urls?.url && <Link href={urls.url} target="_blank">Url </Link>}
-          {/* {urls?.url ? (
-            <Image src={urls.url} alt ="Main Image of property" width="500" height="500"/>
-          ) : (
-            <>
-              <FontAwesomeIcon
-                icon={faImage}
-                style={{ fontSize: "3rem" }}
-                className="group-hover:opacity-0 order-1 group-hover:order-2 mt-20"
-              />
-              <FontAwesomeIcon
-                icon={faPlus}
-                style={{ fontSize: "3rem" }}
-                className="opacity-0 group-hover:opacity-100 order-2 group-hover:order-1 mt-20"
-              />
-            </>
-          )} */}
-          {/* {file ?(
-            // <Image src={()=>{let reader = new FileReader();reader.readAsDataURL(); return reader.reasult}}
-          )} */}
-        </label>
-      <button 
-       onClick={async () => {
-        if (file) {
-          const res = await edgestore.publicFiles.upload({
-            file,
-            input: { type: "post" },
-            options:{
-              temporary: true
-            },
-            onProgressChange: (progresss) => {
-              setProgress(progresss)
-            },
-          });
-          setUrls({
-            url: res.url,
-          });
-       
-        }
-        console.log("kmlt1")
-      }}>hi</button>
-        <h2 className="font-bold text-black text-[1.5rem] p-4 pb-6">
-          The images uploaded :
-        </h2>
-        <div className="flex flex-wrap gap-8">
-        
-        </div>
+          Reset
+        </button>
       </div>
-      <button
-        // onClick={
-        //   console.log("hi")
-        // }
-      >
-        finish the registratino
-      </button>
     </div>
   );
 }

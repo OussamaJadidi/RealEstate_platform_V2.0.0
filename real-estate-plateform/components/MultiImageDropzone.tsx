@@ -1,24 +1,26 @@
-import React from "react";
-import { formatFileSize } from "@edgestore/react/utils";
-import { useDropzone, type DropzoneOptions } from "react-dropzone";
-import { twMerge } from "tailwind-merge";
-import { UploadCloudIcon, X } from "lucide-react";
+'use client';
+
+import { formatFileSize } from '@edgestore/react/utils';
+import { UploadCloudIcon, X } from 'lucide-react';
+import * as React from 'react';
+import { useDropzone, type DropzoneOptions } from 'react-dropzone';
+import { twMerge } from 'tailwind-merge';
 
 const variants = {
-  base: "relative rounded-md aspect-square flex justify-center items-center flex-col cursor-pointer min-h-[150px] min-w-[200px] border border-dashed border-gray-400 dark:border-gray-300 transition-colors duration-200 ease-in-out",
+  base: 'relative rounded-md aspect-square flex justify-center items-center flex-col cursor-pointer min-h-[150px] min-w-[200px] border border-dashed border-gray-400 dark:border-gray-300 transition-colors duration-200 ease-in-out',
   image:
-    "border-0 p-0 w-full h-full relative shadow-md bg-slate-200 dark:bg-slate-900 rounded-md",
-  active: "border-2",
+    'border-0 p-0 w-full h-full relative shadow-md bg-slate-200 dark:bg-slate-900 rounded-md',
+  active: 'border-2',
   disabled:
-    "bg-gray-200 border-gray-300 cursor-default pointer-events-none bg-opacity-30 dark:bg-gray-700",
-  accept: "border border-blue-500 bg-blue-500 bg-opacity-10",
-  reject: "border border-red-700 bg-red-700 bg-opacity-10",
+    'bg-gray-200 border-gray-300 cursor-default pointer-events-none bg-opacity-30 dark:bg-gray-700',
+  accept: 'border border-blue-500 bg-blue-500 bg-opacity-10',
+  reject: 'border border-red-700 bg-red-700 bg-opacity-10',
 };
 
 export type FileState = {
   file: File | string;
   key: string; // used to identify the file in the progress callback
-  progress: "PENDING" | "COMPLETE" | "ERROR" | number;
+  progress: 'PENDING' | 'COMPLETE' | 'ERROR' | number;
 };
 
 type InputProps = {
@@ -27,33 +29,35 @@ type InputProps = {
   onChange?: (files: FileState[]) => void | Promise<void>;
   onFilesAdded?: (addedFiles: FileState[]) => void | Promise<void>;
   disabled?: boolean;
-  dropzoneOptions?: Omit<DropzoneOptions, "disabled">;
+  dropzoneOptions?: Omit<DropzoneOptions, 'disabled'>;
 };
+
 const ERROR_MESSAGES = {
   fileTooLarge(maxSize: number) {
     return `The file is too large. Max size is ${formatFileSize(maxSize)}.`;
   },
   fileInvalidType() {
-    return "Invalid file type.";
+    return 'Invalid file type.';
   },
   tooManyFiles(maxFiles: number) {
     return `You can only add ${maxFiles} file(s).`;
   },
   fileNotSupported() {
-    return "The file is not supported.";
+    return 'The file is not supported.';
   },
 };
-export onst MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
+
+const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
   (
     { dropzoneOptions, value, className, disabled, onChange, onFilesAdded },
-    ref
+    ref,
   ) => {
     const [customError, setCustomError] = React.useState<string>();
 
     const imageUrls = React.useMemo(() => {
       if (value) {
         return value.map((fileState) => {
-          if (typeof fileState.file === "string") {
+          if (typeof fileState.file === 'string') {
             // in case a url is passed in, use it to display the image
             return fileState.file;
           } else {
@@ -74,7 +78,7 @@ export onst MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
       isDragAccept,
       isDragReject,
     } = useDropzone({
-      accept: { "image/*": [] },
+      accept: { 'image/*': [] },
       disabled,
       onDrop: (acceptedFiles) => {
         const files = acceptedFiles;
@@ -90,7 +94,7 @@ export onst MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
           const addedFiles = files.map<FileState>((file) => ({
             file,
             key: Math.random().toString(36).slice(2),
-            progress: "PENDING",
+            progress: 'PENDING',
           }));
           void onFilesAdded?.(addedFiles);
           void onChange?.([...(value ?? []), ...addedFiles]);
@@ -108,7 +112,7 @@ export onst MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
           disabled && variants.disabled,
           (isDragReject ?? fileRejections[0]) && variants.reject,
           isDragAccept && variants.accept,
-          className
+          className,
         ).trim(),
       [
         isFocused,
@@ -117,18 +121,18 @@ export onst MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
         isDragReject,
         disabled,
         className,
-      ]
+      ],
     );
 
     // error validation messages
     const errorMessage = React.useMemo(() => {
       if (fileRejections[0]) {
         const { errors } = fileRejections[0];
-        if (errors[0]?.code === "file-too-large") {
+        if (errors[0]?.code === 'file-too-large') {
           return ERROR_MESSAGES.fileTooLarge(dropzoneOptions?.maxSize ?? 0);
-        } else if (errors[0]?.code === "file-invalid-type") {
+        } else if (errors[0]?.code === 'file-invalid-type') {
           return ERROR_MESSAGES.fileInvalidType();
-        } else if (errors[0]?.code === "too-many-files") {
+        } else if (errors[0]?.code === 'too-many-files') {
           return ERROR_MESSAGES.tooManyFiles(dropzoneOptions?.maxFiles ?? 0);
         } else {
           return ERROR_MESSAGES.fileNotSupported();
@@ -139,26 +143,26 @@ export onst MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div>
-        <div className="grid grid-cols-[repeat(1,1fr)] gap-2 sm:grid-cols-[repeat(2,1fr)] lg:grid-cols-[repeat(3,1fr)] xl:grid-cols-[repeat(4,1fr)]">
+        <div className="grid grid-cols-[repeat(1,1fr)] gap-2 sm:grid-cols-[repeat(2,1fr)] lg:grid-cols-[repeat(3,1fr)] border-4 border-red-500 ">
           {/* Images */}
           {value?.map(({ file, progress }, index) => (
             <div
               key={index}
-              className={variants.image + " aspect-square h-full"}
+              className={variants.image + ' aspect-video h-full'}
             >
               <img
                 className="h-full w-full rounded-md object-cover"
                 src={imageUrls[index]}
-                alt={typeof file === "string" ? file : file.name}
+                alt={typeof file === 'string' ? file : file.name}
               />
               {/* Progress Bar */}
-              {typeof progress === "number" && (
+              {typeof progress === 'number' && (
                 <div className="absolute top-0 left-0 flex h-full w-full items-center justify-center rounded-md bg-black bg-opacity-70">
                   <CircleProgress progress={progress} />
                 </div>
               )}
               {/* Remove Image Icon */}
-              {imageUrls[index] && !disabled && progress === "PENDING" && (
+              {imageUrls[index] && !disabled && progress === 'PENDING' && (
                 <div
                   className="group absolute right-0 top-0 -translate-y-1/4 translate-x-1/4 transform"
                   onClick={(e) => {
@@ -182,7 +186,7 @@ export onst MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
           {(!value || value.length < (dropzoneOptions?.maxFiles ?? 0)) && (
             <div
               {...getRootProps({
-                className: dropZoneClassName,
+                className: dropZoneClassName + " aspect-video  h-[15rem]"
               })}
             >
               {/* Main File Input */}
@@ -203,8 +207,33 @@ export onst MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
         </div>
       </div>
     );
-  }
+  },
 );
+MultiImageDropzone.displayName = 'MultiImageDropzone';
+
+const Button = React.forwardRef<
+  HTMLButtonElement,
+  React.ButtonHTMLAttributes<HTMLButtonElement>
+>(({ className, ...props }, ref) => {
+  return (
+    <button
+      className={twMerge(
+        // base
+        'focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50',
+        // color
+        'border border-gray-400 text-gray-400 shadow hover:bg-gray-100 hover:text-gray-500 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700',
+        // size
+        'h-6 rounded-md px-2 text-xs',
+        className,
+      )}
+      ref={ref}
+      {...props}
+    />
+  );
+});
+Button.displayName = 'Button';
+
+export { MultiImageDropzone };
 
 function CircleProgress({ progress }: { progress: number }) {
   const strokeWidth = 10;
@@ -250,23 +279,3 @@ function CircleProgress({ progress }: { progress: number }) {
     </div>
   );
 }
-const Button = React.forwardRef<
-  HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
->(({ className, ...props }, ref) => {
-  return (
-    <button
-      className={twMerge(
-        // base
-        "focus-visible:ring-ring inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 disabled:pointer-events-none disabled:opacity-50",
-        // color
-        "border border-gray-400 text-gray-400 shadow hover:bg-gray-100 hover:text-gray-500 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700",
-        // size
-        "h-6 rounded-md px-2 text-xs",
-        className
-      )}
-      ref={ref}
-      {...props}
-    />
-  );
-});

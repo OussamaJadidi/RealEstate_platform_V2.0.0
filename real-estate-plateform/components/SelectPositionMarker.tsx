@@ -5,6 +5,14 @@ import { LatLngExpression } from "leaflet";
 import * as L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import  MiniCard  from "./MiniCard";
+import { GitGraph } from "lucide-react";
+
+type LocationProp={
+  address: string,
+  country: string,
+  city: string,
+  latAndLng: [number,number] 
+}
 
 // Define the type for your markers
 type MarkerData = {
@@ -16,6 +24,8 @@ type MarkersPropsType = {
   address?: string,
   position: [number, number],
   setPosition: (pos: [number, number]) => void;
+  updateData: (updatedData: Partial<LocationProp>) => void
+  latAndLng: [number,number]
 };
 
 
@@ -30,39 +40,42 @@ export default function Markers({
   address,
   position,
   setPosition,
+  updateData,
+  latAndLng
 }: MarkersPropsType) {
   const handleMapClick = (e :L.LeafletMouseEvent) => {
     const { lat, lng } = e.latlng; // Destructure lat and lng from e.latlng
+    console.log("==>",[lat,lng])
     setPosition([lat,lng]); 
+    updateData({latAndLng: [lat,lng] })
   }; 
   const mapEvents = useMapEvents({
     click: handleMapClick, 
   });
   const map = useMap()
   useEffect(() => {
-    const handleGeocode = async () => {
-      try {
-        if (address) {
-          let result;
+      const handleGeocode = async () => {
+        try {
           if (address) {
-            result = await geocodeLocation(address);
+            let result;
+            if (address) {
+              result = await geocodeLocation(address);
+            }
+            if (result) {
+              setPosition(result);
+              updateData({latAndLng: result})
+            }
           }
-          if (result) {
-            setPosition(result);
-          }
+        } catch (error: any) {
+          console.error(error.message);
         }
-      } catch (error: any) {
-        console.error(error.message);
-      }
-    };
-
-    handleGeocode();
+      };
+      handleGeocode();
   }, [address]);
   useEffect(()=> {
     map.flyTo(position,map.getZoom())
 
   },[position])
- 
   return (
     <>
       <Marker
