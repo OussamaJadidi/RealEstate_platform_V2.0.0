@@ -15,8 +15,8 @@ type OwnerInfoProps= OwnerProps & {
 }
 export default function OwnerInfo({name , email,currentStepIndex , phoneNumber , facebook , instagram, twitter,updateData}: OwnerInfoProps) {
   return (
-    <div className={`Container ${currentStepIndex !== 2 ? "hidden" : "" }`}>
-      <h1 className="font-bold text-black text-[2rem] p-4">Owner Contacts</h1>
+    <div className={`Container  ${currentStepIndex !== 2 ? "hidden" : "" }`}>
+      <h1 className="font-bold wrapper text-black text-[2rem] p-4">Owner Contacts</h1>
       <div className="wrapper flex max-md:flex-col justify-between w-full ">
         <div className="w-full">
           <h1 className="font-bold text-black text-[1.5rem] p-4 pb-6">

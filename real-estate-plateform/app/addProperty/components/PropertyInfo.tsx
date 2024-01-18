@@ -44,8 +44,8 @@ export default function PropertyInfo({
 }: PropertyInfoProps) {
  
   return (
-    <div className={`Container ${currentStepIndex !== 1 ? "hidden" : "" }`}>
-      <h1 className="font-bold text-black text-[2rem] p-4">
+    <div className={`Container  ${currentStepIndex !== 1 ? "hidden" : "" }`}>
+      <h1 className="font-bold wrapper text-black text-[2rem] p-4">
         Property Information
       </h1>
       <div className="wrapper">

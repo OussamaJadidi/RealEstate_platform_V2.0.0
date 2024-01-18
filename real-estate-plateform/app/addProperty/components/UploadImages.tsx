@@ -40,14 +40,14 @@ export default function UploadImages({
     });
   }
   return (
-    <div className={`Container ${currentStepIndex !== 3 ? "hidden" : ""}`}>
-      <h1 className="font-bold text-black text-[1.5rem] p-4 pb-6">
+    <div className={`Container  ${currentStepIndex !== 3 ? "hidden" : ""}`}>
+      <h1 className="font-bold wrapper text-black text-[1.5rem] p-4 pb-2">
         Upload the property's Pictures
       </h1>
-      <div className="Container">
-        <h2 className="font-bold text-black text-[1.5rem] p-4 pb-6">
+        <h2 className="wrapper font-semibold text-gray-500 text-[1.2rem] px-4 pb-6">
           Upload Up to 7 Images
         </h2>
+      <div className=" px-8 wrapper">
         <MultiImageDropzone
           value={fileStates}
           dropzoneOptions={{

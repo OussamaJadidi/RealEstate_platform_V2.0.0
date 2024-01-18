@@ -76,8 +76,8 @@ export default function page() {
   
   return (
     <>
-      <div className=" flex justify-center ">
-        <div className="flex flex-nowrap gap-4">
+      <div className="Container my-8 flex justify-center  ">
+        <div className={`${currentStepIndex != 0 ? "max-sm:hidden" : ""} flex flex-nowrap gap-4`}>
           <span className={`${currentStepIndex >= 0 ? "border-blue-700 " : ""} ${currentStepIndex >= 1 ? "bg-blue-700" : ""}  overflow-hidden border-2 rounded-full text-blue-800 flex justify-center items-center h-0 w-0 p-6`}>
             <span >
               {currentStepIndex >= 1 ? <Check className="text-white  block w-8 h-8 " /> : "1" }  
@@ -88,8 +88,8 @@ export default function page() {
             <div className="text-gray-400 font-medium ">Adress</div>
           </span>
         </div>
-        <div className={`${currentStepIndex >= 1 ? "text-blue-700" : "text-gray-400"} font-extrabold text-xl  px-4`}>_______________</div>
-        <div className="flex flex-nowrap gap-4">
+        <div className=  {`${currentStepIndex >= 2  ? "max-sm:hidden" : ""} ${currentStepIndex >= 1 ? "border-blue-700" : "border-gray-400"} border-b-[3px] my-auto w-[10rem] flex justify-center h-0 font-extrabold text-xl mx-4`}></div>
+        <div className={`${currentStepIndex != 1 ? "max-sm:hidden" : ""} flex flex-nowrap gap-4`}>
           <span className={`${currentStepIndex >= 1 ? "border-blue-700" : ""} ${currentStepIndex >= 2 ? "bg-blue-700" : ""}  border-2 rounded-full text-blue-800 flex justify-center items-center h-0 w-0 p-6`}>
             <span >
               {currentStepIndex >= 2 ? <Check className="text-white  block w-8 h-8 " /> : "2" }  
@@ -100,8 +100,8 @@ export default function page() {
             <div className="text-gray-400 font-medium ">Infos</div>
           </span>
         </div>
-        <div className={`${currentStepIndex >= 2 ? "text-blue-700" : "text-gray-400"} font-extrabold text-xl  px-4`}>_______________</div>
-        <div className="flex flex-nowrap gap-4">
+        <div className=  {`${currentStepIndex === 0 || currentStepIndex === 3  ? "max-sm:hidden" : ""} ${currentStepIndex >= 2 ? "border-blue-700" : "border-gray-400"} border-b-[3px] my-auto w-[10rem] flex justify-center h-0 font-extrabold text-xl mx-4`}></div>
+        <div className={`${currentStepIndex != 2 ? "max-sm:hidden" : ""} flex flex-nowrap gap-4`}>
           <span className={`${currentStepIndex >= 2 ? "border-blue-700" : ""}  ${currentStepIndex >= 3 ? "bg-blue-700" : ""}  border-2 rounded-full text-blue-800 flex justify-center items-center h-0 w-0 p-6`}>
             <span >
               {currentStepIndex >= 3 ? <Check className="text-white  block w-8 h-8 " /> : "3" }  
@@ -112,8 +112,8 @@ export default function page() {
             <div className="text-gray-400 font-medium ">Infos</div>
           </span>
         </div>
-        <div className={`${currentStepIndex >= 3 ? "text-blue-700" : "text-gray-400"} font-extrabold text-xl  px-4`}>_______________</div>
-        <div className="flex flex-nowrap gap-4">
+        <div className=  {`${currentStepIndex <= 1 ? "max-sm:hidden" : ""} ${currentStepIndex >= 3 ? "border-blue-700" : "border-gray-400"} border-b-[3px] my-auto w-[10rem] flex justify-center h-0 font-extrabold text-xl mx-4`}></div>
+        <div className={`${currentStepIndex != 3 ? "max-sm:hidden" : ""} flex flex-nowrap gap-4`}>
           <span className={`${currentStepIndex >=3 ? "border-blue-700" : ""}  ${currentStepIndex >= 4 ? "bg-blue-700" : ""}  border-2 rounded-full text-blue-800 flex justify-center items-center h-0 w-0 p-6`}>
           <span >
               {currentStepIndex >= 4 ? <Check className="text-white  block w-8 h-8 " /> : "4" }  

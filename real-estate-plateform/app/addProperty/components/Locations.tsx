@@ -19,7 +19,7 @@ export default function Locations({address,country,city,latAndLng,currentStepInd
 
   return (
     <div className={`Container ${currentStepIndex !== 0 ? "hidden" : "" }`}>
-      <div className="py-8 max-sm:h-22 wrapper ">
+      <div className=" max-sm:h-22 wrapper ">
         <h1 className="font-bold text-black text-[2rem] p-4">Location</h1>
         <div className=" flex max-lg:flex-col items-center justify-between w-full ">
           <div className="flex flex-col flex-nowrap lg:justify-center pb-4 px-8 gap-4 w-full  lg:w-1/2">
