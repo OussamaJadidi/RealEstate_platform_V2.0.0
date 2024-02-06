@@ -36,6 +36,7 @@ export default function OwnerInfo({name , email,currentStepIndex , phoneNumber ,
                   onChange={(e) => {
                     updateData({name: e.target.value });
                   }}
+                  required = {currentStepIndex == 2 ? true : false}
                 />
               </span>
               <span>
@@ -50,6 +51,7 @@ export default function OwnerInfo({name , email,currentStepIndex , phoneNumber ,
                   onChange={(e) => {
                     updateData({email: e.target.value });
                   }}
+                  required = {currentStepIndex == 2 ? true : false}
                 />
               </span>
               <span>
@@ -65,6 +67,7 @@ export default function OwnerInfo({name , email,currentStepIndex , phoneNumber ,
                   onChange={(e) => {
                     updateData({phoneNumber: e.target.value });
                   }}
+                  required = {currentStepIndex == 2 ? true : false}
                 />
               </span>
             </div>

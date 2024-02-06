@@ -16,8 +16,8 @@ type LocationProp={
 type MapPropsType = {
   address?: string,
   showMultiplePositions: Boolean,
-  latAndLng: [number,number],
-  updateData: (latAndLng: Partial<LocationProp>) => void
+  latAndLng?: [number,number],
+  updateData?: (latAndLng: Partial<LocationProp>) => void
 };
 
 export default function Map({

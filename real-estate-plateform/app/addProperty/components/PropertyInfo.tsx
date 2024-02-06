@@ -75,6 +75,7 @@ export default function PropertyInfo({
                 onChange={(e) => {
                   updateData({title: e.target.value });
                 }}
+                required = {currentStepIndex ==1 ? true: false}
               />
             </span>
             <span>
@@ -91,6 +92,7 @@ export default function PropertyInfo({
                                       description: e.target.value,
                   });
                 }}
+                required = {currentStepIndex ==1 ? true: false}
               />
             </span>
           </div>
@@ -131,6 +133,7 @@ export default function PropertyInfo({
                                       price: parseInt(e.target.value),
                   });
                 }}
+                required = {currentStepIndex ==1 ? true: false}
               />
             </span>
             <span>
@@ -148,6 +151,7 @@ export default function PropertyInfo({
                                       surface: parseInt(e.target.value),
                   });
                 }}
+                required = {currentStepIndex ==1 ? true: false}
               />
             </span>
           </div>

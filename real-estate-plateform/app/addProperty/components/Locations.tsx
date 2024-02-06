@@ -36,6 +36,7 @@ export default function Locations({address,country,city,latAndLng,currentStepInd
                 onChange={(e) => {
                   updateData({country: e.target.value});
                 }}
+                required
               />
               <datalist className="marker:text-red-600" id="country">
                 {countries.map((country) => {
@@ -58,6 +59,7 @@ export default function Locations({address,country,city,latAndLng,currentStepInd
                 onChange={(e) => {
                   updateData({city: e.target.value });
                 }}
+                required
               />
             </span>
             <span>
@@ -73,6 +75,7 @@ export default function Locations({address,country,city,latAndLng,currentStepInd
                 onChange={(e) => {
                   updateData({address: e.target.value });
                 }}
+                required
               />
             </span>
           </div>

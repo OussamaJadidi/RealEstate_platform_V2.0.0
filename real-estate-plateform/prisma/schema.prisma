@@ -13,7 +13,7 @@ datasource db {
 model User {
   id       String  @id @default(uuid())
   name     String?
-  email    String @unique
+  email    String  @unique
   password String
   image    String?
   phone    String?
@@ -25,69 +25,85 @@ model User {
   FavoritesPropertiesId Json?
 }
 
-
 model PropertyToSell {
   id          String   @id @default(uuid())
   title       String
   description String
-  price       Float
+  price       Int
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  images      Json
 
   country String
   city    String
   address String
+  latAndLng Json
 
   propertyType String
-  bedsNumber   Int
-  bathsNumber  Int
-  furniture   String
-  surface      Float
-  Hashtags     Json?
+  bedsNumber   String
+  bathsNumber  String
+  furniture    String
+  surface      Int
+  Hashtags     Json
 
-  globalLikesNumber Int?   @default(0)
-  ViewByNumber      Int?   @default(0)
-  clickedBy         Int?   @default(0)
-  User              User   @relation("ownedPropertiesToSell", fields: [ownerId], references: [id])
-  ownerId           String
+  globalLikesNumber Int? @default(0)
+  ViewByNumber      Int? @default(0)
+  clickedBy         Int? @default(0)
+  User              User @relation("ownedPropertiesToSell", fields: [ownerId], references: [id])
 
-  ownerEmail String?
-  ownerPhone String?
+  ownerId       String
+  ownerEmail    String
+  ownerPhone    String
+  ownerUsedName String
 
+  ownerFacebookContact  String?
+  ownerInstagramContact String?
+  ownerTwitterContact   String?
+
+  images Json
+
+  isBoosted Boolean @default(false)
+  BostedTill DateTime?
   @@unique(fields: [address, ownerEmail])
 }
 
-
 model PropertyToRent {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  price       Float
+  id           String   @id @default(uuid())
+  title        String
+  description  String
+  price        Int
   rentalPeriod String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  images      Json
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   country String
   city    String
   address String
+  latAndLng Json
 
   propertyType String
-  bedsNumber   Int
-  bathsNumber  Int
-  furniture   String
-  surface      Float
-  Hashtags     Json?
+  bedsNumber   String
+  bathsNumber  String
+  furniture    String
+  surface      Int
+  Hashtags     Json
 
-  globalLikesNumber Int?   @default(0)
-  ViewByNumber      Int?   @default(0)
-  clickedBy         Int?   @default(0)
-  User              User   @relation("ownedPropertiesToRent", fields: [ownerId], references: [id])
-  ownerId          String
+  globalLikesNumber Int? @default(0)
+  ViewByNumber      Int? @default(0)
+  clickedBy         Int? @default(0)
+  User              User @relation("ownedPropertiesToRent", fields: [ownerId], references: [id])
 
-  ownerEmail String?
-  ownerPhone String?
+  ownerId String
+  ownerEmail    String
+  ownerPhone    String
+  ownerUsedName String
 
+  ownerFacebookContact  String?
+  ownerInstagramContact String?
+  ownerTwitterContact   String?
+
+  images Json
+
+  isBoosted Boolean @default(false)
+  BostedTill DateTime?
   @@unique(fields: [address, ownerEmail])
 }

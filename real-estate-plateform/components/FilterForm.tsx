@@ -76,8 +76,7 @@ export default function FilterForm({ lgScreen = false }) {
 
     // plain object:
     const formJson = Object.fromEntries(formData.entries()) as Record<string, string>;
-    console.log(formJson);
-
+    
     router.push("/properties"+"?" + new URLSearchParams(Object.entries(formJson)));
   }
   return (

@@ -23,7 +23,10 @@ import SignIn from "./SignIn";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import { redirect, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 export default function Header() {
+  const router = useRouter()
   const menuPopupRef = useRef<HTMLDivElement | null>(null);
   const menuPopupTriggerRef = useRef<HTMLSpanElement | null>(null);
   const [menuPopupIsOpen, handleMenuPopup] = useHandlePopUp(
@@ -50,7 +53,7 @@ export default function Header() {
       <div className="wrapper | h-20 max-sm:h-22 font-medium |  flex justify-between items-center font-sans">
         {/* Logo  */}
         <span className="text-4xl text-blue-800 font-sans ">
-          <Link href="/" >EstateElite</Link>
+          <Link href="/">EstateElite</Link>
         </span>
         <ul className="flex gap-4  font-rubik">
           {/* Start links for desktop screen */}
@@ -61,7 +64,20 @@ export default function Header() {
             Rent
           </li>
           <li className="max-sm:hidden cursor-pointer hover:text-blue-800 transition-all">
-            <Link href="/addProperty">Add Property</Link>
+            <button
+              onClick={() => {
+                if (status === "authenticated") {
+                  toast.loading("redirecting",{duration: 1000})
+                  router.push("/addProperty");
+                } else {
+                  toast("Sign In or Create An Account First")
+                  setAccountState(true);
+                  handleSignInPopup();
+                }
+              }}
+            >
+              Add Property
+            </button>
           </li>
           {/* End links for desktop screen */}
           {/* Start PopUp menu  */}
@@ -122,16 +138,26 @@ export default function Header() {
                       Rent
                     </li>
                     <li className=" text-[1rem] hover:bg-slate-300 sm:hidden ">
-                      <Link
+                      <button
                         className="w-full h-full block py-2 px-4 text-left"
-                        href="/addProperty"
+                        onClick={() => {
+                          if (status === "authenticated") {
+                            toast.loading("redirecting",{duration: 1000})
+                            handleMenuPopup()
+                            router.push("/addProperty");
+                          } else {
+                            toast("Sign In or Create An Account First")
+                            setAccountState(true);
+                            handleSignInPopup();
+                          }
+                        }}
                       >
                         <FontAwesomeIcon
                           style={{ paddingInline: ".7rem" }}
                           icon={faCircleDown}
                         />
                         Add Property
-                      </Link>
+                      </button>
                     </li>
                     <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
                       <FontAwesomeIcon
@@ -206,11 +232,8 @@ export default function Header() {
 
                     {status == "authenticated" && (
                       <>
-                       <li className="  text-[1rem] hover:bg-slate-300 ">
-                          <button
-                            className="w-full h-full py-2 px-4 text-left"
-                            onClick={() => signOut()}
-                          >
+                        <li className="  text-[1rem] hover:bg-slate-300 ">
+                          <button className="w-full h-full py-2 px-4 text-left">
                             <FontAwesomeIcon
                               style={{ paddingInline: ".7rem" }}
                               icon={faBullhorn}
@@ -219,10 +242,7 @@ export default function Header() {
                           </button>
                         </li>
                         <li className="  text-[1rem] hover:bg-slate-300 ">
-                          <button
-                            className="w-full h-full py-2 px-4 text-left"
-                            onClick={() => signOut()}
-                          >
+                          <button className="w-full h-full py-2 px-4 text-left">
                             <FontAwesomeIcon
                               style={{ paddingInline: ".7rem" }}
                               icon={faGear}

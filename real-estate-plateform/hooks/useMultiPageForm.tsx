@@ -2,7 +2,7 @@
 import { ReactElement, useState } from "react";
 
 export  function useMultiPageForm(NumberOfPages: number){
-    const [currentStepIndex, setCurrentStepIndex] = useState(3)
+    const [currentStepIndex, setCurrentStepIndex] = useState(0)
 
     function next(){
         setCurrentStepIndex(prev=>{

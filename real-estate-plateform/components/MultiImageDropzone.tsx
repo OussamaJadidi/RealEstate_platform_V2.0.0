@@ -1,6 +1,6 @@
 "use client";
 
-import {Home} from "lucide-react";
+import { Home } from "lucide-react";
 import { formatFileSize } from "@edgestore/react/utils";
 import { UploadCloudIcon, X } from "lucide-react";
 import * as React from "react";
@@ -22,6 +22,10 @@ export type FileState = {
   file: File | string;
   key: string; // used to identify the file in the progress callback
   progress: "PENDING" | "COMPLETE" | "ERROR" | number;
+};
+type ImagesProps = {
+  images: string[] | undefined;
+  currentStepIndex?: number;
 };
 
 type InputProps = {
@@ -50,14 +54,21 @@ const ERROR_MESSAGES = {
 
 const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
   (
-    { dropzoneOptions, value, className, disabled, onChange, onFilesAdded },
+    {
+      dropzoneOptions,
+      value,
+      className,
+      disabled,
+      onChange,
+      onFilesAdded,
+    },
     ref
   ) => {
     const [customError, setCustomError] = React.useState<string>();
 
     const imageUrls = React.useMemo(() => {
       if (value) {
-        return value.map((fileState) => {
+        const result = value.map((fileState) => {
           if (typeof fileState.file === "string") {
             // in case a url is passed in, use it to display the image
             return fileState.file;
@@ -66,6 +77,8 @@ const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
             return URL.createObjectURL(fileState.file);
           }
         });
+        // updateData({images: result});
+        return result;
       }
       return [];
     }, [value]);
@@ -151,11 +164,11 @@ const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
               key={index}
               className={variants.image + " aspect-video h-full"}
             >
-              {
-                index === 0 &&  
-                <div className='text-white absolute inset-0 flex justify-center items-center bg-[rgb(0,0,0,.2)]'><Home  className="text-white h-[5rem] w-[5rem] text-xl" /></div>
-
-              }
+              {index === 0 && (
+                <div className="text-white absolute inset-0 flex justify-center items-center bg-[rgb(0,0,0,.2)]">
+                  <Home className="text-white h-[5rem] w-[5rem] text-xl" />
+                </div>
+              )}
               <img
                 className="h-full w-full rounded-md object-cover"
                 src={imageUrls[index]}
@@ -174,6 +187,7 @@ const MultiImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
                   onClick={(e) => {
                     e.stopPropagation();
                     void onChange?.(value.filter((_, i) => i !== index) ?? []);
+                    // updateFileStates(index)
                   }}
                 >
                   <div className="flex h-5 w-5 cursor-pointer items-center justify-center rounded-md border border-solid border-gray-500 bg-white transition-all duration-300 hover:h-6 hover:w-6 dark:border-gray-400 dark:bg-black">

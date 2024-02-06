@@ -6,7 +6,6 @@ import PaginationButtons from "@/components/PaginationButtons";
 
 export default function page({searchParams}:{searchParams: {[key: string]: string | string[] | undefined}}) {
   const page = searchParams['page'] ?? 1;
-  console.log(page)
   return (
     <main className=" w-full flex max-lg:flex-col">
       <div className="w-1/2 first-let max-lg:w-full max-lg:px-[2rem] max-lg:py-[1rem]   max-lg:aspect-square lg:h-[100vh] lg:sticky top-0   ">

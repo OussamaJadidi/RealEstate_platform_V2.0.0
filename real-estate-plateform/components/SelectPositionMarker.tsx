@@ -24,8 +24,8 @@ type MarkersPropsType = {
   address?: string,
   position: [number, number],
   setPosition: (pos: [number, number]) => void;
-  updateData: (updatedData: Partial<LocationProp>) => void
-  latAndLng: [number,number]
+  updateData?: (updatedData: Partial<LocationProp>) => void
+  latAndLng?: [number,number]
 };
 
 
@@ -47,7 +47,7 @@ export default function Markers({
     const { lat, lng } = e.latlng; // Destructure lat and lng from e.latlng
     console.log("==>",[lat,lng])
     setPosition([lat,lng]); 
-    updateData({latAndLng: [lat,lng] })
+    if(updateData) updateData({latAndLng: [lat,lng] })
   }; 
   const mapEvents = useMapEvents({
     click: handleMapClick, 
@@ -63,7 +63,7 @@ export default function Markers({
             }
             if (result) {
               setPosition(result);
-              updateData({latAndLng: result})
+              if(updateData)updateData({latAndLng: result})
             }
           }
         } catch (error: any) {

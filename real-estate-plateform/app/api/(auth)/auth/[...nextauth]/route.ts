@@ -3,8 +3,7 @@ import NextAuth, { type NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 import { compare } from "bcryptjs";
-import { JWT } from "next-auth/jwt";
-import { User as NextAuthUser } from "next-auth";
+
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -18,7 +17,7 @@ export const authOptions: NextAuthOptions = {
     }),
     CredentialsProvider({
       // The name to display on the sign in form (e.g. 'Sign in with...')
-      name: "Credentials",
+      name: "Sign in",
       // The credentials is used to generate a suitable form on the sign in page.
       // You can specify whatever fields you are expecting to be submitted.
       // e.g. domain, username, password, 2FA token, etc.
@@ -91,7 +90,6 @@ export const authOptions: NextAuthOptions = {
       },
       async jwt({ token, user,account }) {
       if (user) {
-        let isNewUser=true
         let u = user as unknown as any;
         if(account?.provider === "google"){
   

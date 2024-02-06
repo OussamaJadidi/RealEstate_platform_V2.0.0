@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import Image from "next/image";
 
-import { Container, Map } from "@/components";
+import  Map  from "@/components/Map";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -28,7 +28,6 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 export default function page() {
   return (
     <div className="Container">
-      <Container>
         <div className="  flex justify-between ">
           <div className=" w-full group/card  min-w-0">
             <div className=" h-[20rem] md:h-[25rem]">
@@ -36,9 +35,7 @@ export default function page() {
               spaceBetween={50}
               slidesPerView={1}
               modules={[Navigation, Pagination, Scrollbar, A11y]}
-              // navigation
-              // pagination={{ clickable: true }}
-                // scrollbar={{ draggable: true }}
+        
               onSlideChange={() => console.log("slide change")}
               onSwiper={(swiper) => console.log(swiper)}
               style={{ height: "100%"}}
@@ -200,7 +197,7 @@ export default function page() {
               <div className="py-4 w-full ">
                 <div className="text-gray-800 font-roboto font-semibold text-[1rem] pb-3"> Location on the map :</div>
                 <div className="h-[25rem] " >
-                  <Map />
+                  <Map showMultiplePositions={false} latAndLng={[12,4] }/>
                 </div>
               </div>
               <hr />
@@ -212,7 +209,6 @@ export default function page() {
             ad panel
           </div>
         </div>
-      </Container>
     </div>
   );
 }
