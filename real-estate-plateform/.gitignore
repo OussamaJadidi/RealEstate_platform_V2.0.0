@@ -36,3 +36,28 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Ignore untracked files one level above the current directory
+../Advanced-Todo-App/
+../cars-rent/
+../cloning-responsive-landig-page-1/
+../cloning-resposive-landig-page-2/
+../drag and drop/
+../ecommerce/components/
+../ecommerce/context/
+../ecommerce/lib/
+../ecommerce/pages/api/stripe.js
+../ecommerce/pages/product/
+../ecommerce/pages/success.js
+../ecommerce/sanity_ecommerce/
+../learn-next/
+../learn-react/
+../next-auth/
+../promptopia/
+../react-admin-dashboard ( uncompleted )/
+../react-todo-list/hooks/d
+../rest-countries-api-with-color-theme-switcher-master/
+../rock-paper-csissors-lizard-spock/
+../smart-documents-plateform/
+../tic-tac-toe/
+../whats-app-clone-v1.0.0/

@@ -6,6 +6,7 @@ import { Check } from "lucide-react";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEdgeStore } from "@/lib/edgestore";
 
 type FormDataType = {
   address: string;
@@ -14,6 +15,7 @@ type FormDataType = {
   latAndLng: [number, number];
 
   rentOrSell: string;
+  rentPeriod: string;
   title: string;
   description: string;
   bathRooms: string;
@@ -39,14 +41,16 @@ type FormDataType = {
   images: string;
   ownerId: string;
 };
+
 export default function page() {
-  const router = useRouter()
+  const {edgestore} = useEdgeStore();
+  const router = useRouter();
   const { data: session, status } = useSession();
   if (status == "unauthenticated") {
-    router.push("/")
-    toast.error("Sign IN or Create An Account First")
+    router.push("/");
+    toast.error("Sign IN or Create An Account First");
   }
-  const [enablingSubmit, setEnablingSubmit] = useState(true);
+  const [enablingSubmit, setEnablingSubmit] = useState(false);
   const [data, setData] = useState<FormDataType>({
     address: "",
     country: "",
@@ -57,6 +61,7 @@ export default function page() {
     description: "",
     price: 0,
     rentOrSell: "sell",
+    rentPeriod: "perMonth", 
     propertyType: "Apartment",
     bathRooms: "1",
     bedRooms: "1",
@@ -77,7 +82,7 @@ export default function page() {
     twitter: "",
 
     images: "[]",
-    ownerId: "j",
+    ownerId: (session?.user as any)?.id,
   });
   const { back, next, isFirstStep, isLastStep, currentStepIndex } =
     useMultiPageForm(4); // currentStepIndex from  0 => currentIndex -1
@@ -91,34 +96,62 @@ export default function page() {
     setEnablingSubmit(state);
   }
   async function onSubmit(e: FormEvent) {
+    console.log("your data is =>", data);
     e.preventDefault();
     window.scrollTo({
       top: 0,
       behavior: "smooth", // Adds smooth scrolling behavior
     });
-    next();
+    // So the user must upload at least 1 image
     if (isLastStep && data.images == "[]") {
       toast.error("Upload at least 1 image");
     }
     if (isLastStep) {
+     
+      const imagesArray = JSON.parse(data.images)
+      console.log("your imagesss",imagesArray)
+      for (const imageURL of imagesArray) {
+        const res = await edgestore.myPublicImages.confirmUpload({
+          url: imageURL!,
+        });
+      }
       try {
-        const OptimalData ={...data,latAndLng: JSON.stringify(data.latAndLng)}
         const res = await fetch("/api/addNewProperty", {
           method: "POST",
-          body: JSON.stringify(OptimalData),
+          body: JSON.stringify(data),
         });
         if (res.ok) {
-          toast.success("The Property's announce published successfully");
+          toast.success("The announce published successfully");
+          router.push("/myProperties");
+        } else if (res.status === 400) {
+          // Handle bad request error
+          const errorMessage = await res.text();
+          toast.error(`Bad Request: ${errorMessage}`);
+          router.push("/addProperty");
         } else {
-          toast.error("An Error, Please try later");
+          // Handle other server errors
+          toast.error(
+            "Something went wrong on the server side, please try again later."
+          );
+          router.push("/addProperty");
         }
-      } catch {
-        toast.error("An Error occured, Please try later");
+      } catch (error) {
+        // Handle network errors
+        toast.error(
+          "An error occurred while trying to connect to the server, please check your internet connection and try again."
+        );
+        router.push("/addProperty");
       }
     }
+    next();
   }
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit}  onKeyDown={(e) => {
+      // Prevent default form submission when Enter key is pressed
+      if (isLastStep && e.key === 'Enter' && enablingSubmit == false) {
+        e.preventDefault()
+      }
+    }}>
       <div className="Container my-8 flex justify-center  ">
         <div
           className={`${
@@ -252,6 +285,7 @@ export default function page() {
         currentStepIndex={currentStepIndex}
         {...data}
         updateData={updateData}
+        enablingSubmit={enablingSubmit}
       />
       <div className="flex justify-center gap-4 my-12">
         {!isFirstStep && (

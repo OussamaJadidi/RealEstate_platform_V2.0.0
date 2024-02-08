@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 export const POST = async (request: Request)=>{
     try{
+        console.log("yyyyyyy")
         const body = await request.json();
         const {
             address,
@@ -30,81 +31,84 @@ export const POST = async (request: Request)=>{
             facebook,
             instagram,
             twitter,
-            images
+            images,
+            ownerId,
+            rentPeriod
         } = body;
         const prisma = new PrismaClient();
-        // if(rentOrSell == "sell"){
+        if(rentOrSell == "sell"){
         const announceForSell = await prisma.propertyToSell.create({
             data: {
-                country:"country",
-                city:"city",
-                address:"adrress",
-                latAndLng:JSON.stringify([22,5]),
+                country,
+                city,
+                address,
+                latAndLng: JSON.stringify(latAndLng),
                
                 
-                title:'title',
-                description:"des",
-                propertyType:'aron now',
-                price: 100,
-                surface: 200,
+                title,
+                description,
+                propertyType,
+                price,
+                surface,
                 
-                bedsNumber: "3",
-                bathsNumber: "3",
-                furniture: "unf",
-                Hashtags: JSON.stringify({centralizedClimat:true,parking:false,storage:true,concierge:false,pool:true,downtown:false}),
+                bedsNumber: bedRooms,
+                bathsNumber: bathRooms,
+                furniture,
+                Hashtags: JSON.stringify({centralizedClimat:centralizedClimat,parking:parking,storage:storage,concierge:concierge,pool:pool,downtown:downtown}),
                 
 
-                ownerId: "hahido",
-                ownerUsedName: "name",
-                ownerEmail: "email",
-                ownerPhone: "phoneNumber",
+                ownerId,
+                ownerUsedName: name,
+                ownerEmail: email,
+                ownerPhone: phoneNumber,
 
-                ownerFacebookContact: "facebook",
-                ownerInstagramContact: "instagram",
-                ownerTwitterContact: "twitter",
+                ownerFacebookContact: facebook,
+                ownerInstagramContact: instagram,
+                ownerTwitterContact: twitter,
                 
-                images:JSON.stringify(images),
-            }   
+                images:images,
+            }     
         })
         return new Response(JSON.stringify(announceForSell),{status:200});
 
-        // }else{
-        //     const announceForRent = await prisma.propertyToSell.create({
-        //         data: {
-        //             country,
-        //             city,
-        //             address,
-        //             latAndLng,
+        }else{
+            const announceForRent = await prisma.propertyToRent.create({
+                data: {
+                    country,
+                    city,
+                    address,
+                    latAndLng:JSON.stringify(latAndLng),
                    
                     
-        //             title,
-        //             description,
-        //             propertyType,
-        //             price,
-        //             surface,
+                    title,
+                    description,
+                    propertyType,
+                    price,
+                    rentalPeriod: rentPeriod,
+                    surface,
                     
-        //             bedsNumber: bedRooms,
-        //             bathsNumber: bathRooms,
-        //             furniture,
-        //             Hashtags: JSON.stringify({centralizedClimat:centralizedClimat,parking:parking,storage:storage,concierge:concierge,pool:pool,downtown:downtown}),
+                    bedsNumber: bedRooms,
+                    bathsNumber: bathRooms,
+                    furniture,
+                    Hashtags: JSON.stringify({centralizedClimat:centralizedClimat,parking:parking,storage:storage,concierge:concierge,pool:pool,downtown:downtown}),
                     
     
-        //             ownerId: "sessi",
-        //             ownerUsedName: name,
-        //             ownerEmail: email,
-        //             ownerPhone: phoneNumber,
+                    ownerId,
+                    ownerUsedName: name,
+                    ownerEmail: email,
+                    ownerPhone: phoneNumber,
     
-        //             ownerFacebookContact: facebook,
-        //             ownerInstagramContact: instagram,
-        //             ownerTwitterContact: twitter,
+                    ownerFacebookContact: facebook,
+                    ownerInstagramContact: instagram,
+                    ownerTwitterContact: twitter,
                     
-        //             images,
-        //         }   
-        //     })
-        //     return new Response(JSON.stringify(announceForRent),{status:200});
-        // }
+                    images:images,
+                }   
+            })
+            return new Response(JSON.stringify(announceForRent),{status:200});
+        }
   } catch (error) {
-    return new Response("something went wrong", { status: 400 });
+    return new Response("something went wrong", { status: 400, statusText: "Internal Server Error"  });
   }
 
 }

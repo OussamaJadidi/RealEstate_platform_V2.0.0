@@ -63,7 +63,7 @@ model PropertyToSell {
 
   isBoosted Boolean @default(false)
   BostedTill DateTime?
-  @@unique(fields: [address, ownerEmail])
+  @@unique(fields: [address,latAndLng, ownerEmail])
 }
 
 model PropertyToRent {
@@ -105,5 +105,5 @@ model PropertyToRent {
 
   isBoosted Boolean @default(false)
   BostedTill DateTime?
-  @@unique(fields: [address, ownerEmail])
+  @@unique(fields: [address,latAndLng, ownerEmail])
 }
