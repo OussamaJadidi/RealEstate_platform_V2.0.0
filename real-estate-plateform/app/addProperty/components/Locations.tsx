@@ -37,6 +37,7 @@ export default function Locations({address,country,city,latAndLng,currentStepInd
                   updateData({country: e.target.value});
                 }}
                 required
+                autoFocus
               />
               <datalist className="marker:text-red-600" id="country">
                 {countries.map((country) => {
@@ -63,7 +64,7 @@ export default function Locations({address,country,city,latAndLng,currentStepInd
               />
             </span>
             <span>
-              <h2 className=" pb-2 font-roboto text-slate-950 font-semibold">
+              <h2 className="gi pb-2 font-roboto text-slate-950 font-semibold">
                 Address <span className="text-red-700">*</span>
               </h2>
               <input

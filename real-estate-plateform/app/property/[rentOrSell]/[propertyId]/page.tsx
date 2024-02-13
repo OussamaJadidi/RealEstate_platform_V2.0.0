@@ -1,18 +1,18 @@
-// "use client";
+"use client";
 import React from "react";
 // Import Swiper React components
-// import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-// import { Navigation, Pagination, Scrollbar, A11y, Zoom } from "swiper/modules";
+import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
+import { Navigation, Pagination, Scrollbar, A11y, Zoom } from "swiper/modules";
 // Import Swiper styles
-// import "swiper/css";
-// import "swiper/css/zoom";
-// import "swiper/css/navigation";
-// import "swiper/css/pagination";
-// import "swiper/css/scrollbar";
+import "swiper/css";
+import "swiper/css/zoom";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
 
 import Image from "next/image";
 
-// import Map from "@/components/Map";
+import Map from "@/components/Map";
 import axios from "axios";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -26,6 +26,8 @@ import {
   faCalendarDays,
   faCheck,
   faX,
+  faHouse,
+  faCouch,
 } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { useQuery } from "@tanstack/react-query";
@@ -69,7 +71,7 @@ export default function page({
         <div className="  flex justify-between ">
           <div className=" w-full group/card  min-w-0">
             <div className=" h-[20rem] md:h-[25rem]">
-               {/* <Swiper
+              <Swiper
                 // spaceBetween={50}
                 slidesPerView={1}
                 style={{ height: "100%" }}
@@ -78,8 +80,8 @@ export default function page({
                 // zoom={true}
                 modules={[Zoom, Navigation, Pagination, Scrollbar, A11y]}
               >
-                <SwiperControlle /> 
-                 <SwiperSlide>
+                {/* <SwiperControlle /> */}
+                <SwiperSlide>
                   <div className="swiper-zoom-container ">
                     <Image
                       src="/assets/c.jpg"
@@ -180,7 +182,7 @@ export default function page({
                     className={"w-full  h-full"}
                   />
                 </SwiperSlide>
-              </Swiper>  */}
+              </Swiper>
             </div>
             <div className="text-gray-500 wrapper">
               <div className="py-4">
@@ -199,7 +201,10 @@ export default function page({
                       icon={faLocationDot}
                       style={{ color: "#6b7280" }}
                     />
-                    <span>{`${data.country}, ${data.city}, ${data.address}`}</span>
+                    <span>
+                      {" "}
+                      {`${data.country}, ${data.city}, ${data.address}`}
+                    </span>
                   </span>
                   <span>
                     <FontAwesomeIcon
@@ -207,7 +212,7 @@ export default function page({
                       style={{ color: "#6b7280" }}
                     />
                     <span className=" whitespace-nowrap">
-                      {`Published at ${new Date(
+                      {` Published at ${new Date(
                         data.createdAt
                       ).getDay()}/${new Date(
                         data.createdAt
@@ -217,170 +222,249 @@ export default function page({
                 </div>
               </div>
               <hr />
-              <div className="flex  justify-between py-4 lg:px-4 max-md:flex-col max-md:items-center gap-x-8 gap-y-4">
-                <ul className="w-full sm:w-[70%] lg:w-[50%]max-sm:w-full flex flex-col gap-y-2 min-w-[0] ">
-                  {/* <li className="flex flex-wrap justify-between">
-                  <span className="text-gray-800 font-roboto font-semibold text-[1rem]">
-                    Counry
+              <ul className="flex w-full align-center    max-sm:flex-col ">
+                <div className="flex w-full align-center justify-center">
+                  <li className="flex flex-col gap-1 justify-center align-center w-full border-x border-x-1 py-4">
+                    <FontAwesomeIcon
+                      style={{ fontSize: "1.5rem" }}
+                      icon={faHouse}
+                    />
+                    <span className="text-center text-nowrap">
+                      Property Type
+                    </span>
+                    <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
+                      {data.propertyType}
+                    </span>
+                  </li>
+                  <li className="flex flex-col gap-1 justify-center align-center w-full border-r border-r-1 py-4">
+                    <FontAwesomeIcon
+                      style={{ fontSize: "1.5rem" }}
+                      icon={faCouch}
+                    />
+                    <span className="text-center">Furniture</span>
+                    <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
+                      {data.furniture}
+                    </span>
+                  </li>
+                </div>
+                <li className="flex flex-col gap-1 justify-center max-sm:order-3 align-center w-1/2 max-sm:w-full border-r border-r-1 py-4">
+                  <FontAwesomeIcon
+                    style={{ fontSize: "1.5rem" }}
+                    icon={faCouch}
+                  />
+                  <span className="text-center text-nowrap">Property Area</span>
+                  <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
+                    {data.surface}
                   </span>
-                  <span>Morocco</span>
                 </li>
-                <li className="flex flex-wrap justify-between">
-                  <span className="text-gray-800 font-roboto font-semibold text-[1rem]">
-                    City
-                  </span>
-                  <span>Oujda</span>
-                </li>
-                <li className="flex flex-wrap justify-between">
-                  <span className="text-gray-800 font-roboto font-semibold text-[1rem]">
-                    Address
-                  </span>
-                  <span>Rue atlas lot talhaoui nr 15 oujda</span>
-                </li> */}
-                  <li className="flex flex-wrap justify-between">
-                    <span className="text-gray-800 font-roboto font-semibold text-[1rem]">
-                      Type
+                <div className="flex w-full align-center justify-center">
+                  <li className="flex flex-col gap-1 justify-center align-center w-full border-r border-r-1 py-4">
+                    <FontAwesomeIcon
+                      style={{ fontSize: "1.5rem" }}
+                      icon={faBed}
+                    />
+                    <span className="text-center text-nowrap">Beds Number</span>
+                    <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
+                      {data.bedsNumber}
                     </span>
-                    <span>{`${data.propertyType}`}</span>
                   </li>
-                  <li className="flex flex-wrap justify-between">
-                    <span className="text-gray-800 font-roboto font-semibold text-[1rem]">
-                      Beds
+                  <li className="flex flex-col gap-1 justify-center align-center w-full border-r border-r-1 py-4">
+                    <FontAwesomeIcon
+                      style={{ fontSize: "1.5rem" }}
+                      icon={faBath}
+                    />
+                    <span className="text-center text-nowrap">
+                      Baths Number
                     </span>
-                    <span>{`${data.bedsNumber}`}</span>
-                  </li>
-                  <li className="flex flex-wrap justify-between">
-                    <span className="text-gray-800 font-roboto font-semibold text-[1rem]">
-                      Baths
+                    <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
+                      {data.bathsNumber}
                     </span>
-                    <span>{`${data.bathsNumber}`}</span>
                   </li>
-                  <li className="flex flex-wrap justify-between">
-                    <span className="text-gray-800 font-roboto font-semibold text-[1rem]">
-                      Furniture state
-                    </span>
-                    <span>{`${data.furniture}`}</span>
-                  </li>
-                  <li className="flex flex-wrap justify-between">
-                    <span className="text-gray-800 font-roboto font-semibold text-[1rem]">
-                      Surface
-                    </span>
-                    <span>{`${data.surface}m²`}</span>
-                  </li>
-                </ul>
+                </div>
+              </ul>
+              <hr />
 
-                <div className="w-full sm:w-[70%] lg:w-[50%] text-gray-800 font-roboto font-semibold text-[1rem] flex flex-wrap justify-between ">
-                  <div className="p-0 ">
-                    <div className=" whitespace-nowrap">
-                      {centralizedClimat ?  <FontAwesomeIcon
+              <div className="w-full py-4 text-gray-800 font-roboto font-semibold text-[1rem] flex max-341px:flex-col justify-between ">
+                <div className="border-r-2 max-341px:border-0 flex flex-col items-center justify-center w-full">
+                  <div className=" whitespace-nowrap pb-2">
+                    {downtown ? (
+                      <FontAwesomeIcon
                         icon={faCheck}
                         style={{
                           color: "#22c55e",
                           fontWeight: "bold",
                           fontSize: "1.2rem",
                         }}
-                      /> :  <FontAwesomeIcon
-                      icon={faX}
-                      style={{
-                        color: "red",
-                        fontWeight: "bold",
-                        fontSize: "1.2rem",
-                      }}
-                    />}
-                      Centralized Climat
-                    </div>
-                    <div className=" whitespace-nowrap">
-                    {concierge ?  <FontAwesomeIcon
-                        icon={faCheck}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faX}
                         style={{
-                          color: "#22c55e",
+                          color: "red",
                           fontWeight: "bold",
                           fontSize: "1.2rem",
                         }}
-                      /> :  <FontAwesomeIcon
-                      icon={faX}
-                      style={{
-                        color: "red",
-                        fontWeight: "bold",
-                        fontSize: "1.2rem",
-                      }}
-                    />}
-                      Concierge
-                    </div>
-                    <div className=" whitespace-nowrap">
-                    {parking ?  <FontAwesomeIcon
-                        icon={faCheck}
-                        style={{
-                          color: "#22c55e",
-                          fontWeight: "bold",
-                          fontSize: "1.2rem",
-                        }}
-                      /> :  <FontAwesomeIcon
-                      icon={faX}
-                      style={{
-                        color: "red",
-                        fontWeight: "bold",
-                        fontSize: "1.2rem",
-                      }}
-                    />}
-                      Parking couvert
-                    </div>
+                      />
+                    )}
+                    DownTownn
                   </div>
-                  <div>
-                    <div className=" whitespace-nowrap">
-                    {storage ?  <FontAwesomeIcon
+                  <div className=" whitespace-nowrap pb-2">
+                    {concierge ? (
+                      <FontAwesomeIcon
                         icon={faCheck}
                         style={{
                           color: "#22c55e",
                           fontWeight: "bold",
                           fontSize: "1.2rem",
                         }}
-                      /> :  <FontAwesomeIcon
-                      icon={faX}
-                      style={{
-                        color: "red",
-                        fontWeight: "bold",
-                        fontSize: "1.2rem",
-                      }}
-                    />}
-                      Storage
-                    </div>
-                    <div className=" whitespace-nowrap">
-                    {pool ?  <FontAwesomeIcon
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faX}
+                        style={{
+                          color: "red",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    )}
+                    Concierge
+                  </div>
+                  <div className="sm:hidden whitespace-nowrap pb-2">
+                    {parking ? (
+                      <FontAwesomeIcon
                         icon={faCheck}
                         style={{
                           color: "#22c55e",
                           fontWeight: "bold",
                           fontSize: "1.2rem",
                         }}
-                      /> :  <FontAwesomeIcon
-                      icon={faX}
-                      style={{
-                        color: "red",
-                        fontWeight: "bold",
-                        fontSize: "1.2rem",
-                      }}
-                    />}
-                      Pool
-                    </div>
-                    <div className=" whitespace-nowrap">
-                    {downtown ?  <FontAwesomeIcon
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faX}
+                        style={{
+                          color: "red",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    )}
+                    Parking couvert
+                  </div>
+                </div>
+                <div className="max-sm:hidden border-r-2 flex flex-col items-center justify-center w-full">
+                  <div className=" whitespace-nowrap pb-2">
+                    {parking ? (
+                      <FontAwesomeIcon
                         icon={faCheck}
                         style={{
                           color: "#22c55e",
                           fontWeight: "bold",
                           fontSize: "1.2rem",
                         }}
-                      /> :  <FontAwesomeIcon
-                      icon={faX}
-                      style={{
-                        color: "red",
-                        fontWeight: "bold",
-                        fontSize: "1.2rem",
-                      }}
-                    />}
-                      DownTownn
-                    </div>
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faX}
+                        style={{
+                          color: "red",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    )}
+                    Parking couvert
+                  </div>
+                  <div className=" whitespace-nowrap pb-2">
+                    {storage ? (
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        style={{
+                          color: "#22c55e",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faX}
+                        style={{
+                          color: "red",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    )}
+                    Storage
+                  </div>
+                </div>
+                <div className="flex flex-col items-center justify-center w-full">
+                  <div className=" whitespace-nowrap pb-2">
+                    {centralizedClimat ? (
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        style={{
+                          color: "#22c55e",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faX}
+                        style={{
+                          color: "red",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    )}
+                    Centralized Climat
+                  </div>
+                  <div className=" whitespace-nowrap pb-2">
+                    {pool ? (
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        style={{
+                          color: "#22c55e",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faX}
+                        style={{
+                          color: "red",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    )}
+                    Pool
+                  </div>
+                  <div className="sm:hidden whitespace-nowrap pb-2">
+                    {storage ? (
+                      <FontAwesomeIcon
+                        icon={faCheck}
+                        style={{
+                          color: "#22c55e",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faX}
+                        style={{
+                          color: "red",
+                          fontWeight: "bold",
+                          fontSize: "1.2rem",
+                        }}
+                      />
+                    )}
+                    Storage
                   </div>
                 </div>
               </div>
@@ -397,10 +481,10 @@ export default function page({
                   Location on the map :
                 </div>
                 <div className="h-[25rem] ">
-                  {/* <Map
+                  <Map
                     showMultiplePositions={false}
                     latAndLng={JSON.parse(data.latAndLng)}
-                  /> */}
+                  />
                 </div>
               </div>
               <hr />
@@ -412,7 +496,7 @@ export default function page({
               </button>
             </div>
           </div>
-          {/* <div className="border border-gray-800 min-w-[20rem] ml-1 max-xl:hidden text-center">
+          {/* <div className="border-r border-gray-800 min-w-[20rem] ml-1 max-xl:hidden text-center">
             ad panel
           </div> */}
         </div>

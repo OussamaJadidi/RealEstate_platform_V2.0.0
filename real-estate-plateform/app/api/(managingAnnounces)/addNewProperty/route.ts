@@ -3,7 +3,6 @@ import { PrismaClient } from "@prisma/client";
 
 export const POST = async (request: Request)=>{
     try{
-        console.log("yyyyyyy")
         const body = await request.json();
         const {
             address,
@@ -108,7 +107,7 @@ export const POST = async (request: Request)=>{
             return new Response(JSON.stringify(announceForRent),{status:200});
         }
   } catch (error) {
-    return new Response("something went wrong", { status: 400, statusText: "Internal Server Error"  });
+    return new Response("something went wrong", { status: 500, statusText: "Internal Server Error"  });
   }
 
 }

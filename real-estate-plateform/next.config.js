@@ -15,6 +15,26 @@ const nextConfig = {
             protocol: "https",
             hostname: 'files.edgestore.dev',
             pathname: "**"
+          },
+          {
+            protocol: "https",
+            hostname: 'https://swiperjs.com/demos/images/nature-1.jpg',
+            pathname: "**"
+          },
+          {
+            protocol: "https",
+            hostname: 'https://swiperjs.com/demos/images/nature-2.jpg',
+            pathname: "**"
+          },
+          {
+            protocol: "https",
+            hostname: 'https://swiperjs.com/demos/images/nature-3.jpg',
+            pathname: "**"
+          },
+          {
+            protocol: "https",
+            hostname: 'https://swiperjs.com/demos/images/nature-4.jpg',
+            pathname: "**"
           }
         ],
       },
