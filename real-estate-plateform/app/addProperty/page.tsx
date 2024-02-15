@@ -61,7 +61,7 @@ export default function page() {
     description: "",
     price: 0,
     rentOrSell: "sell",
-    rentPeriod: "perMonth", 
+    rentPeriod: "Month", 
     propertyType: "Apartment",
     bathRooms: "1",
     bedRooms: "1",

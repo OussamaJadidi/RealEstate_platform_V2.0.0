@@ -240,26 +240,26 @@ export default function PropertyInfo({
                     onChange={(e) => updateData({ rentPeriod: e.target.value })}
                   >
                     <option
-                      value="perDay"
-                      selected={rentPeriod === "perDay" ? true : false}
+                      value="Day"
+                      selected={rentPeriod === "Day" ? true : false}
                     >
                       per Day
                     </option>
                     <option
-                      value="perNight"
-                      selected={rentPeriod === "perNight" ? true : false}
+                      value="Night"
+                      selected={rentPeriod === "Night" ? true : false}
                     >
                       per Night
                     </option>
                     <option
-                      value="perMonth"
-                      selected={rentPeriod === "perMonth" ? true : false}
+                      value="Month"
+                      selected={rentPeriod === "Month" ? true : false}
                     >
                       per Month
                     </option>
                     <option
-                      value="perYear"
-                      selected={rentPeriod === "perYear" ? true : false}
+                      value="Year"
+                      selected={rentPeriod === "Year" ? true : false}
                     >
                       per Year
                     </option>

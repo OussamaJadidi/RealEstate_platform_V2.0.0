@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useEdgeStore } from "@/lib/edgestore";
 import {
   type FileState,
