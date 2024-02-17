@@ -1,5 +1,5 @@
 "use client";
-import React ,{ useState } from "react";
+import React, { useState } from "react";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
@@ -45,15 +45,18 @@ import {
   faFacebookF,
   faInstagram,
   faXTwitter,
-} from "@fortawesome/free-brands-svg-icons"; 
-
+} from "@fortawesome/free-brands-svg-icons";
+import { getSession, useSession } from "next-auth/react";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
 
-
-export default function page({params}: {params: { rentOrSell: string; propertyId: string }}) {
-
+export default function page({
+  params,
+}: {
+  params: { rentOrSell: string; propertyId: string };
+}) {
+  const {data:session, status: statusOfSession} = useSession()
   const [value, onChange] = useState<Value>(new Date());
 
   const { rentOrSell, propertyId } = params;
@@ -69,7 +72,7 @@ export default function page({params}: {params: { rentOrSell: string; propertyId
     );
     return res.data;
   }
-  function submitBooking(e: any){
+  function submitBooking(e: any) {
     e.preventDefault();
   }
   if (status == "success") {
@@ -77,9 +80,40 @@ export default function page({params}: {params: { rentOrSell: string; propertyId
     var { centralizedClimat, parking, storage, concierge, pool, downtown } =
       hashtags;
     var imagesArray = JSON.parse(data.images);
-   
   }
 
+  async function updateUserData() {
+    try {
+      const ownerId = (session?.user as any)?.id; // Ensure session and user exist
+  
+      if (!ownerId || !propertyId) {
+        throw new Error("Invalid ownerId or propertyId"); // Handle invalid values
+      }
+      if(statusOfSession !== "authenticated"){
+        throw new Error("Invalid ownerId or propertyId"); 
+      }
+     
+      const res = await axios.put("/api/addAFavoriteProperty",{ownerId: ownerId,
+      propertyId: propertyId})
+      if (statusOfSession === 'authenticated') {
+        const fetchData = async () => {
+          try {
+            // Fetch the session data again to update user-related information
+            await getSession({ force: true } as any);
+          } catch (error) {
+            console.error('Error fetching session data:', error);
+          }
+        };
+  
+        fetchData();
+      }
+  
+      toast.success("Announce Added to Favorites")
+      console.log("User data updated:",res.data); // Log response from server
+    } catch (error) {
+      toast.error("An Error Ocurred")
+    }
+  }
   return (
     <div className=" bg-gray-50">
       {status === "loading" && <div>loading</div>}
@@ -102,10 +136,15 @@ export default function page({params}: {params: { rentOrSell: string; propertyId
                     slidesPerView: 1,
                   },
                   850: {
-                    slidesPerView: (imagesArray.length >= 2 ? 2 : 1),
+                    slidesPerView: imagesArray.length >= 2 ? 2 : 1,
                   },
                   1200: {
-                    slidesPerView: imagesArray.length >=2 ? (imagesArray.length >= 3 ? 3 : 2) : 1,
+                    slidesPerView:
+                      imagesArray.length >= 2
+                        ? imagesArray.length >= 3
+                          ? 3
+                          : 2
+                        : 1,
                   },
                 }}
               >
@@ -467,7 +506,10 @@ export default function page({params}: {params: { rentOrSell: string; propertyId
                       >
                         More Info about you
                       </textarea>
-                      <button className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center" onClick={(e)=>submitBooking(e)}>
+                      <button
+                        className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center"
+                        onClick={(e) => submitBooking(e)}
+                      >
                         Book your visits
                       </button>
                     </form>
@@ -478,7 +520,7 @@ export default function page({params}: {params: { rentOrSell: string; propertyId
                           className="group-hover:text-red-500"
                           icon={faHeart}
                         />
-                        <span className="pl-2"> Add to Favorites</span>
+                        <span className="pl-2" onClick={updateUserData}> Add to Favorites</span>
                       </button>
                       <button
                         className="flex justify-center group"
@@ -494,34 +536,43 @@ export default function page({params}: {params: { rentOrSell: string; propertyId
                     <hr />
                     <div className="flex justify-around p-4">
                       {data.ownerFacebookContact && (
-                        <Link
+                        <a
                           href={data.ownerFacebookContact}
                           className="group"
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
                           <FontAwesomeIcon
                             className="group-hover:text-[#1877F2] text-[1.5rem] text-gray-500"
                             icon={faFacebookF}
                           />
-                        </Link>
+                        </a>
                       )}
                       {data.ownerInstagramContact && (
-                        <Link
+                        <a
                           href={data.ownerInstagramContact}
                           className="group"
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
                           <FontAwesomeIcon
                             icon={faInstagram}
                             className="text-[1.5rem] text-gray-500 group-hover:text-[#b95a5a]"
                           />
-                        </Link>
+                        </a>
                       )}
                       {data.ownerTwitterContact && (
-                        <Link href={data.ownerTwitterContact} className="group">
+                        <a
+                          href={data.ownerTwitterContact}
+                          className="group "
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           <FontAwesomeIcon
                             className="group-hover:text-black text-[1.5rem] text-gray-500"
                             icon={faXTwitter}
                           />
-                        </Link>
+                        </a>
                       )}
                       {data.ownerEmail && (
                         <a
@@ -591,7 +642,10 @@ export default function page({params}: {params: { rentOrSell: string; propertyId
                   >
                     More Info about you
                   </textarea>
-                  <button className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center" onClick={(e)=>submitBooking(e)}>
+                  <button
+                    className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center"
+                    onClick={(e) => submitBooking(e)}
+                  >
                     Book your visit
                   </button>
                 </form>
@@ -602,7 +656,7 @@ export default function page({params}: {params: { rentOrSell: string; propertyId
                       className="group-hover:text-red-500"
                       icon={faHeart}
                     />
-                    <span className="pl-2"> Add to Favorites</span>
+                    <span className="pl-2" onClick={updateUserData}> Add to Favorites</span>
                   </button>
                   <button
                     className="flex justify-center group"
@@ -618,37 +672,43 @@ export default function page({params}: {params: { rentOrSell: string; propertyId
                 <hr />
                 <div className="flex justify-around p-4">
                   {data.ownerFacebookContact && (
-                    <Link
+                    <a
                       href={data.ownerFacebookContact}
                       className="group hover:bg-gray-200 p-4 rounded-full"
+                      target="_blank"
+                          rel="noopener noreferrer"
                     >
                       <FontAwesomeIcon
                         className="group-hover:text-[#1877F2] text-[1.5rem] text-gray-500"
                         icon={faFacebookF}
                       />
-                    </Link>
+                    </a>
                   )}
                   {data.ownerInstagramContact && (
-                    <Link
+                    <a
                       href={data.ownerInstagramContact}
                       className="group hover:bg-gray-200 p-4 rounded-full"
+                      target="_blank"
+                          rel="noopener noreferrer"
                     >
                       <FontAwesomeIcon
                         icon={faInstagram}
                         className="text-[1.5rem] text-gray-500 group-hover:text-[#b95a5a]"
                       />
-                    </Link>
+                    </a>
                   )}
                   {data.ownerTwitterContact && (
-                    <Link
+                    <a
                       href={data.ownerTwitterContact}
                       className="group hover:bg-gray-200 p-4 rounded-full"
+                      target="_blank"
+                          rel="noopener noreferrer"
                     >
                       <FontAwesomeIcon
                         className="group-hover:text-black text-[1.5rem] text-gray-500"
                         icon={faXTwitter}
                       />
-                    </Link>
+                    </a>
                   )}
                   {data.ownerEmail && (
                     <a
