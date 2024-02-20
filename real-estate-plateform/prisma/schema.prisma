@@ -61,6 +61,8 @@ model PropertyToSell {
 
   images Json
 
+  bookingsInfo Json?
+
   isBoosted Boolean @default(false)
   BostedTill DateTime?
   @@unique(fields: [address,latAndLng, ownerEmail])
@@ -102,6 +104,8 @@ model PropertyToRent {
   ownerTwitterContact   String?
 
   images Json
+
+  bookingsInfo Json?
 
   isBoosted Boolean @default(false)
   BostedTill DateTime?

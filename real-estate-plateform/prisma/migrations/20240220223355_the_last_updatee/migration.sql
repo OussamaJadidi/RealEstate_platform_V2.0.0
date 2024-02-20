@@ -42,10 +42,11 @@ CREATE TABLE `PropertyToSell` (
     `ownerInstagramContact` VARCHAR(191) NULL,
     `ownerTwitterContact` VARCHAR(191) NULL,
     `images` JSON NOT NULL,
+    `bookingsInfo` JSON NULL,
     `isBoosted` BOOLEAN NOT NULL DEFAULT false,
     `BostedTill` DATETIME(3) NULL,
 
-    UNIQUE INDEX `PropertyToSell_address_ownerEmail_key`(`address`, `ownerEmail`),
+    UNIQUE INDEX `PropertyToSell_address_latAndLng_ownerEmail_key`(`address`, `latAndLng`, `ownerEmail`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -79,10 +80,11 @@ CREATE TABLE `PropertyToRent` (
     `ownerInstagramContact` VARCHAR(191) NULL,
     `ownerTwitterContact` VARCHAR(191) NULL,
     `images` JSON NOT NULL,
+    `bookingsInfo` JSON NULL,
     `isBoosted` BOOLEAN NOT NULL DEFAULT false,
     `BostedTill` DATETIME(3) NULL,
 
-    UNIQUE INDEX `PropertyToRent_address_ownerEmail_key`(`address`, `ownerEmail`),
+    UNIQUE INDEX `PropertyToRent_address_latAndLng_ownerEmail_key`(`address`, `latAndLng`, `ownerEmail`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

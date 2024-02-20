@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 
 // Import Swiper React components
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
@@ -56,8 +56,10 @@ export default function page({
 }: {
   params: { rentOrSell: string; propertyId: string };
 }) {
-  const {data:session, status: statusOfSession} = useSession()
-  const [value, onChange] = useState<Value>(new Date());
+  const { data: session, status: statusOfSession } = useSession();
+
+  const [value, onChange] = useState<Value>();
+  const [moreInfoAboutVisitor, setMoreInfoAboutVisitor] = useState("");
 
   const { rentOrSell, propertyId } = params;
   const { data, status } = useQuery({
@@ -72,8 +74,35 @@ export default function page({
     );
     return res.data;
   }
-  function submitBooking(e: any) {
+  async function submitBookTheVisit(e: FormEvent) {
     e.preventDefault();
+    try {
+      if (statusOfSession === "unauthenticated") {
+        toast.error("Log in to your account First");
+        return;
+      }
+     
+      if (!value) {
+        toast.error("Please pick a Date");
+        return;
+      } 
+      if (!moreInfoAboutVisitor) {
+        toast.error("Please add some contact informations");
+        return;
+      }
+      const res = await axios.patch("/api/bookAVisit", {
+        bookingVisitData: {
+          bookedBy: (session?.user as any)?.id,
+          visitDate: value,
+          visitorInfo: moreInfoAboutVisitor,
+        },
+        propertyId,
+        rentOrSell,
+      });
+      toast.success("Visit booked successfully");
+    } catch (error) {
+      toast.error("An Error Ocurred");
+    }
   }
   if (status == "success") {
     const hashtags = JSON.parse(data.Hashtags);
@@ -84,34 +113,39 @@ export default function page({
 
   async function updateUserData() {
     try {
+      if (statusOfSession === "unauthenticated") {
+        toast.error("Log in to your account First");
+        return;
+      }
       const ownerId = (session?.user as any)?.id; // Ensure session and user exist
-  
+
       if (!ownerId || !propertyId) {
         throw new Error("Invalid ownerId or propertyId"); // Handle invalid values
       }
-      if(statusOfSession !== "authenticated"){
-        throw new Error("Invalid ownerId or propertyId"); 
-      }
-     
-      const res = await axios.put("/api/addAFavoriteProperty",{ownerId: ownerId,
-      propertyId: propertyId})
-      if (statusOfSession === 'authenticated') {
+      // if (statusOfSession !== "authenticated") {
+      //   throw new Error("Invalid ownerId or propertyId");
+      // }
+
+      const res = await axios.put("/api/addAFavoriteProperty", {
+        ownerId: ownerId,
+        propertyId: propertyId,
+      });
+      if (statusOfSession === "authenticated") {
         const fetchData = async () => {
           try {
             // Fetch the session data again to update user-related information
             await getSession({ force: true } as any);
           } catch (error) {
-            console.error('Error fetching session data:', error);
+            console.error("Error fetching session data:", error);
           }
         };
-  
+
         fetchData();
       }
-  
-      toast.success("Announce Added to Favorites")
-      console.log("User data updated:",res.data); // Log response from server
+
+      toast.success("Announce Added to Favorites");
     } catch (error) {
-      toast.error("An Error Ocurred")
+      toast.error("An Error Ocurred");
     }
   }
   return (
@@ -135,13 +169,13 @@ export default function page({
                   480: {
                     slidesPerView: 1,
                   },
-                  850: {
-                    slidesPerView: imagesArray.length >= 2 ? 2 : 1,
+                  1025: {
+                    slidesPerView: imagesArray.length >= 3 ? 2 : 1,
                   },
                   1200: {
                     slidesPerView:
-                      imagesArray.length >= 2
-                        ? imagesArray.length >= 3
+                      imagesArray.length >= 3
+                        ? imagesArray.length >= 4
                           ? 3
                           : 2
                         : 1,
@@ -200,11 +234,7 @@ export default function page({
                         <span className=" whitespace-nowrap">
                           {` Published ${new Date(
                             data.createdAt
-                          ).getDay()}/${new Date(
-                            data.createdAt
-                          ).getMonth()}/${new Date(
-                            data.createdAt
-                          ).getFullYear()}`}
+                          ).toLocaleDateString()}`}
                         </span>
                       </span>
                     </div>
@@ -490,7 +520,10 @@ export default function page({
                         Oussama Jadidi
                       </span>
                     </div>
-                    <form className="flex flex-col items-center gap-2 p-8 text-gray-500">
+                    <form
+                      onSubmit={(e) => submitBookTheVisit(e)}
+                      className="flex flex-col items-center gap-2 p-8 text-gray-500"
+                    >
                       <div className="">
                         <Calendar
                           onChange={onChange}
@@ -503,26 +536,32 @@ export default function page({
                         name=""
                         id=""
                         className="border rounded-md w-full py-2 !px-4"
-                      >
-                        More Info about you
-                      </textarea>
-                      <button
-                        className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center"
-                        onClick={(e) => submitBooking(e)}
-                      >
+                        value={moreInfoAboutVisitor}
+                        onChange={(e) =>
+                          setMoreInfoAboutVisitor(e.target.value)
+                        }
+                        placeholder="Where owner can contact you"
+                      ></textarea>
+                      <button className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center">
                         Book your visits
                       </button>
                     </form>
                     <hr />
                     <div className="text-gray-500 w-full flex flex-col gap-4 items-center  p-8">
-                      <button className="p-2 rounded-md px-4 w-full text-semibold text-center border group">
+                      <button
+                        type="button"
+                        className="p-2 rounded-md px-4 w-full text-semibold text-center border group"
+                      >
                         <FontAwesomeIcon
                           className="group-hover:text-red-500"
                           icon={faHeart}
                         />
-                        <span className="pl-2" onClick={updateUserData}> Add to Favorites</span>
+                        <span className="pl-2" onClick={updateUserData}>
+                          Add to Favorites
+                        </span>
                       </button>
                       <button
+                        type="button"
                         className="flex justify-center group"
                         onClick={() => window.print()}
                       >
@@ -626,7 +665,10 @@ export default function page({
                     Oussama Jadidi
                   </span>
                 </div>
-                <form className="flex flex-col items-center gap-2 p-4 text-gray-500">
+                <form
+                  onSubmit={(e) => submitBookTheVisit(e)}
+                  className="flex flex-col items-center gap-2 p-4 text-gray-500"
+                >
                   <div className="">
                     <Calendar
                       onChange={onChange}
@@ -639,26 +681,30 @@ export default function page({
                     name=""
                     id=""
                     className="border rounded-md w-full py-2 px-4"
-                  >
-                    More Info about you
-                  </textarea>
-                  <button
-                    className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center"
-                    onClick={(e) => submitBooking(e)}
-                  >
+                    value={moreInfoAboutVisitor}
+                    onChange={(e) => setMoreInfoAboutVisitor(e.target.value)}
+                    placeholder="Where owner can contact you"
+                  ></textarea>
+                  <button className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center">
                     Book your visit
                   </button>
                 </form>
                 <hr />
                 <div className="text-gray-500 w-full flex flex-col gap-4 items-center px-4  py-6">
-                  <button className="p-2 rounded-md px-4 w-full text-semibold text-center border group">
+                  <button
+                    type="button"
+                    className="p-2 rounded-md px-4 w-full text-semibold text-center border group"
+                  >
                     <FontAwesomeIcon
                       className="group-hover:text-red-500"
                       icon={faHeart}
                     />
-                    <span className="pl-2" onClick={updateUserData}> Add to Favorites</span>
+                    <span className="pl-2" onClick={updateUserData}>
+                      Add to Favorites
+                    </span>
                   </button>
                   <button
+                    type="button"
                     className="flex justify-center group"
                     onClick={() => window.print()}
                   >
@@ -676,7 +722,7 @@ export default function page({
                       href={data.ownerFacebookContact}
                       className="group hover:bg-gray-200 p-4 rounded-full"
                       target="_blank"
-                          rel="noopener noreferrer"
+                      rel="noopener noreferrer"
                     >
                       <FontAwesomeIcon
                         className="group-hover:text-[#1877F2] text-[1.5rem] text-gray-500"
@@ -689,7 +735,7 @@ export default function page({
                       href={data.ownerInstagramContact}
                       className="group hover:bg-gray-200 p-4 rounded-full"
                       target="_blank"
-                          rel="noopener noreferrer"
+                      rel="noopener noreferrer"
                     >
                       <FontAwesomeIcon
                         icon={faInstagram}
@@ -702,7 +748,7 @@ export default function page({
                       href={data.ownerTwitterContact}
                       className="group hover:bg-gray-200 p-4 rounded-full"
                       target="_blank"
-                          rel="noopener noreferrer"
+                      rel="noopener noreferrer"
                     >
                       <FontAwesomeIcon
                         className="group-hover:text-black text-[1.5rem] text-gray-500"
@@ -757,6 +803,7 @@ function SwiperControlle() {
   return (
     <div className="px-8 absolute top-0 bottom-0 left-0 right-0 z-[1] flex justify-between items-center pointer-events-none">
       <button
+        type="button"
         onClick={() => swiper.slidePrev()}
         className="bg-blue-800 rounded-md text-white text-xl px-2 py-1  font-bold "
         style={{ pointerEvents: "auto" }} // Set pointer-events to auto
@@ -764,6 +811,7 @@ function SwiperControlle() {
         <FontAwesomeIcon icon={faChevronLeft} style={{ width: "1rem" }} />
       </button>
       <button
+        type="button"
         onClick={() => swiper.slideNext()}
         className="bg-blue-800 rounded-md text-white text-xl px-2 py-1  font-bold "
         style={{ pointerEvents: "auto" }} // Set pointer-events to auto
