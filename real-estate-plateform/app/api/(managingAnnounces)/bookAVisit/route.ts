@@ -11,7 +11,7 @@ export const PATCH = async (req: Request) => {
           id: propertyId,
         },
       });
-      console.log("aaaaaaaa",announceData?.bookingsInfo)
+      console.log("aaaaaaaav",announceData)
       // Second Add this new booking visit to the property data
       if (announceData?.bookingsInfo == null) {
         var updatedbookingsInfo: string[] = [JSON.stringify(bookingVisitData)];

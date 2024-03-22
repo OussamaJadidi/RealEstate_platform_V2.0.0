@@ -23,7 +23,7 @@ import SignIn from "./SignIn";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import { redirect, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 export default function Header() {
   const router = useRouter()
@@ -180,11 +180,13 @@ export default function Header() {
                         </button>
                       </li>
                     )}
-                    <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 ">
+                    <li className=" py-2 px-4 text-[1rem] hover:bg-slate-300 "
+                    onClick={()=>{router.push("/favorites")}}>
                       <FontAwesomeIcon
                         style={{ paddingInline: ".7rem" }}
                         icon={faHeart}
                       />
+                      
                       Favorites
                     </li>
                     {status !== "authenticated" && (
@@ -232,13 +234,13 @@ export default function Header() {
 
                     {status == "authenticated" && (
                       <>
-                        <li className="  text-[1rem] hover:bg-slate-300 ">
+                        <li className="  text-[1rem] hover:bg-slate-300 " onClick={()=>{router.push("/myProperties")}}>
                           <button className="w-full h-full py-2 px-4 text-left">
                             <FontAwesomeIcon
                               style={{ paddingInline: ".7rem" }}
                               icon={faBullhorn}
                             />
-                            My Announces
+                            My Properties
                           </button>
                         </li>
                         <li className="  text-[1rem] hover:bg-slate-300 ">

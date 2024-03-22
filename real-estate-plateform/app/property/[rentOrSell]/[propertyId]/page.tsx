@@ -47,6 +47,8 @@ import {
   faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import { getSession, useSession } from "next-auth/react";
+import Card from "@/components/Card";
+import Loading from "./loading";
 
 type ValuePiece = Date | null;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
@@ -81,11 +83,11 @@ export default function page({
         toast.error("Log in to your account First");
         return;
       }
-     
+
       if (!value) {
         toast.error("Please pick a Date");
         return;
-      } 
+      }
       if (!moreInfoAboutVisitor) {
         toast.error("Please add some contact informations");
         return;
@@ -150,12 +152,12 @@ export default function page({
   }
   return (
     <div className=" bg-gray-50">
-      {status === "loading" && <div>loading</div>}
+      {status === "loading" && <Loading />}
       {status === "success" && (
         <>
           {/* bg-sky-50 for the header only in home page */}
           <div className="absolute top-0 left-0 right-0 h-20 max-sm:h-22 bg-gray-50 z-[-1]"></div>
-          <div className=" w-full group/card   ">
+          <div className=" w-full group/card">
             <div className=" h-[20rem] md:h-[25rem]">
               <Swiper
                 // spaceBetween={0}
@@ -649,10 +651,14 @@ export default function page({
                   </div>
                 </div>
                 <div className="w-full wrapper  ">
-                  <div className="text-gray-800 font-roboto font-semibold text-[1rem] ">
+                  <div className="text-gray-800 font-roboto font-semibold text-[1.4rem] py-6">
                     Similar announces
                   </div>
-                  <div>{`${data.description}`}</div>
+                  <div className="flex flex-col gap-2">
+                    <Card TailwindCSS="flex max-lg:flex-col" />
+                    <Card TailwindCSS="flex max-lg:flex-col" />
+                    <Card TailwindCSS="flex max-lg:flex-col" />
+                  </div>
                 </div>
               </div>
 

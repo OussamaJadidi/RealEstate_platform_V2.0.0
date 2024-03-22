@@ -10,6 +10,9 @@ import {
   faTentArrowLeftRight,
   faChevronLeft,
   faChevronRight,
+  faTrash,
+  faPen,
+  faBolt,
 } from "@fortawesome/free-solid-svg-icons";
 // The following import prevents a Font Awesome icon server-side rendering bug,
 // where the icons flash from a very large icon down to a properly sized one:
@@ -22,15 +25,28 @@ import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type CardPropsType = {
   TailwindCSS?: String;
+  myProperties?: boolean;
 };
 
-export default function Card({ TailwindCSS = "undefined" }: CardPropsType) {
+export default function Card({
+  TailwindCSS = "undefined",
+  myProperties = false,
+}: CardPropsType) {
+  const id = "37d8d7f5-fe8c-41a3-ae3f-b55c6d7f826e";
+  const rentOrSell = "rent";
+  const router = useRouter();
   return (
     <div
       className={`${TailwindCSS} rounded-lg overflow-hidden group/card border `}
+      onClick={() => {
+        toast.loading("redirecting", { duration: 500 });
+        router.push("/property/" + rentOrSell + "/" + id);
+      }}
     >
       <span
         className={`relative    ${
@@ -159,35 +175,62 @@ export default function Card({ TailwindCSS = "undefined" }: CardPropsType) {
           </SwiperSlide>
         </Swiper>
       </span>
-      <section className="p-3 flex flex-col justify-between gap-4 text-gray-500 text-sm bg-white ">
-        <div>
-          <p>Appartement</p>
-          <div className=" text-blue-800 text-[1.1rem] font-bold font-roboto">
-            <span>1900</span> $/<span>month</span>
+      <section className="flex justify-between w-full">
+        <section className="p-3 flex flex-col justify-between gap-4 text-gray-500 text-sm bg-white w-full">
+          <div>
+            <p>Appartement</p>
+            <div className=" text-blue-800 text-[1.1rem] font-bold font-roboto">
+              <span>1900</span> $/<span>month</span>
+            </div>
+            <h3 className=" text-black text-base ">
+              Superbe appartment a louer bla blo Superbe appartment a louer bla
+              blo
+            </h3>
           </div>
-          <h3 className=" text-black text-base ">
-            Superbe appartment a louer bla blo Superbe appartment a louer bla
-            blo
-          </h3>
-        </div>
-        <div className="flex flex-col gap-1 font-normal">
-          <p>
-            <FontAwesomeIcon icon={faLocationDot} /> <span>Morroco, oujda</span>
-          </p>
-          <div className="flex flex-wrap">
-            <span className="whitespace-nowrap">
-              <FontAwesomeIcon icon={faBed} /> <span>3</span> bedrooms
-            </span>
-            <span className="px-2">|</span>
-            <span className="whitespace-nowrap">
-              <FontAwesomeIcon icon={faBath} /> <span>2</span> bathrooms
-            </span>
-            <span className="px-2">|</span>
-            <span className="whitespace-nowrap">
-              <FontAwesomeIcon icon={faTentArrowLeftRight} /> <span>120</span>m²
-            </span>
+          <div className="flex flex-col gap-1 font-normal">
+            <p>
+              <FontAwesomeIcon icon={faLocationDot} />{" "}
+              <span>Morroco, oujda</span>
+            </p>
+            <div className="flex flex-wrap">
+              <span className="whitespace-nowrap">
+                <FontAwesomeIcon icon={faBed} /> <span>3</span> bedrooms
+              </span>
+              <span className="px-2">|</span>
+              <span className="whitespace-nowrap">
+                <FontAwesomeIcon icon={faBath} /> <span>2</span> bathrooms
+              </span>
+              <span className="px-2">|</span>
+              <span className="whitespace-nowrap">
+                <FontAwesomeIcon icon={faTentArrowLeftRight} /> <span>120</span>
+                m²
+              </span>
+            </div>
           </div>
-        </div>
+        </section>
+
+        {myProperties === true && (
+          <section className="w-min flex flex-col items-center justify-start gap-2 pt-2 pr-2">
+            <button
+              className="hover:border border-black rounded-md p-2 hover:bg-green-300"
+              title="Modify"
+            >
+              <FontAwesomeIcon icon={faPen} /> 
+            </button>
+            <button
+              className="hover:border border-black rounded-md p-2 hover:bg-blue-400"
+              title="Boost"
+            >
+              <FontAwesomeIcon icon={faBolt} />
+            </button>
+            <button
+              className="hover:border border-black rounded-md p-2 hover:bg-red-300"
+              title="Delete"
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
+          </section>
+        )}
       </section>
     </div>
   );

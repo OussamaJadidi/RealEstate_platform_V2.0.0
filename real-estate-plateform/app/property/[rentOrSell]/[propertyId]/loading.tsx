@@ -48,112 +48,12 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import { getSession, useSession } from "next-auth/react";
 import Card from "@/components/Card";
-import Loading from "./loading";
+import { Skeleton } from "@/components/ui/skeleton";
 
-type ValuePiece = Date | null;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+export default function page() {
 
-export default function page({
-  params,
-}: {
-  params: { rentOrSell: string; propertyId: string };
-}) {
-  const { data: session, status: statusOfSession } = useSession();
-
-  const [value, onChange] = useState<Value>();
-  const [moreInfoAboutVisitor, setMoreInfoAboutVisitor] = useState("");
-
-  const { rentOrSell, propertyId } = params;
-  const { data, status } = useQuery({
-    queryKey: ["property", rentOrSell, propertyId],
-    queryFn: fetchPropertyData,
-    staleTime: 500000,
-  });
-
-  async function fetchPropertyData() {
-    const res = await axios(
-      `/api/searchPropertyData/${rentOrSell}/${propertyId}`
-    );
-    return res.data;
-  }
-  async function submitBookTheVisit(e: FormEvent) {
-    e.preventDefault();
-    try {
-      if (statusOfSession === "unauthenticated") {
-        toast.error("Log in to your account First");
-        return;
-      }
-
-      if (!value) {
-        toast.error("Please pick a Date");
-        return;
-      }
-      if (!moreInfoAboutVisitor) {
-        toast.error("Please add some contact informations");
-        return;
-      }
-      const res = await axios.patch("/api/bookAVisit", {
-        bookingVisitData: {
-          bookedBy: (session?.user as any)?.id,
-          visitDate: value,
-          visitorInfo: moreInfoAboutVisitor,
-        },
-        propertyId,
-        rentOrSell,
-      });
-      toast.success("Visit booked successfully");
-    } catch (error) {
-      toast.error("An Error Ocurred");
-    }
-  }
-  if (status == "success") {
-    const hashtags = JSON.parse(data.Hashtags);
-    var { centralizedClimat, parking, storage, concierge, pool, downtown } =
-      hashtags;
-    var imagesArray = JSON.parse(data.images);
-  }
-
-  async function updateUserData() {
-    try {
-      if (statusOfSession === "unauthenticated") {
-        toast.error("Log in to your account First");
-        return;
-      }
-      const ownerId = (session?.user as any)?.id; // Ensure session and user exist
-
-      if (!ownerId || !propertyId) {
-        throw new Error("Invalid ownerId or propertyId"); // Handle invalid values
-      }
-      // if (statusOfSession !== "authenticated") {
-      //   throw new Error("Invalid ownerId or propertyId");
-      // }
-
-      const res = await axios.put("/api/addAFavoriteProperty", {
-        ownerId: ownerId,
-        propertyId: propertyId,
-      });
-      if (statusOfSession === "authenticated") {
-        const fetchData = async () => {
-          try {
-            // Fetch the session data again to update user-related information
-            await getSession({ force: true } as any);
-          } catch (error) {
-            console.error("Error fetching session data:", error);
-          }
-        };
-
-        fetchData();
-      }
-
-      toast.success("Announce Added to Favorites");
-    } catch (error) {
-      toast.error("An Error Ocurred");
-    }
-  }
   return (
     <div className=" bg-gray-50">
-      {status === "loading" && <Loading />}
-      {status === "success" && (
         <>
           {/* bg-sky-50 for the header only in home page */}
           <div className="absolute top-0 left-0 right-0 h-20 max-sm:h-22 bg-gray-50 z-[-1]"></div>
@@ -172,33 +72,27 @@ export default function page({
                     slidesPerView: 1,
                   },
                   1025: {
-                    slidesPerView: imagesArray.length >= 3 ? 2 : 1,
+                    slidesPerView: 2,
                   },
                   1200: {
-                    slidesPerView:
-                      imagesArray.length >= 3
-                        ? imagesArray.length >= 4
-                          ? 3
-                          : 2
-                        : 1,
+                    slidesPerView: 3,
                   },
                 }}
               >
                 <SwiperControlle />
 
-                {imagesArray.map((imageUrl: string) => (
                   <SwiperSlide>
-                    <div className="swiper-zoom-container ">
-                      <Image
-                        src={imageUrl}
-                        alt="propertyImg"
-                        width="500"
-                        height="300"
-                        className={"w-full h-full !object-fill "}
-                      />
-                    </div>
+                    <Skeleton className="inline-block  w-full h-full"/>
                   </SwiperSlide>
-                ))}
+                  <SwiperSlide>
+                    <Skeleton className="inline-block  w-full h-full"/>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <Skeleton className="inline-block  w-full h-full"/>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <Skeleton className="inline-block  w-full h-full"/>
+                  </SwiperSlide>
               </Swiper>
             </div>
 
@@ -208,13 +102,10 @@ export default function page({
                   <div className="p-8">
                     <div className="flex justify-between flex-wrap w-full">
                       <span className="font-semibold text-[1.5rem] font-rubik text-gray-800 ">
-                        {data.title}
+                        <Skeleton className="inline-block h-6 w-60"/>
                       </span>
-                      <div className=" text-blue-800 text-[1.3rem] font-roboto font-semibold">
-                        <span>{data.price}</span> $
-                        {params.rentOrSell === "rent" && (
-                          <span>/{`${data.rentalPeriod}`}</span>
-                        )}
+                      <div className=" text-blue-800 text-[1.3rem] font-roboto font-semibold flex items-center">
+                        <span><Skeleton className="inline-block h-4 w-16"/> $/ <Skeleton className=" h-4 w-16 inline-block"/></span>
                       </div>
                     </div>
 
@@ -225,7 +116,7 @@ export default function page({
                           style={{ color: "#6b7280" }}
                         />
                         <span>
-                          {`${data.country}, ${data.city}, ${data.address}`}
+                         <Skeleton className="inline-block h-4 w-24"/>,<Skeleton className="inline-block h-4 w-16"/>,<Skeleton className="inline-block h-4 w-16"/>
                         </span>
                       </span>
                       <span>
@@ -234,9 +125,7 @@ export default function page({
                           style={{ color: "#6b7280" }}
                         />
                         <span className=" whitespace-nowrap">
-                          {` Published ${new Date(
-                            data.createdAt
-                          ).toLocaleDateString()}`}
+                           Published <Skeleton className="inline-block h-4 w-6"/> / <Skeleton className="inline-block h-4 w-6"/> / <Skeleton className="inline-block h-4 w-6"/>
                         </span>
                       </span>
                     </div>
@@ -253,7 +142,7 @@ export default function page({
                           Property Type
                         </span>
                         <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
-                          {data.propertyType}
+                        <Skeleton className="inline-block h-4 w-24"/>
                         </span>
                       </li>
                       <li className="flex flex-col gap-1 justify-center align-center w-full sm:border-r py-4">
@@ -263,7 +152,7 @@ export default function page({
                         />
                         <span className="text-center">Furniture</span>
                         <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
-                          {data.furniture}
+                        <Skeleton className="inline-block h-4 w-24"/>
                         </span>
                       </li>
                     </div>
@@ -276,7 +165,7 @@ export default function page({
                         Property Area
                       </span>
                       <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
-                        {data.surface}
+                      <Skeleton className="inline-block h-4 w-24"/>
                       </span>
                     </li>
                     <div className="flex w-full align-center justify-center">
@@ -289,7 +178,7 @@ export default function page({
                           Beds Number
                         </span>
                         <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
-                          {data.bedsNumber}
+                        <Skeleton className="inline-block h-4 w-8"/>
                         </span>
                       </li>
                       <li className="flex flex-col gap-1 justify-center align-center w-full  py-4">
@@ -301,7 +190,7 @@ export default function page({
                           Baths Number
                         </span>
                         <span className="text-center text-gray-800 font-roboto font-semibold text-[1rem] ">
-                          {data.bathsNumber}
+                        <Skeleton className="inline-block h-4 w-8"/>
                         </span>
                       </li>
                     </div>
@@ -311,184 +200,47 @@ export default function page({
                   <div className="w-full p-8 text-gray-800 font-roboto font-semibold text-[1rem] flex max-341px:flex-col justify-between ">
                     <div className="border-r max-341px:border-0 flex flex-col items-center justify-center w-full">
                       <div className=" whitespace-nowrap pb-2">
-                        {downtown ? (
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            style={{
-                              color: "#22c55e",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faX}
-                            style={{
-                              color: "red",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        )}
-                        DownTownn
+                      <Skeleton className="inline-block h-4 w-4"/>
+                        <span> DownTownn</span> 
                       </div>
                       <div className=" whitespace-nowrap pb-2">
-                        {concierge ? (
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            style={{
-                              color: "#22c55e",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faX}
-                            style={{
-                              color: "red",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        )}
-                        Concierge
+                      <Skeleton className="inline-block h-4 w-4"/>
+
+                        <span> Concierge</span> 
                       </div>
                       <div className="sm:hidden whitespace-nowrap pb-2">
-                        {parking ? (
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            style={{
-                              color: "#22c55e",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faX}
-                            style={{
-                              color: "red",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        )}
-                        Parking couvert
+                      <Skeleton className="inline-block h-4 w-4"/>
+
+                        <span> Parking couvert </span>
                       </div>
                     </div>
                     <div className="max-sm:hidden border-r flex flex-col items-center justify-center w-full">
                       <div className=" whitespace-nowrap pb-2">
-                        {parking ? (
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            style={{
-                              color: "#22c55e",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faX}
-                            style={{
-                              color: "red",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        )}
-                        Parking couvert
+                      <Skeleton className="inline-block h-4 w-4"/>
+
+                        <span> Parking couvert</span>
                       </div>
                       <div className=" whitespace-nowrap pb-2">
-                        {storage ? (
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            style={{
-                              color: "#22c55e",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faX}
-                            style={{
-                              color: "red",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        )}
-                        Storage
+                      <Skeleton className="inline-block h-4 w-4"/>
+
+                        <span> Storage</span>
                       </div>
                     </div>
                     <div className="flex flex-col items-center justify-center w-full">
                       <div className=" whitespace-nowrap pb-2">
-                        {centralizedClimat ? (
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            style={{
-                              color: "#22c55e",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faX}
-                            style={{
-                              color: "red",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        )}
-                        Centralized Climat
+                      <Skeleton className="inline-block h-4 w-4"/>
+
+                        <span> Centralized Climat</span>
                       </div>
                       <div className=" whitespace-nowrap pb-2">
-                        {pool ? (
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            style={{
-                              color: "#22c55e",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faX}
-                            style={{
-                              color: "red",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        )}
-                        Pool
+                      <Skeleton className="inline-block h-4 w-4"/>
+
+                        <span> Pool</span>
                       </div>
                       <div className="sm:hidden whitespace-nowrap pb-2">
-                        {storage ? (
-                          <FontAwesomeIcon
-                            icon={faCheck}
-                            style={{
-                              color: "#22c55e",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        ) : (
-                          <FontAwesomeIcon
-                            icon={faX}
-                            style={{
-                              color: "red",
-                              fontWeight: "bold",
-                              fontSize: "1.2rem",
-                            }}
-                          />
-                        )}
-                        Storage
+                        <Skeleton className="inline-block h-4 w-4"/>
+
+                        <span> Storage</span>
                       </div>
                     </div>
                   </div>
@@ -497,7 +249,9 @@ export default function page({
                     <div className="text-gray-800 font-roboto font-semibold text-[1rem]">
                       Description
                     </div>
-                    <div>{`${data.description}`}</div>
+                    <div className="flex flex-col gap-2 pt-4"><Skeleton className="inline-block h-4 w-48"/>
+                    <Skeleton className="inline-block h-4 w-72"/>
+                    <Skeleton className="inline-block h-4 w-56"/></div>
                   </div>
                   <hr />
 
@@ -505,12 +259,7 @@ export default function page({
                     <div className="text-gray-800 font-roboto font-semibold text-[1rem] pb-3">
                       Location on the map :
                     </div>
-                    <div className="h-[25rem] ">
-                      <Map
-                        showMultiplePositions={false}
-                        latAndLng={JSON.parse(data.latAndLng)}
-                      />
-                    </div>
+                    <Skeleton className="w-full h-[25rem] " />
                   </div>
                   <hr />
                   <div className="lg:hidden bg-white  h-min sticky top-0 ">
@@ -519,17 +268,15 @@ export default function page({
                         <FontAwesomeIcon icon={faUser} />
                       </span>
                       <span className="pl-3 text-gray-800 font-roboto font-semibold text-[1rem] ">
-                        Oussama Jadidi
+                        <Skeleton className="w-4 w-24" />
                       </span>
                     </div>
                     <form
-                      onSubmit={(e) => submitBookTheVisit(e)}
                       className="flex flex-col items-center gap-2 p-8 text-gray-500"
                     >
                       <div className="">
                         <Calendar
-                          onChange={onChange}
-                          value={value}
+                        
                           className="!w-full !rounded-md !border-gray-200"
                           tileDisabled={({ date }) => date < new Date()}
                         />
@@ -538,10 +285,7 @@ export default function page({
                         name=""
                         id=""
                         className="border rounded-md w-full py-2 !px-4"
-                        value={moreInfoAboutVisitor}
-                        onChange={(e) =>
-                          setMoreInfoAboutVisitor(e.target.value)
-                        }
+                      
                         placeholder="Where owner can contact you"
                       ></textarea>
                       <button className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center">
@@ -558,7 +302,7 @@ export default function page({
                           className="group-hover:text-red-500"
                           icon={faHeart}
                         />
-                        <span className="pl-2" onClick={updateUserData}>
+                        <span className="pl-2">
                           Add to Favorites
                         </span>
                       </button>
@@ -576,9 +320,7 @@ export default function page({
                     </div>
                     <hr />
                     <div className="flex justify-around p-4">
-                      {data.ownerFacebookContact && (
                         <a
-                          href={data.ownerFacebookContact}
                           className="group"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -588,10 +330,7 @@ export default function page({
                             icon={faFacebookF}
                           />
                         </a>
-                      )}
-                      {data.ownerInstagramContact && (
                         <a
-                          href={data.ownerInstagramContact}
                           className="group"
                           target="_blank"
                           rel="noopener noreferrer"
@@ -601,10 +340,7 @@ export default function page({
                             className="text-[1.5rem] text-gray-500 group-hover:text-[#b95a5a]"
                           />
                         </a>
-                      )}
-                      {data.ownerTwitterContact && (
                         <a
-                          href={data.ownerTwitterContact}
                           className="group "
                           target="_blank"
                           rel="noopener noreferrer"
@@ -614,10 +350,7 @@ export default function page({
                             icon={faXTwitter}
                           />
                         </a>
-                      )}
-                      {data.ownerEmail && (
                         <a
-                          href={`mailto:${data.ownerEmail}?subject=From EstateElite to disscuss about your property for ${params.rentOrSell}&body=Hi I noticed your property at EstateElite plateform\n`}
                           className="group"
                         >
                           <FontAwesomeIcon
@@ -625,8 +358,6 @@ export default function page({
                             icon={faEnvelope}
                           />
                         </a>
-                      )}
-                      {data.ownerPhone && (
                         <button
                           className="group"
                           onClick={() =>
@@ -636,7 +367,7 @@ export default function page({
                                   className="text-green-600 text-[1.5rem] "
                                   icon={faPhone}
                                 />
-                                {`${data.ownerPhone}`}
+                                +XXX XXX XXXX XXX
                               </>
                             )
                           }
@@ -646,20 +377,11 @@ export default function page({
                             icon={faPhone}
                           />
                         </button>
-                      )}
                     </div>
                   </div>
                 </div>
-                <div className="w-full wrapper  ">
-                  <div className="text-gray-800 font-roboto font-semibold text-[1.4rem] py-6">
-                    Similar announces
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <Card TailwindCSS="flex max-lg:flex-col" />
-                    <Card TailwindCSS="flex max-lg:flex-col" />
-                    <Card TailwindCSS="flex max-lg:flex-col" />
-                  </div>
-                </div>
+                
+                
               </div>
 
               <div className="max-lg:hidden bg-white w-[30rem] h-min sticky top-0 border">
@@ -668,17 +390,15 @@ export default function page({
                     <FontAwesomeIcon icon={faUser} />
                   </span>
                   <span className="pl-3 text-gray-800 font-roboto font-semibold text-[1rem] ">
-                    Oussama Jadidi
+                    <Skeleton className="h-4 w-40" />
                   </span>
                 </div>
                 <form
-                  onSubmit={(e) => submitBookTheVisit(e)}
                   className="flex flex-col items-center gap-2 p-4 text-gray-500"
                 >
                   <div className="">
                     <Calendar
-                      onChange={onChange}
-                      value={value}
+
                       className="!w-full !rounded-md !border-gray-200"
                       tileDisabled={({ date }) => date < new Date()}
                     />
@@ -687,8 +407,6 @@ export default function page({
                     name=""
                     id=""
                     className="border rounded-md w-full py-2 px-4"
-                    value={moreInfoAboutVisitor}
-                    onChange={(e) => setMoreInfoAboutVisitor(e.target.value)}
                     placeholder="Where owner can contact you"
                   ></textarea>
                   <button className="bg-blue-800 text-white  p-2 rounded-md px-4 w-full text-semibold text-center">
@@ -705,7 +423,7 @@ export default function page({
                       className="group-hover:text-red-500"
                       icon={faHeart}
                     />
-                    <span className="pl-2" onClick={updateUserData}>
+                    <span className="pl-2">
                       Add to Favorites
                     </span>
                   </button>
@@ -723,9 +441,7 @@ export default function page({
                 </div>
                 <hr />
                 <div className="flex justify-around p-4">
-                  {data.ownerFacebookContact && (
                     <a
-                      href={data.ownerFacebookContact}
                       className="group hover:bg-gray-200 p-4 rounded-full"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -735,10 +451,7 @@ export default function page({
                         icon={faFacebookF}
                       />
                     </a>
-                  )}
-                  {data.ownerInstagramContact && (
                     <a
-                      href={data.ownerInstagramContact}
                       className="group hover:bg-gray-200 p-4 rounded-full"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -748,10 +461,7 @@ export default function page({
                         className="text-[1.5rem] text-gray-500 group-hover:text-[#b95a5a]"
                       />
                     </a>
-                  )}
-                  {data.ownerTwitterContact && (
                     <a
-                      href={data.ownerTwitterContact}
                       className="group hover:bg-gray-200 p-4 rounded-full"
                       target="_blank"
                       rel="noopener noreferrer"
@@ -761,10 +471,7 @@ export default function page({
                         icon={faXTwitter}
                       />
                     </a>
-                  )}
-                  {data.ownerEmail && (
                     <a
-                      href={`mailto:${data.ownerEmail}?subject=From EstateElite to disscuss about your property for ${params.rentOrSell}&body=Hi I noticed your property at EstateElite plateform\n`}
                       className="group hover:bg-gray-200 p-4 rounded-full"
                     >
                       <FontAwesomeIcon
@@ -772,8 +479,6 @@ export default function page({
                         icon={faEnvelope}
                       />
                     </a>
-                  )}
-                  {data.ownerPhone && (
                     <button
                       className="group hover:bg-gray-200 p-4 rounded-full"
                       onClick={() =>
@@ -783,7 +488,7 @@ export default function page({
                               className="text-green-600 text-[1.5rem] "
                               icon={faPhone}
                             />
-                            {`${data.ownerPhone}`}
+                            +xxx XXX XXX XXX
                           </>
                         )
                       }
@@ -793,13 +498,11 @@ export default function page({
                         icon={faPhone}
                       />
                     </button>
-                  )}
                 </div>
               </div>
             </div>
           </div>
         </>
-      )}
     </div>
   );
 }
